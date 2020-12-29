@@ -1,0 +1,26 @@
+@import "variable.scss";
+
+
+html, body {
+  height: 100%;
+}
+
+* {
+  font-size: 14px;
+  box-sizing: border-box;
+  color: #304265;
+  user-select: none;
+}
+
+.flex {
+  display: flex;
+}
+
+.flex-auto {
+  flex: 1;
+}
+
+.flex-col {
+  display: flex;
+  flex-direction: column;
+}
