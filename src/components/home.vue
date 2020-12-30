@@ -1,5 +1,6 @@
 <template>
     <div class="main flex-col">
+      <div class="animation"></div>
       <div class="flex header mb-20">
         <div class="left"></div>
         <div class="title flex-auto"><div class="title-img"></div>域名解析统一管理系统</div>
@@ -89,7 +90,7 @@ export default {
       }
       let day = date.getDate();
       if (day < 10) {
-        monthday = '0' + day;
+        day = '0' + day;
       }
       let hours = date.getHours();
       if (hours < 10) {
@@ -111,11 +112,11 @@ export default {
 </script>
 <style scoped lang="scss">
 .main {
-  height: 100%;
-  background: url('./../assets/bg.png');
+  // height: 100%;
+  background: url('./../assets/bg.gif');
   background-size: cover;
   padding: 40px 20px;
-  overflow: hidden;
+  overflow-x: hidden;
 }
 .header {
   height: 80px;
@@ -158,6 +159,7 @@ export default {
   border-radius: 2px;
   border-radius: 2px;
   position: relative;
+  height: 356px;
 }
 
 .mb-20 {
@@ -192,7 +194,7 @@ export default {
   right: 22px;
 }
 
-.rotate {
-  // transform: rotate(10deg);
+.animation {
+  background: url('./../assets/ani.png');
 }
 </style>

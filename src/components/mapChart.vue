@@ -38,7 +38,7 @@ export default {
         layoutSize: "100%",
         itemStyle: {
             normal: {
-                borderColor: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+                borderColor: new window.echarts.graphic.LinearGradient(0, 0, 0, 1, [{
                     offset: 0,
                     color: '#00F6FF'
                 }, {
@@ -161,11 +161,10 @@ export default {
     };
   },
   mounted() {
-    this.myChart = echarts.init(this.$refs.chart);
+    this.myChart = window.echarts.init(this.$refs.chart);
     this.calMap();
     this.fetchData();
-    var mapFeatures = echarts.getMap('china').geoJson.features;
-    var geoCoordMap = {};
+    var mapFeatures = window.echarts.getMap('china').geoJson.features;
     mapFeatures.forEach(v => {
         // 地区名称
         var name = v.properties.name;

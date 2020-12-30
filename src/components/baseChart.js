@@ -3,7 +3,7 @@ const baseChart = {
 
   },
   mounted() {
-    this.myChart = echarts.init(this.$refs.chart);
+    this.myChart = window.echarts.init(this.$refs.chart);
     this.refresh();
   },
   methods: {
