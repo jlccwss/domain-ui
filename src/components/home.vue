@@ -3,7 +3,7 @@
       <div class="animation"></div>
       <div class="flex header mb-20">
         <div class="left"></div>
-        <div class="title flex-auto"><div class="title-img"></div>域名解析统一管理系统</div>
+        <div class="title flex flex-auto"><div class="title-img"></div><div class="title-h">域名解析统一管理系统</div></div>
         <div class="right"></div>
       </div>
       <div class="flex flex-auto">
@@ -143,10 +143,15 @@ export default {
 .title {
   background-image: url('./../assets/title.png');
   background-size:100% 100%;
-  font-size: 30px;
-  color: #FFF;
   text-align: center;
-  line-height: 80px;
+  justify-content: center;
+  align-items: center;
+  padding-bottom: 5px;
+}
+
+.title-h {
+  font-size: 30px;
+  color: #fff;
 }
 
 .right-chart, .left-chart {
@@ -159,7 +164,6 @@ export default {
   border-radius: 2px;
   border-radius: 2px;
   position: relative;
-  // min-height: 356px;
 }
 
 .mb-20 {
