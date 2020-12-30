@@ -2,7 +2,7 @@
     <div class="main flex-col">
       <div class="flex header mb-20">
         <div class="left"></div>
-        <div class="title flex-auto"><div class="title-img"></div>域名管理系统</div>
+        <div class="title flex-auto"><div class="title-img"></div>域名解析统一管理系统</div>
         <div class="right"></div>
       </div>
       <div class="flex flex-auto">
