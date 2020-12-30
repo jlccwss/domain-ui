@@ -15,13 +15,18 @@ export default {
       total: 0,
       option: {
         color: ['#8543E0', '#1890FF', '#13C2C2', '#2FC25B ', '#FACC14', '#F04864'],
-        tooltip: {
-          trigger: 'item',
-          formatter: '{a} <br/>{b}: {c} ({d}%)'
-        },
+        // tooltip: {
+        //   trigger: 'item',
+        //   formatter: '{a} <br/>{b}: {c} ({d}%)'
+        // },
         legend: {
           orient: 'vertical',
+          icon: 'circle',
+          itemHeight: 10,
           right: 10,
+          textStyle: {
+            color: '#fff'
+          },
           data: []
         },
       },
@@ -34,9 +39,12 @@ export default {
       $http.get(url).then(res => {
         const arr = res.data[this.type] || [];
         let legendData = [];
+        let sum = arr.reduce((sum, item) => sum + item[1], 0);
         const data = arr.map(item => {
-          legendData.push(item[0]);
-          return {value: item[1],name: item[0]};
+          let num = (item[1]/sum*100).toFixed(2);
+          let name = item[0] + '  |  ' + num +  '%';
+          legendData.push(name);
+          return {value: item[1],name};
         });
         this.option.legend.data = legendData;
         this.option.series = [{
@@ -45,6 +53,26 @@ export default {
           label: {
             show: false,
             position: 'center'
+          },
+          right: '30%',
+          emphasis: {
+              label: {
+                  show: true,
+                  formatter: function(e) {
+                    let name = e.data.name.split(' ')[0];
+                    return '{des|' + name + '}\n{title|' + e.data.value +'}';
+                  },
+                  fontSize: '30',
+                  color: '#fff',
+                  rich: {
+                    des: {
+                      fontSize: '14'
+                    },
+                    title: {
+                      fontSize: '30',
+                    }
+                  }
+              }
           },
           radius: ['50%', '70%'],
           data

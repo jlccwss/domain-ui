@@ -2,7 +2,7 @@
     <div class="main flex-col">
       <div class="flex header mb-20">
         <div class="left"></div>
-        <div class="title flex-auto">域名管理系统</div>
+        <div class="title flex-auto"><div class="title-img"></div>域名管理系统</div>
         <div class="right"></div>
       </div>
       <div class="flex flex-auto">
@@ -83,7 +83,27 @@ export default {
   methods: {
     calTime() {
       let date = new Date();
-      this.time = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate() + ' ' + date.getHours() + ':' + date.getMinutes() + ':' + date.getSeconds();
+      let month = date.getMonth() + 1;
+      if (month < 10) {
+        month = '0' + month;
+      }
+      let day = date.getDate();
+      if (day < 10) {
+        monthday = '0' + day;
+      }
+      let hours = date.getHours();
+      if (hours < 10) {
+        hours = '0' + hours;
+      }
+      let minutes = date.getMinutes();
+      if (minutes < 10) {
+        minutes = '0' + minutes;
+      }
+      let seconds = date.getSeconds();
+      if (seconds < 10) {
+        seconds = '0' + seconds;
+      }
+      this.time = date.getFullYear() + '-' + month + '-' + day + ' ' + hours + ':' + minutes + ':' + seconds;
       setTimeout(() => this.calTime(), 5000);
     }
   }
@@ -103,6 +123,15 @@ export default {
 .left {
   background: url('./../assets/left.svg');
   width: 469px;
+}
+
+.title-img {
+  background: url('./../assets/title-img.png');
+  width: 34px;
+  height: 26px;
+  background-repeat: no-repeat;
+  display: inline-block;
+  margin-right: 10px;
 }
 
 .right {

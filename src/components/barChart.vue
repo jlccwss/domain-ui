@@ -30,6 +30,12 @@ export default {
             textStyle: {
                 color: '#fff'
             },
+            formatter: function(v) {
+              if (v < 10000) {
+                return v;
+              }
+              return v/10000 + '万';
+            },
           },
           axisLine: {
             show: true,
