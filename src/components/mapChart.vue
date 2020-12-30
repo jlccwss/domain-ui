@@ -1,13 +1,21 @@
 <template>
-    <div class="mapChart" ref="chart">
+  <div>
+    <div class="mapChart" ref="chart"></div>
+    <div class="lenged">
+      <div class="item flex"><div class="rect" style="background: rgba(128, 93, 255, 0.66)"></div>&gt;=15000</div>
+      <div class="item flex"><div class="rect" style="background: rgba(255, 133, 192, 0.66)"></div>&gt;=12000并且&lt;15000</div>
+      <div class="item flex"><div class="rect" style="background: rgba(50, 197, 255, 0.66)"></div>&gt;=9000并且&lt;12000</div>
+      <div class="item flex"><div class="rect" style="background: rgba(250, 100, 0, 0.66)"></div>&gt;=6000并且&lt;9000</div>
+      <div class="item flex"><div class="rect" style="background: rgba(247, 181, 0, 0.66)"></div>&gt;=3000并且&lt;6000</div>
+      <div class="item flex"><div class="rect" style="background: rgba(54, 207, 201, 0.66)"></div>&lt;3000</div>
     </div>
+  </div>
 </template>
-
 <script>
 import $http from '@/http';
 import '@/lib/china';
 const colorMap = ['rgba(54, 207, 201, 0.33)', 'rgba(247, 181, 0, 0.33)', 'rgba(250, 100, 0, 0.33)',
- 'rgba(50, 197, 255, 0.33)', 'rgba(255, 133, 192, 0.33)', 'rgba(128m, 93, 255, 0.33)'];
+ 'rgba(50, 197, 255, 0.33)', 'rgba(255, 133, 192, 0.33)', 'rgba(128, 93, 255, 0.33)'];
 export default {
   props: ['type'],
   data() {
@@ -244,8 +252,25 @@ export default {
   }
 };
 </script>
-<style scoped>
+<style scoped lang="scss">
 .mapChart {
   height: 100%;
+}
+
+.lenged {
+  position: absolute;
+  left: 20px;
+  bottom: 50px;
+  .item {
+    color: #fff;
+    margin-bottom: 10px;
+  }
+
+  .rect {
+    border-radius: 4px;
+    height: 20px;
+    width: 30px;
+    margin-right: 10px;
+  }
 }
 </style>

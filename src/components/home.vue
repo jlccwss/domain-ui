@@ -44,13 +44,13 @@
           </div>
           <div class="chart flex-auto mb-20 flex-col">
             <chart-boder></chart-boder>
-            <div class="sub-title">解析类型</div>
-            <pie-chart class="flex-auto" type="解析类型"></pie-chart>
+            <div class="sub-title">IP排行TOP</div>
+            <bar-chart class="flex-auto" type="IP排行"></bar-chart>
           </div>
           <div class="chart flex-auto flex-col">
             <chart-boder></chart-boder>
-            <div class="sub-title">IP排行TOP</div>
-            <bar-chart class="flex-auto" type="IP排行"></bar-chart>
+            <div class="sub-title">解析类型</div>
+            <pie-chart class="flex-auto" type="解析类型"></pie-chart>
           </div>
         </div>
       </div>
@@ -143,7 +143,7 @@ export default {
 .title {
   background-image: url('./../assets/title.png');
   background-size:100% 100%;
-  font-size: 32px;
+  font-size: 30px;
   color: #FFF;
   text-align: center;
   line-height: 80px;
@@ -171,7 +171,7 @@ export default {
 }
 
 .sub-title {
-  font-size: 16px;
+  font-size: 14px;
   color: #FFF;
   line-height:30px;
   border-bottom: 1px solid rgba(0,145,255,0.44);
