@@ -8,20 +8,20 @@
       </div>
       <div class="flex flex-auto">
         <div class="left-chart flex-col mr-20">
-          <div class="chart flex-auto mb-20 flex-col">
+          <div class="chart flex-col mb-20 flex-auto">
             <chart-boder></chart-boder>
-            <div class="sub-title">解析状态</div>
-            <pie-chart class="flex-auto" type="解析状态"></pie-chart>
+            <div class="sub-title">DNS解析成功率</div>
+            <line-chart class="flex-auto" type="解析成功率"></line-chart>
           </div>
           <div class="chart flex-col flex-auto mb-20">
             <chart-boder></chart-boder>
             <div class="sub-title">域名排行TOP</div>
             <bar-chart class="flex-auto" type="域名排行"></bar-chart>
           </div>
-          <div class="chart flex-col flex-auto">
+          <div class="chart flex-auto flex-col">
             <chart-boder></chart-boder>
-            <div class="sub-title">DNS解析成功率</div>
-            <line-chart class="flex-auto" type="解析成功率"></line-chart>
+            <div class="sub-title">解析状态</div>
+            <pie-chart class="flex-auto" type="解析状态"></pie-chart>
           </div>
         </div>
         <div class="flex-col flex-auto mr-20">
@@ -37,20 +37,20 @@
           </div>
         </div>
         <div class="right-chart flex-col">
+          <div class="chart flex-col flex-auto mb-20">
+            <chart-boder></chart-boder>
+            <div class="sub-title">DNS解析流量统计(QPS)</div>
+            <line-chart class="flex-auto" type="QPS"></line-chart>
+          </div>
           <div class="chart flex-auto mb-20 flex-col">
             <chart-boder></chart-boder>
             <div class="sub-title">解析类型</div>
             <pie-chart class="flex-auto" type="解析类型"></pie-chart>
           </div>
-          <div class="chart flex-auto flex-col mb-20">
+          <div class="chart flex-auto flex-col">
             <chart-boder></chart-boder>
             <div class="sub-title">IP排行TOP</div>
             <bar-chart class="flex-auto" type="IP排行"></bar-chart>
-          </div>
-          <div class="chart flex-col flex-auto">
-            <chart-boder></chart-boder>
-            <div class="sub-title">DNS解析流量统计(QPS)</div>
-            <line-chart class="flex-auto" type="QPS"></line-chart>
           </div>
         </div>
       </div>
@@ -112,10 +112,10 @@ export default {
 </script>
 <style scoped lang="scss">
 .main {
-  // height: 100%;
+  min-height: 100%;
   background: url('./../assets/bg.gif');
   background-size: cover;
-  padding: 40px 20px;
+  padding: 10px 10px;
   overflow-x: hidden;
 }
 .header {
@@ -159,23 +159,23 @@ export default {
   border-radius: 2px;
   border-radius: 2px;
   position: relative;
-  height: 356px;
+  // min-height: 356px;
 }
 
 .mb-20 {
-  margin-bottom: 20px;
+  margin-bottom: 10px;
 }
 
 .mr-20 {
-  margin-right: 20px;
+  margin-right: 10px;
 }
 
 .sub-title {
   font-size: 16px;
   color: #FFF;
-  line-height: 64px;
+  line-height:30px;
   border-bottom: 1px solid rgba(0,145,255,0.44);
-  padding-left: 24px;
+  padding-left: 12px;
 }
 
 .cur-day {

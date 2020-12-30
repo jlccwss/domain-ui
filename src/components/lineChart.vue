@@ -12,11 +12,11 @@ export default {
   data() {
     return {
       option: {
+        grid: {
+          top: 20
+        },
         tooltip: {
-            trigger: 'axis',
-            axisPointer: {
-                type: 'cross'
-            }
+            trigger: 'item'
         },
         xAxis: {
             type: 'category',

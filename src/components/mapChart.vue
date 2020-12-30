@@ -6,7 +6,8 @@
 <script>
 import $http from '@/http';
 import '@/lib/china';
-const colorMap = ['#115ca1', '#09436d', '#6e4644'];
+const colorMap = ['rgba(54, 207, 201, 0.33)', 'rgba(247, 181, 0, 0.33)', 'rgba(250, 100, 0, 0.33)',
+ 'rgba(50, 197, 255, 0.33)', 'rgba(255, 133, 192, 0.33)', 'rgba(128m, 93, 255, 0.33)'];
 export default {
   props: ['type'],
   data() {
@@ -60,7 +61,14 @@ export default {
           selectedMode: false,
           label: {
               normal: {
-                  show: false,
+                  show: true,
+                  color: '#fff',
+                  // width: 50,
+                  
+                  // fontSize: 20
+                  // position: 'top',
+                  // align: 'left'
+                  // offset: [100, 100],
               },
               emphasis: {
                   show: false,
@@ -117,28 +125,40 @@ export default {
                   return colorMap[0];
                 }
 
-                if (item.value[2] > 6000) {
+                if (item.value[2] < 6000) {
+                  return colorMap[1];
+                }
+
+                if (item.value[2] < 9000) {
+                  return colorMap[1];
+                }
+
+                if (item.value[2] < 12000) {
+                  return colorMap[1];
+                }
+
+                if (item.value[2] < 15000) {
                   return colorMap[1];
                 }
 
                 return colorMap[2];
               },
-              borderColor: 'rgba(255, 255, 255, 0.2)',
-              borderWidth: 2
+              borderColor: 'rgba(255, 255, 255, 0.3)',
             }
         },
         label: {
             normal: {
                 show: false,
-                color: '#fff',
-                fontWeight: 'bold',
-                position: 'inside',
-                formatter: function(para) {
-                    return '{cnNum|' + para.data.value[2] + '}'
-                },
+                // color: '#fff',
+                // fontWeight: 'bold',
+                // position: 'inside',
+                // formatter: function(para) {
+                //     return '{cnNum|' + para.data.value[2] + '}'
+                // },
             },
         },
         symbol: 'circle',
+        symbolOffset: [0 , 10],
         symbolSize: function(val) {
             if (val[2] === 0) {
                 return 0;
