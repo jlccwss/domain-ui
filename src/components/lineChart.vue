@@ -22,7 +22,7 @@ export default {
             type: 'category',
             boundaryGap: false,
             axisLabel: {
-              rotate: 45
+              rotate: 60
             },
             axisLine: {
               show: true,
@@ -58,7 +58,7 @@ export default {
               color: '#D4D0F3'
             }
           },
-          symbolSize: 10,
+          symbolSize: 5,
           data: []
         }]
       }
@@ -85,7 +85,7 @@ export default {
         let val = res.data[this.type] || 0;
         let xData = this.option.xAxis.data;
         let sData = this.option.series[0].data;
-        if (xData.length === 18) {
+        if (xData.length === 20) {
           xData.shift();
           sData.shift();
         }

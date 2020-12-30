@@ -149,7 +149,7 @@ export default {
 }
 
 .right-chart, .left-chart {
-  width: 455px;
+  width: 500px;
 }
 
 .chart {
