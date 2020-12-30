@@ -19,7 +19,6 @@ export default {
             top: '10%',
             containLabel: true
         },
-        color: ['#1890FF', '#6DD400'],
         xAxis: {
           type: 'value',
           splitLine: {
@@ -65,7 +64,7 @@ export default {
   },
   methods: {
     fetchData() {
-      const url = '/apis/stats/7/groups/*/members/*/views/*/' + this.type + '?topn=4';
+      const url = '/apis/stats/7/groups/*/members/*/views/*/' + this.type + '?topn=10';
       $http.get(url).then(res => {
         const arr = res.data[this.type] || [];
         let xAxisData = [];
@@ -76,8 +75,15 @@ export default {
         this.option.yAxis.data = xAxisData;
         this.option.series = [{
           type: 'bar',
-          barWidth: 24,
-          data
+          data,
+          itemStyle: {
+            normal: {
+              color: function(params) {
+                var colorList = ['#000', '#fff', '#13C2C2', '#2FC25B ', '#FACC14', '#F04864', '#1890FF', '#8543E0', '#1890FF', '#6DD400'];
+                return colorList[params.dataIndex] || 'red';
+              }
+            }
+          }
         }];
         this.myChart.setOption(this.option);
       });
