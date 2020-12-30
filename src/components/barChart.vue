@@ -76,6 +76,11 @@ export default {
         this.option.series = [{
           type: 'bar',
           data,
+          label: {
+              show: true,
+              position: 'right',
+              color: '#fff'
+          },
           itemStyle: {
             normal: {
               color: function(params) {

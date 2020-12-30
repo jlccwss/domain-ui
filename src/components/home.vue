@@ -12,12 +12,12 @@
             <div class="sub-title">解析状态</div>
             <pie-chart class="flex-auto" type="解析状态"></pie-chart>
           </div>
-          <div class="chart flex-col flex-auto">
+          <div class="chart flex-col flex-auto mb-20">
             <chart-boder></chart-boder>
             <div class="sub-title">域名排行TOP</div>
             <bar-chart class="flex-auto" type="域名排行"></bar-chart>
           </div>
-          <div class="chart flex-col flex-auto mb-20">
+          <div class="chart flex-col flex-auto">
             <chart-boder></chart-boder>
             <div class="sub-title">DNS解析成功率</div>
             <line-chart class="flex-auto" type="解析成功率"></line-chart>
@@ -41,12 +41,12 @@
             <div class="sub-title">解析类型</div>
             <pie-chart class="flex-auto" type="解析类型"></pie-chart>
           </div>
-          <div class="chart flex-auto flex-col">
+          <div class="chart flex-auto flex-col mb-20">
             <chart-boder></chart-boder>
             <div class="sub-title">IP排行TOP</div>
             <bar-chart class="flex-auto" type="IP排行"></bar-chart>
           </div>
-          <div class="chart flex-col flex-auto mb-20">
+          <div class="chart flex-col flex-auto">
             <chart-boder></chart-boder>
             <div class="sub-title">DNS解析流量统计(QPS)</div>
             <line-chart class="flex-auto" type="QPS"></line-chart>

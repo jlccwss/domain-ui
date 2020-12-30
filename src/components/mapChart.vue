@@ -75,11 +75,11 @@ export default {
                       x2: 800,
                       y2: 800,
                       colorStops: [{
-                          offset: 0,
-                          color: '#04a2f7' // 0% 处的颜色
+                          offset: 0.2,
+                          color: '#01a2f8' // 0% 处的颜色
                       }, {
                           offset: 1,
-                          color: '#05173f' // 100% 处的颜色
+                          color: '#051740' // 100% 处的颜色
                       }],
                       globalCoord: true,
                       global: true
