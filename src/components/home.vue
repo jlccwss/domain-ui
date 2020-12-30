@@ -32,7 +32,7 @@
           <div class="chart flex-col flex-auto">
             <chart-boder></chart-boder>
             <div class="sub-title">域名解析分布<span class="des">计算时间：{{time}}</span></div>
-            <map-chart class="flex-auto"></map-chart>
+            <map-chart class="flex-auto rotate"></map-chart>
           </div>
         </div>
         <div class="right-chart flex-col">
@@ -190,5 +190,9 @@ export default {
   color: #fff;
   position: absolute;
   right: 22px;
+}
+
+.rotate {
+  // transform: rotate(10deg);
 }
 </style>
