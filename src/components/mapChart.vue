@@ -33,6 +33,7 @@ export default {
                 show: false
             }
         },
+        selectedMode: false,
         aspectScale: 1,
         layoutSize: "100%",
         itemStyle: {
@@ -56,6 +57,7 @@ export default {
           type: 'map',
           map: 'china',
           aspectScale: 1,
+          selectedMode: false,
           label: {
               normal: {
                   show: false,
