@@ -1,0 +1,110 @@
+<template>
+    <div>
+      <el-row class="mt-xs">
+        <el-col :span="20" align="right">
+          <el-button @click="handlerAdd" type="primary" size="small">
+            创建
+          </el-button>
+        </el-col>
+      </el-row>
+     <el-table
+      :data="list"
+      style="width: 100%">
+      <el-table-column
+        prop="userName"
+        label="区名称">
+        <template slot-scope="{ row }">
+          <a href="javascript: void(0)" @click="go(row.id)">{{row.zoneName}}</a>
+        </template>
+      </el-table-column>
+      <el-table-column
+        prop="viewName"
+        label="视图名称">
+      </el-table-column>
+      <el-table-column
+        prop="defaultTtl"
+        label="默认TTL">
+      </el-table-column>
+      <el-table-column
+        label="创建时间">
+        <template slot-scope="{ row }">
+          {{row.createTime | dateFormat}}
+        </template>
+      </el-table-column>
+      <el-table-column width="140">
+        <template slot-scope="{ row }">
+          <el-button @click="handlerEdit(row)" type="text" size="small">编辑</el-button>
+          <el-button @click="handlerChange(row)" type="text" size="small">修改所有者</el-button>
+        </template>
+      </el-table-column>
+    </el-table>
+    <addAndEditPanel @close="close" v-if="addAndEdit" :editRow="editRow"></addAndEditPanel>
+    <authorizationPanel @close="close" v-if="changeDialog" :editRow="editRow"></authorizationPanel>
+    </div>
+</template>
+
+<script>
+import $http from '@/http';
+import addAndEditPanel from './addAndEditPanel.vue';
+import authorizationPanel from './authorizationPanel.vue';
+
+export default {
+  components: {
+    addAndEditPanel,
+    authorizationPanel
+  },
+  data() {
+    return {
+      list: [],
+      loading: false,
+      editRow: {},
+      addAndEdit: false,
+      changeDialog: false
+    };
+  },
+  mounted() {
+    this.getList();
+  },
+  methods: {
+    handlerAdd() {
+      this.addAndEdit = true;
+      this.editRow = {};
+    },
+    handlerEdit(row) {
+      this.addAndEdit = true;
+      this.editRow = row;
+    },
+    handlerChange(row) {
+      this.changeDialog = true;
+      this.editRow = row;
+    },
+    go(id) {
+      this.$router.push({
+        path: 'zones/' + id
+      });
+    },
+    getList() {
+      this.loading = true;
+      const url = '/apis/zones';
+      $http.get(url).then(res => {
+        if (res.data.status === 0) {
+          this.list = res.data.data;
+        }
+        this.loading = false;
+      }, () => {
+        this.loading = false;
+      })
+    },
+    close(refresh) {
+      if (refresh) {
+        this.getList();
+      }
+      this.addAndEdit = false;
+      this.changeDialog = false;
+    }
+  }
+};
+</script>
+<style scoped lang="scss">
+
+</style>

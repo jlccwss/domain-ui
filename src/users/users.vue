@@ -1,0 +1,160 @@
+<template>
+    <div>
+      <el-row class="mt-xs">
+        <el-col :span="20" align="right">
+          <el-button @click="handlerAdd" type="primary" size="small">
+            创建
+          </el-button>
+        </el-col>
+      </el-row>
+     <el-table
+      :data="list"
+      style="width: 100%">
+      <el-table-column
+        prop="userName"
+        label="用户名">
+      </el-table-column>
+      <el-table-column
+        label="角色">
+        <template slot-scope="{ row }">{{rulesMap[row.role]}}</template>
+      </el-table-column>
+      <el-table-column
+        prop="gender"
+        label="性别">
+      </el-table-column>
+      <el-table-column
+        prop="employeeCode"
+        label="员工编号">
+      </el-table-column>
+      <el-table-column
+        prop="employeeFirstName"
+        label="员工姓">
+      </el-table-column>
+      <el-table-column
+        prop="employeeLastName"
+        label="员工名">
+      </el-table-column>
+      <el-table-column
+        prop="mobileTelephone"
+        label="移动电话">
+      </el-table-column>
+      <el-table-column
+        prop="officeTelephone"
+        label="办公电话">
+      </el-table-column>
+      <el-table-column
+        prop="email"
+        label="邮箱">
+      </el-table-column>
+      <el-table-column
+        prop="companyCode"
+        label="公司编号">
+      </el-table-column>
+      <el-table-column
+        prop="companyName"
+        label="公司名称">
+      </el-table-column>
+      <el-table-column
+        prop="departmentCode"
+        label="部门编号">
+      </el-table-column>
+      <el-table-column
+        prop="departmentName"
+        label="部门名称">
+      </el-table-column>
+      <el-table-column
+        prop="positionCode"
+        label="职位编号">
+      </el-table-column>
+      <el-table-column
+        prop="positionName"
+        label="职位名称">
+      </el-table-column>
+      <el-table-column
+        width="120"
+        label="创建时间">
+        <template slot-scope="{ row }">
+          {{row.createTime | dateFormat}}
+        </template>
+      </el-table-column>
+      <el-table-column width="120">
+        <template slot-scope="{ row }">
+          <el-button @click="handlerEdit(row)" type="text" size="small">编辑</el-button>
+          <el-button @click="handlerDel(row.id)" type="text" size="small">删除</el-button>
+        </template>
+      </el-table-column>
+    </el-table>
+    <addAndEditPanel @close="close" v-if="addAndEdit" :editRow="editRow"></addAndEditPanel>
+    </div>
+</template>
+
+<script>
+import $http from '@/http';
+import { rulesMap } from './const';
+import addAndEditPanel from './addAndEditPanel.vue';
+
+export default {
+  components: {
+    addAndEditPanel
+  },
+  data() {
+    return {
+      list: [],
+      loading: false,
+      rulesMap: rulesMap,
+      editRow: {},
+      addAndEdit: false
+    };
+  },
+  mounted() {
+    this.getList();
+  },
+  methods: {
+    handlerAdd() {
+      this.addAndEdit = true;
+      this.editRow = {};
+    },
+    handlerEdit(row) {
+      this.addAndEdit = true;
+      this.editRow = row;
+    },
+    getList() {
+      this.loading = true;
+      const url = '/apis/users';
+      $http.get(url).then(res => {
+        if (res.data.status === 0) {
+          this.list = res.data.data;
+        }
+        this.loading = false;
+      }, () => {
+        this.loading = false;
+      })
+    },
+    handlerDel(rowId) {
+      this.$confirm('删除后不可恢复', '确认要删除这条信息吗？')
+          .then(() => {
+            const url = `/apis/users/${rowId}`;
+            $http.delete(url).then(() => {
+              this.$notify.success({
+                message: '删除成功'
+              });
+              this.getList();
+            }, () => {
+              this.$notify.error({
+                message: '删除失败'
+              });
+            });
+          });
+    },
+    close(refresh) {
+      if (refresh) {
+        this.getList();
+      }
+      this.addAndEdit = false;
+    }
+  }
+};
+</script>
+<style scoped lang="scss">
+
+</style>

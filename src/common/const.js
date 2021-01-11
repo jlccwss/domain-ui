@@ -1,0 +1,1 @@
+export const centers = ['主中心', '同城中心', '灾备中心'];
