@@ -21,6 +21,7 @@ export default {
         },
         xAxis: {
           type: 'value',
+          splitNumber: 4,
           splitLine: {
             show: false,
           },
