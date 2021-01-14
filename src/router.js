@@ -16,8 +16,9 @@ import bigshow from './bigshow/bigshow.vue';
 
 const router = new VueRouter({
   routes: [
-    { path: '/login', component: login },
-    { path: '/bigshow', component: bigshow },
+    { path: '/', redirect: '/login' },
+    { path: '/login', name: 'login', component: login },
+    { path: '/bigshow', name: 'bigshow', component: bigshow },
     {
       path: '/home',
       component: home,
@@ -70,5 +71,16 @@ const router = new VueRouter({
     }
   ]
 });
+
+
+router.beforeEach((to, from, next) => {
+  if (['login', 'bigshow'].includes(to.name)) {
+    next();
+  } else {
+    next();
+  }
+  // if (to.name !== 'Login' && !isAuthenticated) next({ name: 'Login' })
+  // else next()
+})
 
 export default router;

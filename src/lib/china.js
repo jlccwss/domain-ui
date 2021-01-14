@@ -1,5 +1,7 @@
 
 (function (root, factory) {
+
+    /* eslint-disable */
   if (typeof define === 'function' && define.amd) {
       // AMD. Register as an anonymous module.
       define(['exports', 'echarts'], factory);
