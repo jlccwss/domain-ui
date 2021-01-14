@@ -29,14 +29,14 @@
             <template slot="title">
               <span>域名注册</span>
             </template>
-            <el-menu-item index="2-1">域名注册</el-menu-item>
+            <el-menu-item index="domains">域名注册</el-menu-item>
           </el-submenu>
           <el-submenu index="3">
             <template slot="title">
               <span>ICP备案</span>
             </template>
-            <el-menu-item index="3-1">ICP备案</el-menu-item>
-            <el-menu-item index="3-2">SSL证书</el-menu-item>
+            <el-menu-item index="icps">ICP备案</el-menu-item>
+            <el-menu-item index="sslCertificates">SSL证书</el-menu-item>
           </el-submenu>
           <el-submenu index="4">
             <template slot="title">
@@ -49,7 +49,7 @@
             <template slot="title">
               <span>审批管理</span>
             </template>
-            <el-menu-item index="5-1">审批管理</el-menu-item>
+            <el-menu-item index="approveList">审批管理</el-menu-item>
             <el-menu-item index="approveModule">审批模板</el-menu-item>
           </el-submenu>
           <el-submenu index="6">

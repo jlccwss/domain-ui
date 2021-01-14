@@ -1,6 +1,7 @@
 <template>
   <div class="login-bg">
     <div class="login flex">
+      <div class="bg-img"></div>
       <div class="form">
         <div class="title">
           用户登录
@@ -13,8 +14,8 @@
             <el-input v-model="form.password" show-password></el-input>
           </el-form-item>
           <el-form-item>
-            <el-button type="primary" @click="onSubmit">登录</el-button>
-            <el-button type="primary" @click="onSubmit">4A认证</el-button>
+            <el-button type="primary" class="login-btn" @click="onSubmit" size="small">确认登录</el-button>
+            <el-button type="primary" class="login-btn" @click="onSubmit" size="small">4A认证</el-button>
           </el-form-item>
         </el-form>
       </div>
@@ -62,16 +63,30 @@ export default {
 <style scoped lang="scss">
 .login-bg {
   height: 100%;
-  padding: 125px;
+  padding: 130px;
+  background-image: linear-gradient(-44deg, #0094FF 0%, #5019C5 100%);
+}
+
+.bg-img {
+  width: 1100px;
+  background: url('./../assets/loginbg.png');
+  background-size: cover;
+  background-repeat: no-repeat;
+  flex: 2;
 }
 
 .login {
-  justify-content: flex-end;
+  height: 100%;
 }
 
 .form {
-  padding: 70px;
-  width: 450px;
+  padding: 90px;
+  width: 560px;
+  background: #fff;
+  flex: 1;
+  background: url('./../assets/formbg.png');
+  background-size: cover;
+  background-repeat: no-repeat;
 }
 
 .title {
@@ -79,5 +94,11 @@ export default {
   font-weight: bold;
   font-size: 24px;
   text-align: left;
+}
+
+.login-btn {
+  background-image: linear-gradient(-44deg, #0094FF 0%, #5019C5 100%);
+  border-radius: 8px;
+  border-radius: 8px;
 }
 </style>
