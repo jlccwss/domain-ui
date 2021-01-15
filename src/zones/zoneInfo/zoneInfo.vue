@@ -12,6 +12,8 @@
       </el-row>
      <el-table
       :data="list"
+      class="mt-xs"
+      header-cell-class-name="table-head"
       style="width: 100%">
       <el-table-column
         prop="rrName"

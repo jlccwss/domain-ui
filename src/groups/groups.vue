@@ -1,5 +1,11 @@
 <template>
     <div>
+      <div class="breadcrumb">
+        <el-breadcrumb separator="/">
+          <el-breadcrumb-item>灾备切换</el-breadcrumb-item>
+          <el-breadcrumb-item>分组列表</el-breadcrumb-item>
+        </el-breadcrumb>
+      </div>
       <el-row class="mt-xs">
         <el-col :span="4" class="page-title">
           分组列表
@@ -13,6 +19,7 @@
      <el-table
       :data="list"
       class="mt-xs"
+      header-cell-class-name="table-head"
       style="width: 100%">
       <el-table-column
         prop="name"

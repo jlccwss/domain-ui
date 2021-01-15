@@ -1,13 +1,20 @@
 <template>
     <div>
-       <el-row class="mt-xs">
+      <div class="breadcrumb">
+        <el-breadcrumb separator="/">
+          <el-breadcrumb-item>系统管理</el-breadcrumb-item>
+          <el-breadcrumb-item>操作日志</el-breadcrumb-item>
+        </el-breadcrumb>
+      </div>
+      <el-row class="mt-xs">
         <el-col :span="4" class="page-title">
           操作日志
         </el-col>
       </el-row>
      <el-table
       :data="list"
-      :max-height="900"
+      class="mt-xs"
+      header-cell-class-name="table-head"
       style="width: 100%">
       <el-table-column
         prop="userName"

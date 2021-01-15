@@ -1,11 +1,14 @@
 <template>
     <div class="main">
       <div class="header">
-        <div class="logo"></div>
+        <div class="logo">
+          <div class="logo-img"></div>
+          <div class="logo-name">集团域名解析统一管理系统</div>
+        </div>
         <div class="handler flex">
           <i class="el-icon-bell mr-sm"></i>
           <i class="el-icon-question mr-sm"></i>
-          <el-avatar class="mr-sm"></el-avatar>
+          <div class="user-logo mr-sm"></div>
           <el-dropdown class="mr-sm" @command="handleCommand">
             <span class="el-dropdown-link">
             {{user.userName}}<i class="el-icon-arrow-down el-icon--right"></i>
@@ -27,16 +30,16 @@
           </el-submenu>
           <el-submenu index="2">
             <template slot="title">
-              <span>域名注册</span>
+              <span>公网域名</span>
             </template>
             <el-menu-item index="domains">域名注册</el-menu-item>
+            <el-menu-item index="sslCertificates">SSL证书</el-menu-item>
           </el-submenu>
           <el-submenu index="3">
             <template slot="title">
               <span>ICP备案</span>
             </template>
             <el-menu-item index="icps">ICP备案</el-menu-item>
-            <el-menu-item index="sslCertificates">SSL证书</el-menu-item>
           </el-submenu>
           <el-submenu index="4">
             <template slot="title">
@@ -61,12 +64,6 @@
           </el-submenu>
         </el-menu>
         <div class="page">
-          <div class="breadcrumb">
-            <el-breadcrumb separator="/">
-              <el-breadcrumb-item>活动列表</el-breadcrumb-item>
-              <el-breadcrumb-item>活动详情</el-breadcrumb-item>
-            </el-breadcrumb>
-          </div>
           <router-view></router-view>
         </div>
       </div>
@@ -113,7 +110,6 @@ export default {
       this.pwdDialog = true;
     },
     close(refresh) {
-      console.log(1)
       if (refresh) {
         this.getCurRole();
       }
@@ -123,7 +119,7 @@ export default {
       const url = '/apis/logout';
       $http.delete(url).then(() => {
         this.$router.push({
-            path: 'login'
+            path: '/login'
           });
       });
     }
@@ -138,7 +134,25 @@ export default {
     background: #001529;
     display: flex;
     .logo {
-      width: 200px;
+      width: 400px;
+      color: #fff;
+      display: flex;
+      text-align: left;
+      align-items: center;
+      padding-left: 16px;
+      .logo-img {
+        display: inline-block;
+        background: url(./../assets/logo.png);
+        background-repeat: no-repeat;
+        background-size: contain;
+        height: 28px;
+        width: 135px;
+      }
+
+      .logo-name {
+        display: inline-block;
+        line-height: 28px;
+      }
     }
     .handler {
       flex: 1;
@@ -160,6 +174,14 @@ export default {
     }
   }
 
+  .user-logo {
+    width: 40px;
+    height: 40px;
+    background: url(./../assets/account.jpeg);
+    background-size: cover;
+    border-radius: 50%;
+  }
+
   .el-dropdown-link {
     color: #fff;
     cursor: pointer;
@@ -173,17 +195,34 @@ export default {
     .menu {
       width: 240px;
       text-align: left;
+      background-image: linear-gradient(180deg, #112338 29%, #3268B0 100%, #1E3C64 100%);
+      box-shadow: 0 2px 4px 0 rgba(0,0,0,0.08);
+      & /deep/ .el-menu {
+        background: transparent;
+      }
+
+      & /deep/ .el-menu-item {
+        color: #fff;
+      }
+
+      & /deep/ .el-submenu__title {
+        color: #fff;
+      }
+
+      & /deep/ .el-menu-item:focus {
+        color: #303133;
+      }
+
+      & /deep/ .el-menu-item:hover {
+        color: #303133;
+      }
     }
 
     .page {
       flex: 1;
-      overflow-y: 'hidden';
+      overflow-y: hidden;
       padding: 12px 16px;
     }
-  }
-
-  .breadcrumb {
-    
   }
 }
 </style>

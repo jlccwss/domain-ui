@@ -1,4 +1,6 @@
 import VueRouter from 'vue-router';
+import $http from '@/http';
+
 import login from './login/login.vue';
 import home from './home/home.vue';
 import auditlogs from './auditlogs/auditlogs.vue';
@@ -77,10 +79,10 @@ router.beforeEach((to, from, next) => {
   if (['login', 'bigshow'].includes(to.name)) {
     next();
   } else {
-    next();
+    $http.get('/apis/current_role').then(() => {
+      next();
+    }, () => next({ name: 'login' }));
   }
-  // if (to.name !== 'Login' && !isAuthenticated) next({ name: 'Login' })
-  // else next()
 })
 
 export default router;

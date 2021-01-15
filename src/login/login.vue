@@ -3,8 +3,9 @@
     <div class="login flex">
       <div class="bg-img"></div>
       <div class="form">
-        <div class="title">
-          用户登录
+        <div class="login-logo"></div>
+        <div class="title mt-xs">
+          集团域名解析统一管理系统
         </div>
         <el-form ref="form" :model="form">
           <el-form-item label="账户名称">
@@ -103,5 +104,12 @@ export default {
   background-image: linear-gradient(-44deg, #0094FF 0%, #5019C5 100%);
   border-radius: 8px;
   border-radius: 8px;
+}
+
+.login-logo {
+  background: url('./../assets/login-logo.png');
+  background-repeat: no-repeat;
+  height: 32px;
+  background-size: contain;
 }
 </style>

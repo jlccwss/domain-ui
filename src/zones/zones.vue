@@ -1,5 +1,11 @@
 <template>
     <div>
+      <div class="breadcrumb">
+        <el-breadcrumb separator="/">
+          <el-breadcrumb-item>域名管理</el-breadcrumb-item>
+          <el-breadcrumb-item>区管理</el-breadcrumb-item>
+        </el-breadcrumb>
+      </div>
       <el-row class="mt-xs">
         <el-col :span="4" class="page-title">
           区管理

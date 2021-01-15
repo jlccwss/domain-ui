@@ -1,5 +1,11 @@
 <template>
     <div>
+       <div class="breadcrumb">
+        <el-breadcrumb separator="/">
+          <el-breadcrumb-item>审批管理</el-breadcrumb-item>
+          <el-breadcrumb-item>审批管理</el-breadcrumb-item>
+        </el-breadcrumb>
+      </div>
       <el-row class="mt-xs">
         <el-col :span="4" class="page-title">
           审批管理
@@ -38,12 +44,12 @@
 
 <script>
 import $http from '@/http';
-// import addAndEditPanel from './addAndEditPanel.vue';
+import addAndEditPanel from './addAndEditPanel.vue';
 
 export default {
-  // components: {
-  //   addAndEditPanel
-  // },
+  components: {
+    addAndEditPanel
+  },
   data() {
     return {
       list: [],
