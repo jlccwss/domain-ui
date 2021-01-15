@@ -12,7 +12,7 @@
             </el-select>
         </el-form-item>
         <el-form-item label="密码">
-            <el-input v-model="editRow.passWord"></el-input>
+            <el-input v-model="editRow.passWord" show-password></el-input>
         </el-form-item>
         <el-form-item label="性别">
             <el-input v-model="editRow.gender"></el-input>
