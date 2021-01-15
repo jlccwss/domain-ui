@@ -1,5 +1,10 @@
 <template>
     <div>
+       <el-row class="mt-xs">
+        <el-col :span="4" class="page-title">
+          操作日志
+        </el-col>
+      </el-row>
      <el-table
       :data="list"
       :max-height="900"

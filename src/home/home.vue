@@ -61,6 +61,12 @@
           </el-submenu>
         </el-menu>
         <div class="page">
+          <div class="breadcrumb">
+            <el-breadcrumb separator="/">
+              <el-breadcrumb-item>活动列表</el-breadcrumb-item>
+              <el-breadcrumb-item>活动详情</el-breadcrumb-item>
+            </el-breadcrumb>
+          </div>
           <router-view></router-view>
         </div>
       </div>
@@ -161,16 +167,23 @@ export default {
 
   .content {
     display: flex;
+    height: 100%;
+    background: #f5f5f5;
 
     .menu {
-      width: 200px;
+      width: 240px;
       text-align: left;
     }
 
     .page {
       flex: 1;
       overflow-y: 'hidden';
+      padding: 12px 16px;
     }
+  }
+
+  .breadcrumb {
+    
   }
 }
 </style>

@@ -15,7 +15,7 @@
           </el-form-item>
           <el-form-item>
             <el-button type="primary" class="login-btn" @click="onSubmit" size="small">确认登录</el-button>
-            <el-button type="primary" class="login-btn" @click="onSubmit" size="small">4A认证</el-button>
+            <el-button type="primary" class="login-btn" @click="login" size="small">4A认证</el-button>
           </el-form-item>
         </el-form>
       </div>
@@ -56,6 +56,9 @@ export default {
           message: 'username or password error!'
         });
       });
+    },
+    login() {
+      location.href = '/apis/oauth/login';
     }
   }
 };

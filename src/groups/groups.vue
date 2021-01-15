@@ -1,6 +1,9 @@
 <template>
     <div>
       <el-row class="mt-xs">
+        <el-col :span="4" class="page-title">
+          分组列表
+        </el-col>
         <el-col :span="20" align="right">
           <el-button @click="handlerAdd()" type="primary" size="small">
             创建
