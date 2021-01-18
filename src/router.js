@@ -15,6 +15,10 @@ import domains from './domains/domains.vue';
 import sslCertificates from './sslCertificates/sslCertificates.vue';
 import icps from './icps/icps.vue';
 import bigshow from './bigshow/bigshow.vue';
+import contacts from './contacts/contacts.vue';
+import website from './website/website.vue';
+import records from './records/records.vue';
+import recordInfo from './records/recordInfo.vue';
 
 const router = new VueRouter({
   routes: [
@@ -68,7 +72,24 @@ const router = new VueRouter({
         {
           path: 'icps',
           component: icps
-        }
+        },
+        {
+          path: 'records',
+          component: records
+        },
+        {
+          path: 'records/:zoneId',
+          component: recordInfo,
+        },
+        {
+          path: 'website',
+          component: website
+        },
+        {
+          path: 'contacts',
+          component: contacts
+        },
+        
       ]
     }
   ]

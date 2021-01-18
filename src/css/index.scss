@@ -32,6 +32,14 @@ html, body {
   margin-right: 12px;
 }
 
+.ml-sm {
+  margin-left: 12px;
+}
+
+.pl-sm {
+  padding-left: 12px;
+}
+
 .p-sm {
   padding: 12px;
 }
@@ -61,4 +69,12 @@ html, body {
   font-size: 24px;
   text-align: left;
   margin-top: 10px;
+}
+
+.w-full {
+  width: 100%!important;
+}
+
+.align-left {
+  text-align: left;
 }

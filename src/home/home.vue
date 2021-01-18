@@ -21,46 +21,49 @@
         </div>
       </div>
       <div class="content">
-        <el-menu :router="true" @select="selectMenu" :default-openeds="openeds" class="menu" :default-active="currentNav">
-          <el-submenu index="1">
+        <el-menu :router="true" :default-openeds="openeds" class="menu" :default-active="currentNav">
+          <el-submenu index="1" v-if="authority.includes('1')">
             <template slot="title">
-              <span>域名管理</span>
+              <span><span class="icon dns"></span>DNS管理</span>
             </template>
-            <el-menu-item index="zones">区管理</el-menu-item>
+            <el-menu-item index="zones" v-if="authority.includes('zones')">区管理</el-menu-item>
           </el-submenu>
-          <el-submenu index="2">
+          <el-submenu index="2" v-if="authority.includes('2')">
             <template slot="title">
-              <span>公网域名</span>
+              <span><span class="icon domain"></span>公网域名</span>
             </template>
-            <el-menu-item index="domains">域名注册</el-menu-item>
-            <el-menu-item index="sslCertificates">SSL证书</el-menu-item>
+            <el-menu-item index="domains" v-if="authority.includes('domains')">域名管理</el-menu-item>
+            <el-menu-item index="sslCertificates" v-if="authority.includes('sslCertificates')">SSL证书</el-menu-item>
           </el-submenu>
-          <el-submenu index="3">
+          <el-submenu index="3" v-if="authority.includes('3')">
             <template slot="title">
-              <span>ICP备案</span>
+              <span><span class="icon icp"></span>ICP备案</span>
             </template>
-            <el-menu-item index="icps">ICP备案</el-menu-item>
+            <!-- <el-menu-item index="icps" v-if="authority.includes('icps')">ICP备案</el-menu-item> -->
+            <el-menu-item index="records" v-if="authority.includes('records')">备案管理</el-menu-item>
+            <el-menu-item index="website" v-if="authority.includes('website')">网站信息表</el-menu-item>
           </el-submenu>
-          <el-submenu index="4">
+          <el-submenu index="4" v-if="authority.includes('4')">
             <template slot="title">
-              <span>系统管理</span>
+              <span><span class="icon sys"></span>系统管理</span>
             </template>
-            <el-menu-item index="users">账号管理</el-menu-item>
-            <el-menu-item index="auditlogs">操作日志</el-menu-item>
+            <el-menu-item index="users" v-if="authority.includes('users')">账号管理</el-menu-item>
+            <el-menu-item index="auditlogs" v-if="authority.includes('auditlogs')">操作日志</el-menu-item>
+            <el-menu-item index="contacts" v-if="authority.includes('contacts')">联系人模板</el-menu-item>
           </el-submenu>
-          <el-submenu index="5">
+          <el-submenu index="5" v-if="authority.includes('5')">
             <template slot="title">
-              <span>审批管理</span>
+              <span><span class="icon approal"></span>审批管理</span>
             </template>
-            <el-menu-item index="approveList">审批管理</el-menu-item>
-            <el-menu-item index="approveModule">审批模板</el-menu-item>
+            <el-menu-item index="approveList" v-if="authority.includes('approveList')">审批单管理</el-menu-item>
+            <el-menu-item index="approveModule" v-if="authority.includes('approveModule')">审批模板</el-menu-item>
           </el-submenu>
-          <el-submenu index="6">
+          <el-submenu index="6" v-if="authority.includes('6')">
             <template slot="title">
-              <span>灾备切换</span>
+              <span><span class="icon toogale"></span>灾备切换</span>
             </template>
-            <el-menu-item index="apps">应用列表</el-menu-item>
-            <el-menu-item index="groups">分组列表</el-menu-item>
+            <el-menu-item index="apps" v-if="authority.includes('apps')">应用列表</el-menu-item>
+            <el-menu-item index="groups" v-if="authority.includes('groups')">分组列表</el-menu-item>
           </el-submenu>
         </el-menu>
         <div class="page">
@@ -74,6 +77,7 @@
 <script>
 import $http from '@/http';
 import changePwdDialog from './changePwdDialog.vue';
+import authority from './authority';
 
 export default {
   components: {
@@ -83,8 +87,9 @@ export default {
     return {
       user: {},
       pwdDialog: false,
-      currentNav: 'zones',
-      openeds: ['1', '2', '3', '4', '5', '6']
+      currentNav: '',
+      openeds: ['1', '2', '3', '4', '5', '6'],
+      authority: []
     };
   },
   mounted() {
@@ -92,13 +97,11 @@ export default {
     this.currentNav = this.$route.path.split('/').pop();
   },
   methods: {
-    selectMenu() {
-      console.log()
-    },
     getCurRole() {
       const url = '/apis/current_role';
       $http.get(url).then(res => {
         this.user = res.data;
+        this.authority = authority[this.user.role];
       });
     },
     handleCommand(type) {
@@ -195,7 +198,7 @@ export default {
     .menu {
       width: 240px;
       text-align: left;
-      background-image: linear-gradient(180deg, #112338 29%, #3268B0 100%, #1E3C64 100%);
+      background: #233353;
       box-shadow: 0 2px 4px 0 rgba(0,0,0,0.08);
       & /deep/ .el-menu {
         background: transparent;
@@ -209,12 +212,84 @@ export default {
         color: #fff;
       }
 
+      & /deep/ .el-submenu__title:hover {
+        background: transparent;
+      }
+
       & /deep/ .el-menu-item:focus {
-        color: #303133;
+        color: #40A9FF;
+        background: transparent;
       }
 
       & /deep/ .el-menu-item:hover {
-        color: #303133;
+        color: #40A9FF;
+        background: transparent;
+      }
+
+      & /deep/ .el-submenu.is-active .el-submenu__title {
+        color: #40A9FF;
+      }
+
+      & /deep/ .el-menu-item.is-active {
+        color: #40A9FF;
+      }
+
+
+      .icon {
+        background-size: cover;
+        display: inline-block;
+        width: 18px;
+        height: 18px;
+        margin-right: 15px;
+        &.dns {
+          background-image: url(./../assets/dns-icon.png);
+        }
+
+        &.domain {
+          background-image: url(./../assets/domain-icon.png);
+        }
+
+        &.icp {
+          background-image: url(./../assets/icp-icon.png);
+        }
+
+        &.sys {
+          background-image: url(./../assets/sys-icon.png);
+        }
+
+        &.approal {
+          background-image: url(./../assets/approal-icon.png);
+        }
+
+        &.toogale {
+          background-image: url(./../assets/toogale-icon.png);
+        }
+      }
+
+      & /deep/ .el-submenu.is-active .icon {
+        &.dns {
+          background-image: url(./../assets/dns-icon-active.png);
+        }
+
+        &.domain {
+          background-image: url(./../assets/domain-icon-active.png);
+        }
+
+        &.icp {
+          background-image: url(./../assets/icp-icon-active.png);
+        }
+
+        &.sys {
+          background-image: url(./../assets/sys-icon-active.png);
+        }
+
+        &.approal {
+          background-image: url(./../assets/approal-icon-active.png);
+        }
+
+        &.toogale {
+          background-image: url(./../assets/toogale-icon-active.png);
+        }
       }
     }
 

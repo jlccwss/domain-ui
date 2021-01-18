@@ -2,72 +2,43 @@
     <div>
       <div class="breadcrumb">
         <el-breadcrumb separator="/">
-          <el-breadcrumb-item>公网域名</el-breadcrumb-item>
-          <el-breadcrumb-item>域名注册</el-breadcrumb-item>
+          <el-breadcrumb-item>icp备案</el-breadcrumb-item>
+          <el-breadcrumb-item>网站信息表</el-breadcrumb-item>
         </el-breadcrumb>
       </div>
       <el-row class="mt-xs">
         <el-col :span="4" class="page-title">
-          域名管理
+          网站信息表
         </el-col>
         <el-col :span="20" align="right">
-          <el-button @click="handlerAdd()" type="primary" size="small">
-            注册
+          <el-button type="primary" size="small">
+            添加网站
           </el-button>
         </el-col>
       </el-row>
      <el-form class="mt-xs" size="small" label-width="120px" label-position="right">
        <el-row>
          <el-col :span="6">
-          <el-form-item label="域名">
-            <el-input ></el-input>
-          </el-form-item>
-         </el-col>
-         <el-col :span="6">
-          <el-form-item label="TLD">
-            <el-select class="w-full">
-              <el-option label="全部" value="1"></el-option>
+          <el-form-item label="审核状态">
+            <el-select class="w-full" placeholder="请选择审核状态">
+              <el-option label="状态1" value="1"></el-option>
+              <el-option label="状态2" value="2"></el-option>
             </el-select>
           </el-form-item>
          </el-col>
          <el-col :span="6">
-          <el-form-item label="实名审核状态">
-            <el-select class="w-full">
-              <el-option label="全部" value="1"></el-option>
-            </el-select>
+          <el-form-item label="备案/许可证号">
+            <el-input placeholder="备案/许可证号"></el-input>
           </el-form-item>
          </el-col>
-       </el-row>
-       <el-row>
-         <el-col :span="12">
-          <el-form-item label="注册时间">
-            <el-date-picker
-              v-model="value1"
-              type="daterange"
-              class="w-full"
-              range-separator="-"
-              start-placeholder="开始日期"
-              end-placeholder="结束日期">
-            </el-date-picker>
+         <el-col :span="6">
+          <el-form-item label="网站域名">
+            <el-input placeholder="网站域名"></el-input>
           </el-form-item>
          </el-col>
-         <el-col :span="12">
-          <el-form-item label="到期时间">
-            <el-date-picker
-              v-model="value1"
-              type="daterange"
-              class="w-full"
-              range-separator="-"
-              start-placeholder="开始日期"
-              end-placeholder="结束日期">
-            </el-date-picker>
-          </el-form-item>
+         <el-col :span="6">
+          <el-button size="small" type="primary">查询</el-button>
          </el-col>
-       </el-row>
-       <el-row class="align-left">
-         <el-button size="small">查询</el-button>
-         <el-button size="small">导出</el-button>
-         <el-button size="small">批量下载证书</el-button>
        </el-row>
     </el-form>
      <el-table
@@ -77,28 +48,32 @@
       style="width: 100%">
       <el-table-column
         prop="flowName"
-        label="域名">
+        label="序号">
       </el-table-column>
       <el-table-column
         prop="flowName"
-        label="TLD">
+        label="备案/许可证号">
       </el-table-column>
       <el-table-column
         prop="flowName"
-        label="注册人">
+        label="网站名称">
       </el-table-column>
       <el-table-column
         prop="flowName"
-        label="域名状态">
+        label="网站域名">
       </el-table-column>
       <el-table-column
-        label="注册日期">
+        prop="flowName"
+        label="网站首页地址">
+      </el-table-column>
+      <el-table-column
+        label="更新时间">
         <template slot-scope="{ row }">
           {{row.createTime | dateFormat}}
         </template>
       </el-table-column>
       <el-table-column
-        label="到期日期">
+        label="审核状态">
         <template slot-scope="{ row }">
           {{row.createTime | dateFormat}}
         </template>
@@ -110,18 +85,13 @@
         </template>
       </el-table-column>
     </el-table>
-    <addAndEditPanel @close="close" v-if="addAndEdit" :editRow="editRow"></addAndEditPanel>
     </div>
 </template>
 
 <script>
 import $http from '@/http';
-import addAndEditPanel from './addAndEditPanel.vue';
 
 export default {
-  components: {
-    addAndEditPanel
-  },
   data() {
     return {
       list: [],

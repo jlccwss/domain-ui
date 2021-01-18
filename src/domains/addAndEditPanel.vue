@@ -1,43 +1,126 @@
 <template>
   <div class="bg-edit">
     <div class="left-panel flex-col">
-      <el-card shadow="never" class="box-card flex-auto" header="新增编辑">
+      <el-card shadow="never" class="box-card flex-auto" header="域名注册">
       <el-form ref="form" :model="editRow">
-         <el-form-item label="名称">
-            <el-input v-model="editRow.flowName"></el-input>
+         <el-form-item>
+           <el-row>
+             <el-col :span="20">
+               <el-input
+                type="textarea"
+                placeholder="每行输入一个域名"
+                :autosize="{ minRows: 2, maxRows: 4}"
+                v-model="editRow.flowName">
+              </el-input>
+             </el-col>
+             <el-col :span="4" align="right">
+               <el-button type="primary" size="small">查询</el-button>
+             </el-col>
+           </el-row>
         </el-form-item>
-        <el-form-item label="类型">
-             <el-radio-group v-model="editRow.flowType">
-              <el-radio :label="1">域名操作</el-radio>
-              <el-radio :label="2">ICP备案操作</el-radio>
-            </el-radio-group>
+        <el-form-item>
+            <el-checkbox v-model="checked1">.unicom</el-checkbox>
+            <el-checkbox v-model="checked2">.联通</el-checkbox>
         </el-form-item>
-        <el-form-item label="第一审批人">
-            <el-select v-model="editRow.flowPath1" style="width:100%">
-              <el-option :key="user.id" :label="user.userName" :value="user.userName" v-for="user in userList"></el-option>
-            </el-select>
+        <el-form-item label="可注册域名">
+            <el-table
+              :data="[{flowName: 1}, {flowName: 2}]"
+              class="mt-xs"
+              header-cell-class-name="table-head"
+              style="width: 100%">
+              <el-table-column
+                type="selection"
+                width="55">
+              </el-table-column>
+              <el-table-column
+                prop="flowName"
+                label="域名">
+              </el-table-column>
+              <el-table-column
+                prop="flowName"
+                label="查询结果">
+              </el-table-column>
+              <el-table-column
+                prop="flowName"
+                label="注册期限">
+              </el-table-column>
+              <el-table-column
+                prop="flowName"
+                label="费用">
+              </el-table-column>
+            </el-table>
         </el-form-item>
-        <el-form-item label="第二审批人">
-            <el-select v-model="editRow.flowPath2" style="width:100%">
-              <el-option :key="user.id" :label="user.userName" :value="user.userName" v-for="user in userList"></el-option>
-            </el-select>
+        <el-form-item>
+          <div>联系人信息</div>
+          <el-row>
+            <el-col :span="6">注册人</el-col>
+            <el-col :span="6">
+              <el-select size="small" class="w-full">
+                <el-option label="全部" value="1"></el-option>
+              </el-select>
+            </el-col>
+            <el-col :span="6" class="pl-sm">
+              <a>查看联系人明细</a>
+            </el-col>
+          </el-row>
+          <el-row>
+            <el-col :span="6">管理联系人</el-col>
+            <el-col :span="6">
+              <el-select size="small" class="w-full">
+                <el-option label="全部" value="1"></el-option>
+              </el-select>
+            </el-col>
+            <el-col :span="6" class="pl-sm">
+              <el-checkbox v-model="checked1">使用注册人模板</el-checkbox>
+            </el-col>
+            <el-col :span="6">
+              <a>查看联系人明细</a>
+            </el-col>
+          </el-row>
+          <el-row>
+            <el-col :span="6">技术联系人</el-col>
+            <el-col :span="6">
+              <el-select size="small" class="w-full">
+                <el-option label="全部" value="1"></el-option>
+              </el-select>
+            </el-col>
+            <el-col :span="6" class="pl-sm">
+              <el-checkbox v-model="checked1">使用注册人模板</el-checkbox>
+            </el-col>
+            <el-col :span="6">
+              <a>查看联系人明细</a>
+            </el-col>
+          </el-row>
+          <el-row>
+            <el-col :span="6">财务联系人</el-col>
+            <el-col :span="6">
+              <el-select size="small" class="w-full">
+                <el-option label="全部" value="1"></el-option>
+              </el-select>
+            </el-col>
+            <el-col :span="6" class="pl-sm">
+              <el-checkbox v-model="checked1">使用注册人模板</el-checkbox>
+            </el-col>
+            <el-col :span="6">
+              <a>查看联系人明细</a>
+            </el-col>
+          </el-row>
         </el-form-item>
-        <el-form-item label="第三审批人">
-            <el-select v-model="editRow.flowPath3" style="width:100%">
-              <el-option :key="user.id" :label="user.userName" :value="user.userName" v-for="user in userList"></el-option>
-            </el-select>
-        </el-form-item>
-        <el-form-item label="第四审批人">
-            <el-select v-model="editRow.flowPath4" style="width:100%">
-              <el-option :key="user.id" :label="user.userName" :value="user.userName" v-for="user in userList"></el-option>
-            </el-select>
-        </el-form-item>
-        <el-form-item label="开启">
-            <el-switch
-              v-model="editRow.status"
-              :active-value="1"
-              :inactive-value="0"
-            ></el-switch>
+        <el-form-item label="不可注册域名">
+            <el-table
+              :data="[{flowName: 1}, {flowName: 2}]"
+              class="mt-xs"
+              header-cell-class-name="table-head"
+              style="width: 100%">
+              <el-table-column
+                prop="flowName"
+                label="域名">
+              </el-table-column>
+              <el-table-column
+                prop="flowName"
+                label="查询结果">
+              </el-table-column>
+            </el-table>
         </el-form-item>
       </el-form>
     </el-card>
@@ -47,7 +130,7 @@
           取消
         </el-button>
         <el-button @click="handlerSave" type="primary" size="small">
-          提交
+          注册域名
         </el-button>
       </el-col>
     </el-row>
