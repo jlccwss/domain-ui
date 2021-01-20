@@ -22,8 +22,17 @@
       header-cell-class-name="table-head"
       style="width: 100%">
       <el-table-column
-        prop="userName"
         label="用户名">
+        <template slot-scope="{ row }">
+          <el-popover
+            placement="top"
+            width="160"
+            trigger="hover"
+            v-model="visible">
+            <p>{{row.detail}}</p>
+            <span slot="reference">{{row.userName}}</span>
+          </el-popover>
+        </template>
       </el-table-column>
       <el-table-column
         label="角色">

@@ -2,21 +2,21 @@
   <div class="bg-edit">
     <div class="left-panel flex-col">
       <el-card shadow="never" class="box-card flex-auto" header="新增编辑">
-      <el-form ref="form" :model="editRow">
-         <el-form-item label="分组名称">
+      <el-form size="small" ref="form" :rules="rules" :model="editRow">
+         <el-form-item prop="name" label="分组名称">
             <el-input v-model="editRow.name"></el-input>
         </el-form-item>
-        <el-form-item label="描述">
+        <el-form-item prop="des" label="描述">
             <el-input v-model="editRow.des"></el-input>
         </el-form-item>
-        <el-form-item label="数据中心">
+        <el-form-item prop="status" label="数据中心">
             <el-select v-model="editRow.status" style="width:100%">
               <el-option :key="center.id" :label="center.dataCenter" :value="center.id" v-for="center in centerList"></el-option>
             </el-select>
         </el-form-item>
-        <el-form-item label="应用">
+        <el-form-item prop="appids" label="应用">
             <el-select style="width:100%" v-model="editRow.appids" multiple>
-              <el-option :key="app.id" :label="app.name" :value="app.id" v-for="app in appList"></el-option>
+              <el-option :key="app.id" :label="app.name + '('+ app.centerName + ')'" :value="app.id" v-for="app in appList"></el-option>
             </el-select>
         </el-form-item>
       </el-form>
@@ -43,7 +43,15 @@ export default {
     return {
       form: {},
       centerList: [],
-      appList: []
+      appList: [],
+      rules: {
+        name: [
+           { required: true, message: '请输入分组名称', trigger: 'blur' },
+        ],
+        status: [
+           { required: true, message: '请选择数据中心', trigger: 'blur' },
+        ]
+      }
     };
   },
   props: ['editRow'],
@@ -72,9 +80,14 @@ export default {
       this.$emit('close')
     },
     handlerSave() {
-      const url = '/apis/groups';
-      $http.post(url, this.editRow).then(() => {
-        this.$emit('close', true);
+      this.$refs.form.validate(valid => {
+          if (valid) {
+            const url = '/apis/groups';
+            let func = this.editRow.id ? $http.put : $http.post;
+            func(url, this.editRow).then(() => {
+              this.$emit('close', true);
+            });
+          }
       });
     }
   }

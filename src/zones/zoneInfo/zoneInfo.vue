@@ -68,7 +68,9 @@ export default {
   methods: {
     handlerAdd() {
       this.addAndEdit = true;
-      this.editRow = {};
+      this.editRow = {
+        enable: 1
+      };
     },
     handlerEdit(row) {
       this.addAndEdit = true;
