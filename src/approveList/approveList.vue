@@ -28,16 +28,16 @@
       </el-table-column>
       <el-table-column
         prop="flowName"
-        width="400"
+        width="500"
         label="审批流">
         <template slot-scope="{ row }">
-          <el-steps :active="row.step">
+          <el-steps class="steps" :active="row.step">
             <el-step :status="finishStep[row.flowPath1Status]" :title="row.flowPath1"></el-step>
             <el-step :status="finishStep[row.flowPath2Status]" :title="row.flowPath2"></el-step>
             <el-step :status="finishStep[row.flowPath3Status]" :title="row.flowPath3"></el-step>
             <el-step :status="finishStep[row.flowPath4Status]" :title="row.flowPath4"></el-step>
           </el-steps>
-          <el-row>
+          <el-row :style="{paddingLeft: row.step * 110 + 'px'}">
             <el-button :disabled="row.disabled" type="primary" size="mini" @click="handlerApprove(row.id)">通过</el-button>
             <el-button :disabled="row.disabled" size="mini" @click="handlerReject(row.id)">驳回</el-button>
           </el-row>
@@ -146,3 +146,9 @@ export default {
   }
 };
 </script>
+<style scoped lang="scss">
+.steps {
+  width: 400px;
+  margin: auto;
+}
+</style>

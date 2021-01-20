@@ -4,7 +4,12 @@
       <el-card shadow="never" class="box-card flex-auto" header="新增编辑">
       <el-form ref="form" :model="editRow" size="small" :rules="rules">
          <el-form-item prop="rrName" label="记录名称">
-            <el-input v-model="editRow.rrName"></el-input>
+           <el-row class="form-row">
+             <el-col :span="20">
+               <el-input v-model="editRow.rrName"></el-input>
+             </el-col>
+             <el-col :span="4" class="pl-sm">{{zoneName}}</el-col>
+           </el-row>
         </el-form-item>
         <el-form-item prop="defaultTtl" label="TTL">
           <el-row class="form-row">
@@ -76,7 +81,7 @@ export default {
       }
     };
   },
-  props: ['editRow'],
+  props: ['editRow', 'zoneName'],
   mounted() {
     this.getTypeList();
     this.getCenterList();
