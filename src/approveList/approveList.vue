@@ -31,13 +31,16 @@
         width="400"
         label="审批流">
         <template slot-scope="{ row }">
-          <el-steps :active="active" finish-status="success">
-            <el-step :title="row.flowPath1"></el-step>
-            <el-step :title="row.flowPath2"></el-step>
-            <el-step :title="row.flowPath3"></el-step>
-            <el-step :title="row.flowPath4"></el-step>
+          <el-steps :active="row.step">
+            <el-step :status="finishStep[row.flowPath1Status]" :title="row.flowPath1"></el-step>
+            <el-step :status="finishStep[row.flowPath2Status]" :title="row.flowPath2"></el-step>
+            <el-step :status="finishStep[row.flowPath3Status]" :title="row.flowPath3"></el-step>
+            <el-step :status="finishStep[row.flowPath4Status]" :title="row.flowPath4"></el-step>
           </el-steps>
-
+          <el-row>
+            <el-button :disabled="row.disabled" type="primary" size="mini" @click="handlerApprove(row.id)">通过</el-button>
+            <el-button :disabled="row.disabled" size="mini" @click="handlerReject(row.id)">驳回</el-button>
+          </el-row>
         </template>
       </el-table-column>
       <el-table-column
@@ -48,11 +51,11 @@
       </el-table-column>
       <el-table-column
         prop="detail"
-        label="详情">
+        label="内容">
       </el-table-column>
       <el-table-column
         prop="flowOwner"
-        label="所有人">
+        label="发起人">
       </el-table-column>
       <el-table-column
         label="创建时间">
@@ -68,6 +71,7 @@
 <script>
 import $http from '@/http';
 import { flowTypes, finishStatus } from './const';
+import { getUser } from '@/user';
 
 export default {
   data() {
@@ -78,47 +82,66 @@ export default {
       editRow: {},
       addAndEdit: false,
       flowTypes: flowTypes,
-      finishStatus: finishStatus
+      finishStatus: finishStatus,
+      finishStep: {
+        0: 'wait',
+        1: 'success',
+        2: 'error'
+      }
     };
   },
   mounted() {
     this.getList();
-    console.log(finishStatus)
   },
   methods: {
     getList() {
       this.loading = true;
       const url = '/apis/approveList';
+      const list = ['flowPath1', 'flowPath2', 'flowPath3', 'flowPath4'];
+      const userName = getUser().userName;
       $http.get(url).then(res => {
         if (res.data.status === 0) {
-          this.list = res.data.data;
+          let data = res.data.data.map(record => {
+            const activeStep = list.findIndex((l) => {
+                if (record[`${l}Status`] === 0 || record[`${l}Status`] === 2) {
+                    return true;
+                }
+                return false;
+            });
+            const errorStep = list.findIndex((l) => {
+                if (record[`${l}Status`] === 2) {
+                    return true;
+                }
+                return false;
+            });
+            record.step = activeStep;
+            record.disabled = userName !== record[`${list[activeStep]}`] || errorStep !== -1;
+            return record;
+          });
+          this.list = data;
         }
         this.loading = false;
       }, () => {
         this.loading = false;
       });
     },
-    handlerDel(rowId) {
-      this.$confirm('删除后不可恢复', '确认要删除这条信息吗？')
-          .then(() => {
-            const url = `/apis/groups/${rowId}`;
-            $http.delete(url).then(() => {
-              this.$notify.success({
-                message: '删除成功'
-              });
-              this.getList();
-            }, () => {
-              this.$notify.error({
-                message: '删除失败'
-              });
-            });
+    handlerReject(rowId) {
+      const url = `/apis/approveList/${rowId}/reject`;
+      $http.post(url).then(() => {
+          this.$notify.success({
+            message: '驳回成功'
           });
+          this.getList();
+        });
     },
-    close(refresh) {
-      if (refresh) {
-        this.getList();
-      }
-      this.addAndEdit = false;
+    handlerApprove(rowId) {
+      const url = `/apis/approveList/${rowId}/approve`;
+      $http.post(url).then(() => {
+          this.$notify.success({
+            message: '通过成功'
+          });
+          this.getList();
+        });
     }
   }
 };

@@ -2,8 +2,8 @@
   <div class="bg-edit">
     <div class="left-panel flex-col">
       <el-card shadow="never" class="box-card flex-auto" header="新增编辑">
-      <el-form ref="form" :model="editRow">
-         <el-form-item label="模板名称">
+      <el-form ref="form" :model="editRow" :rules="rules">
+         <el-form-item label="模板名称" prop="userName">
             <el-input v-model="editRow.userName"></el-input>
         </el-form-item>
         <el-form-item label="注册类型">
@@ -38,10 +38,18 @@
             <el-input v-model="editRow.email"></el-input>
         </el-form-item>
         <el-form-item label="电话">
-            <el-input v-model="editRow.companyCode"></el-input>
+          <el-row class="form-row">
+            <el-col :span="13"><el-input v-model="editRow.companyCode"></el-input></el-col>
+            <el-col class="ml-sm" :span="2">分机</el-col>
+            <el-col :span="8"><el-input v-model="editRow.companyCode"></el-input></el-col>
+          </el-row>
         </el-form-item>
         <el-form-item label="传真">
-            <el-input v-model="editRow.companyName"></el-input>
+          <el-row class="form-row">
+            <el-col :span="13"><el-input v-model="editRow.companyCode"></el-input></el-col>
+            <el-col class="ml-sm" :span="2">分机</el-col>
+            <el-col :span="8"><el-input v-model="editRow.companyCode"></el-input></el-col>
+          </el-row>
         </el-form-item>
         <el-form-item label="邮编">
             <el-input v-model="editRow.departmentCode"></el-input>
@@ -50,8 +58,6 @@
             <el-upload
               class="upload-demo"
               action="https://jsonplaceholder.typicode.com/posts/"
-              :on-preview="handlePreview"
-              :on-remove="handleRemove"
               :before-remove="beforeRemove"
               multiple
               :limit="3"
@@ -83,7 +89,12 @@ import $http from '@/http';
 export default {
   data() {
     return {
-      roleList: []
+      roleList: [],
+      rules: {
+        userName: [
+           { required: true, message: '请输入模板名称', trigger: 'blur' },
+        ]
+      }
     };
   },
   props: ['editRow'],

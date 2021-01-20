@@ -29,14 +29,14 @@
         label="角色">
         <template slot-scope="{ row }">{{rulesMap[row.role]}}</template>
       </el-table-column>
-      <el-table-column
+      <!-- <el-table-column
         prop="gender"
         label="性别">
       </el-table-column>
       <el-table-column
         prop="employeeCode"
         label="员工编号">
-      </el-table-column>
+      </el-table-column> -->
       <el-table-column
         prop="employeeFirstName"
         label="员工姓">
@@ -49,18 +49,18 @@
         prop="mobileTelephone"
         label="移动电话">
       </el-table-column>
-      <el-table-column
+      <!-- <el-table-column
         prop="officeTelephone"
         label="办公电话">
-      </el-table-column>
+      </el-table-column> -->
       <el-table-column
         prop="email"
         label="邮箱">
       </el-table-column>
-      <el-table-column
+      <!-- <el-table-column
         prop="companyCode"
         label="公司编号">
-      </el-table-column>
+      </el-table-column> -->
       <el-table-column
         prop="companyName"
         label="公司名称">
@@ -73,10 +73,10 @@
         prop="departmentName"
         label="部门名称">
       </el-table-column>
-      <el-table-column
+      <!-- <el-table-column
         prop="positionCode"
         label="职位编号">
-      </el-table-column>
+      </el-table-column> -->
       <el-table-column
         prop="positionName"
         label="职位名称">

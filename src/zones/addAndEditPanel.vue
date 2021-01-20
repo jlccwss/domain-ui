@@ -3,16 +3,26 @@
     <div class="left-panel flex-col">
       <el-card shadow="never" class="box-card flex-auto" header="新增编辑">
       <el-form ref="form" :model="editRow">
-         <el-form-item :disabled="!!editRow.id" label="区名称">
-            <el-input v-model="editRow.zoneName"></el-input>
+         <el-form-item label="区名称">
+            <el-input :disabled="!!editRow.id" v-model="editRow.zoneName"></el-input>
         </el-form-item>
         <el-form-item label="默认TTL">
-          <el-input-number style="width: 100%" size="small" v-model="editRow.defaultTtl"></el-input-number>
+          <el-row class="form-row">
+            <el-col :span="20"><el-input-number min="1" style="width: 100%" size="small" v-model="editRow.defaultTtl"></el-input-number></el-col>
+            <el-col :span="4" class="pl-sm">分钟</el-col>
+          </el-row>
         </el-form-item>
         <el-form-item label="视图名称">
             <el-select :disabled="!!editRow.id" style="width:100%" v-model="editRow.viewName">
               <el-option :key="view.id" :label="view.viewName" :value="view.viewName" v-for="view in viewList"></el-option>
             </el-select>
+        </el-form-item>
+        <el-form-item label="备注">
+            <el-input
+              v-model="editRow.des"
+              type="textarea"
+              rows="3"
+              resize="none"></el-input>
         </el-form-item>
       </el-form>
     </el-card>
@@ -57,7 +67,8 @@ export default {
     },
     handlerSave() {
       const url = '/apis/zones';
-      $http.post(url, this.editRow).then(() => {
+      let func = this.editRow.id ? $http.put : $http.post;
+      func(url, this.editRow).then(() => {
         this.$emit('close', true);
       });
     }

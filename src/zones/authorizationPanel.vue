@@ -8,6 +8,7 @@
                 placeholder="请输入内容"
                 suffix-icon="el-icon-search"
                 class="input"
+                @input="search"
                 v-model="userSearch">
               </el-input>
               <div class="item-list" style="border-right: none">
@@ -54,6 +55,7 @@ export default {
   data() {
     return {
       viewList: [],
+      allUserList: [],
       userList: [],
       userSearch: '',
       selectUsers: []
@@ -66,6 +68,9 @@ export default {
     this.getUserList();
   },
   methods: {
+    search() {
+      this.userList = this.allUserList.filter(item => item.userName.includes(this.userSearch));
+    },
     getViewList() {
       const url = '/apis/views';
       $http.get(url).then(res => {
@@ -90,7 +95,7 @@ export default {
       const url = '/apis/users';
       $http.get(url).then(res => {
         if (res.data.status === 0) {
-          this.userList = res.data.data;
+          this.allUserList =  this.userList = res.data.data;
         }
       });
     },

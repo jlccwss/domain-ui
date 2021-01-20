@@ -12,7 +12,7 @@
             <el-input v-model="form.username"></el-input>
           </el-form-item>
           <el-form-item label="账户密码">
-            <el-input v-model="form.password" show-password></el-input>
+            <el-input @keydown.enter.native="onSubmit" v-model="form.password" show-password></el-input>
           </el-form-item>
           <el-form-item>
             <el-button type="primary" class="login-btn" @click="onSubmit" size="small">确认登录</el-button>

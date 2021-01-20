@@ -18,23 +18,23 @@
       style="width: 100%">
       <el-table-column
         prop="userName"
-        label="User name">
+        label="用户名">
       </el-table-column>
       <el-table-column
         prop="sourceIp"
-        label="Source ip">
+        label="源IP">
       </el-table-column>
       <el-table-column
         prop="detail"
-        label="Detail">
+        label="详情">
       </el-table-column>
       <el-table-column
         prop="createTime"
-        label="Create time">
+        label="操作时间">
       </el-table-column>
       <el-table-column
         prop="Action"
-        label="Action">
+        label="动作">
       </el-table-column>
     </el-table>
     </div>

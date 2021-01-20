@@ -9,7 +9,8 @@
                <el-input
                 type="textarea"
                 placeholder="每行输入一个域名"
-                :autosize="{ minRows: 2, maxRows: 4}"
+                rows="3"
+                resize="none"
                 v-model="editRow.flowName">
               </el-input>
              </el-col>
@@ -41,8 +42,16 @@
                 label="查询结果">
               </el-table-column>
               <el-table-column
-                prop="flowName"
                 label="注册期限">
+                <template slot-scope="{ row }">
+                  <el-col :span="18">
+                    <el-select class="w-full" size="small" v-model="row.flowName">
+                    <el-option label="1" value="1"></el-option>
+                    <el-option label="2" value="2"></el-option>
+                  </el-select>
+                  </el-col>
+                  <el-col align="right" :span="6">年</el-col>
+                </template>
               </el-table-column>
               <el-table-column
                 prop="flowName"
@@ -50,6 +59,16 @@
               </el-table-column>
             </el-table>
         </el-form-item>
+        <el-row>
+          <el-col align="right">
+            批量设置
+            <el-select size="small">
+              <el-option label="1" value="1"></el-option>
+              <el-option label="2" value="2"></el-option>
+            </el-select>
+            年
+          </el-col>
+        </el-row>
         <el-form-item>
           <div>联系人信息</div>
           <el-row>

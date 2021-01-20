@@ -25,7 +25,7 @@
       </el-table-column>
       <el-table-column
         prop="rrTtl"
-        label="TTL">
+        label="TTL（分钟）">
       </el-table-column>
       <el-table-column
         label="创建时间">
@@ -36,6 +36,7 @@
       <el-table-column width="140">
         <template slot-scope="{ row }">
           <el-button @click="handlerEdit(row)" type="text" size="small">编辑</el-button>
+          <el-button @click="handlerDel(row.id)" type="text" size="small">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -72,6 +73,22 @@ export default {
     handlerEdit(row) {
       this.addAndEdit = true;
       this.editRow = row;
+    },
+    handlerDel(rowId) {
+      this.$confirm('删除后不可恢复', '确认要删除这条信息吗？')
+          .then(() => {
+            const url = `/apis/zones/${this.zoneId}/rrs/${rowId}`;
+            $http.delete(url).then(() => {
+              this.$notify.success({
+                message: '删除成功'
+              });
+              this.getList();
+            }, () => {
+              this.$notify.error({
+                message: '删除失败'
+              });
+            });
+          });
     },
     getList() {
       this.loading = true;

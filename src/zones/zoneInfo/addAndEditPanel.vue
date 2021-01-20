@@ -7,7 +7,10 @@
             <el-input v-model="editRow.rrName"></el-input>
         </el-form-item>
         <el-form-item label="TTL">
-          <el-input-number style="width: 100%" size="small" v-model="editRow.rrTtl"></el-input-number>
+          <el-row class="form-row">
+          <el-col :span="20"><el-input-number min="1" style="width: 100%" size="small" v-model="editRow.defaultTtl"></el-input-number></el-col>
+          <el-col :span="4" class="pl-sm">分钟</el-col>
+          </el-row>
         </el-form-item>
         <el-form-item label="记录类型">
             <el-select style="width:100%" v-model="editRow.rrType">

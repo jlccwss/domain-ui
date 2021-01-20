@@ -26,44 +26,44 @@
             <template slot="title">
               <span><span class="icon dns"></span>DNS管理</span>
             </template>
-            <el-menu-item index="zones" v-if="authority.includes('zones')">区管理</el-menu-item>
+            <el-menu-item index="/home/zones" v-if="authority.includes('zones')">区管理</el-menu-item>
           </el-submenu>
           <el-submenu index="2" v-if="authority.includes('2')">
             <template slot="title">
               <span><span class="icon domain"></span>公网域名</span>
             </template>
-            <el-menu-item index="domains" v-if="authority.includes('domains')">域名管理</el-menu-item>
-            <el-menu-item index="sslCertificates" v-if="authority.includes('sslCertificates')">SSL证书</el-menu-item>
+            <el-menu-item index="/home/domains" v-if="authority.includes('domains')">域名管理</el-menu-item>
+            <el-menu-item index="/home/sslCertificates" v-if="authority.includes('sslCertificates')">SSL证书</el-menu-item>
           </el-submenu>
           <el-submenu index="3" v-if="authority.includes('3')">
             <template slot="title">
               <span><span class="icon icp"></span>ICP备案</span>
             </template>
             <!-- <el-menu-item index="icps" v-if="authority.includes('icps')">ICP备案</el-menu-item> -->
-            <el-menu-item index="records" v-if="authority.includes('records')">备案管理</el-menu-item>
-            <el-menu-item index="website" v-if="authority.includes('website')">网站信息表</el-menu-item>
+            <el-menu-item index="/home/records" v-if="authority.includes('records')">备案管理</el-menu-item>
+            <el-menu-item index="/home/website" v-if="authority.includes('website')">网站信息表</el-menu-item>
           </el-submenu>
           <el-submenu index="4" v-if="authority.includes('4')">
             <template slot="title">
               <span><span class="icon sys"></span>系统管理</span>
             </template>
-            <el-menu-item index="users" v-if="authority.includes('users')">账号管理</el-menu-item>
-            <el-menu-item index="auditlogs" v-if="authority.includes('auditlogs')">操作日志</el-menu-item>
-            <el-menu-item index="contacts" v-if="authority.includes('contacts')">联系人模板</el-menu-item>
+            <el-menu-item index="/home/users" v-if="authority.includes('users')">账号管理</el-menu-item>
+            <el-menu-item index="/home/auditlogs" v-if="authority.includes('auditlogs')">操作日志</el-menu-item>
+            <el-menu-item index="/home/contacts" v-if="authority.includes('contacts')">联系人模板</el-menu-item>
           </el-submenu>
           <el-submenu index="5" v-if="authority.includes('5')">
             <template slot="title">
               <span><span class="icon approal"></span>审批管理</span>
             </template>
-            <el-menu-item index="approveList" v-if="authority.includes('approveList')">审批单管理</el-menu-item>
-            <el-menu-item index="approveModule" v-if="authority.includes('approveModule')">审批模板</el-menu-item>
+            <el-menu-item index="/home/approveList" v-if="authority.includes('approveList')">审批单管理</el-menu-item>
+            <el-menu-item index="/home/approveModule" v-if="authority.includes('approveModule')">审批模板</el-menu-item>
           </el-submenu>
           <el-submenu index="6" v-if="authority.includes('6')">
             <template slot="title">
               <span><span class="icon toogale"></span>灾备切换</span>
             </template>
-            <el-menu-item index="apps" v-if="authority.includes('apps')">应用列表</el-menu-item>
-            <el-menu-item index="groups" v-if="authority.includes('groups')">分组列表</el-menu-item>
+            <el-menu-item index="/home/apps" v-if="authority.includes('apps')">应用列表</el-menu-item>
+            <el-menu-item index="/home/groups" v-if="authority.includes('groups')">分组列表</el-menu-item>
           </el-submenu>
         </el-menu>
         <div class="page">
@@ -78,6 +78,7 @@
 import $http from '@/http';
 import changePwdDialog from './changePwdDialog.vue';
 import authority from './authority';
+import { getUser } from '@/user';
 
 export default {
   components: {
@@ -88,21 +89,18 @@ export default {
       user: {},
       pwdDialog: false,
       currentNav: '',
-      openeds: ['1', '2', '3', '4', '5', '6'],
+      openeds: [],
       authority: []
     };
   },
   mounted() {
     this.getCurRole();
-    this.currentNav = this.$route.path.split('/').pop();
+    this.currentNav = this.$route.path;
   },
   methods: {
     getCurRole() {
-      const url = '/apis/current_role';
-      $http.get(url).then(res => {
-        this.user = res.data;
-        this.authority = authority[this.user.role];
-      });
+      this.user = getUser()
+      this.authority = authority[this.user.role];
     },
     handleCommand(type) {
       if (this[type]) {
@@ -112,10 +110,7 @@ export default {
     changePwd() {
       this.pwdDialog = true;
     },
-    close(refresh) {
-      if (refresh) {
-        this.getCurRole();
-      }
+    close() {
       this.pwdDialog = false;
     },
     logout() {
@@ -192,7 +187,7 @@ export default {
 
   .content {
     display: flex;
-    height: 100%;
+    height: calc(100% - 60px);
     background: #f5f5f5;
 
     .menu {

@@ -1,5 +1,7 @@
 import VueRouter from 'vue-router';
 import $http from '@/http';
+import authority from './home/authority';
+import { setUser } from './user';
 
 import login from './login/login.vue';
 import home from './home/home.vue';
@@ -31,62 +33,77 @@ const router = new VueRouter({
       children: [
         {
           path: 'auditlogs',
+          name: 'auditlogs',
           component: auditlogs
         },
         {
           path: 'zones',
+          name: 'zones',
           component: zones,
         },
         {
           path: 'zones/:zoneId',
+          name: 'zoneInfo',
           component: zoneInfo,
         },
         {
           path: 'users',
+          name: 'users',
           component: users
         },
         {
           path: 'apps',
+          name: 'apps',
           component: apps
         },
         {
           path: 'groups',
+          name: 'groups',
           component: groups
         },
         {
           path: 'approveModule',
+          name: 'approveModule',
           component: approveModule
         },
         {
           path: 'approveList',
+          name: 'approveList',
           component: approveList
         },
         {
           path: 'domains',
+          name: 'domains',
           component: domains
         },
         {
           path: 'sslCertificates',
+          name: 'sslCertificates',
           component: sslCertificates
         },
         {
           path: 'icps',
+          name: 'icps',
           component: icps
         },
         {
           path: 'records',
+          name: 'records',
           component: records
         },
         {
           path: 'records/:zoneId',
+          name: 'recordInfo',
           component: recordInfo,
         },
         {
           path: 'website',
+          name: 'website',
           component: website
         },
         {
           path: 'contacts',
+          name: 'contacts',
           component: contacts
         },
         
@@ -95,13 +112,19 @@ const router = new VueRouter({
   ]
 });
 
-
 router.beforeEach((to, from, next) => {
   if (['login', 'bigshow'].includes(to.name)) {
     next();
   } else {
-    $http.get('/apis/current_role').then(() => {
-      next();
+    $http.get('/apis/current_role').then(res => {
+      let user = res.data;
+      setUser(user);
+      let authorityArr = authority[user.role];
+      if (authorityArr.includes(to.name)) {
+        next();
+      } else {
+        next({ name: authorityArr[0] })
+      }
     }, () => next({ name: 'login' }));
   }
 })

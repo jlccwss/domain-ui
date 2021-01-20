@@ -25,13 +25,19 @@
         label="模板名称">
       </el-table-column>
       <el-table-column
+        label="启用状态">
+        <template slot-scope="{ row }">
+          {{row.status === 1 ? '开启' : '关闭'}}
+        </template>
+      </el-table-column>
+      <el-table-column
         label="创建时间">
         <template slot-scope="{ row }">
           {{row.createTime | dateFormat}}
         </template>
       </el-table-column>
       <el-table-column
-        label="Action">
+        label="操作">
         <template slot-scope="{ row }">
           <el-button @click="handlerEdit(row)" type="text" size="small">编辑</el-button>
           <el-button @click="handlerDel(row.id)" type="text" size="small">删除</el-button>

@@ -42,10 +42,11 @@
           {{row.createTime | dateFormat}}
         </template>
       </el-table-column>
-      <el-table-column width="140">
+      <el-table-column width="180">
         <template slot-scope="{ row }">
           <el-button @click="handlerEdit(row)" type="text" size="small">编辑</el-button>
           <el-button @click="handlerChange(row)" type="text" size="small">修改所有者</el-button>
+          <el-button v-if="showDel" @click="handlerDel(row.id)" type="text" size="small">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -58,6 +59,8 @@
 import $http from '@/http';
 import addAndEditPanel from './addAndEditPanel.vue';
 import authorizationPanel from './authorizationPanel.vue';
+import { getUser } from '@/user';
+
 
 export default {
   components: {
@@ -70,16 +73,37 @@ export default {
       loading: false,
       editRow: {},
       addAndEdit: false,
-      changeDialog: false
+      changeDialog: false,
+      showDel: false
     };
   },
   mounted() {
     this.getList();
+    let user = getUser();
+    this.showDel = user.role === 'admin';
   },
   methods: {
     handlerAdd() {
       this.addAndEdit = true;
-      this.editRow = {};
+      this.editRow = {
+        defaultTtl: 10
+      };
+    },
+    handlerDel(rowId) {
+      this.$confirm('删除后不可恢复', '确认要删除这条信息吗？')
+          .then(() => {
+            const url = `/apis/zones/${rowId}`;
+            $http.delete(url).then(() => {
+              this.$notify.success({
+                message: '删除成功'
+              });
+              this.getList();
+            }, () => {
+              this.$notify.error({
+                message: '删除失败'
+              });
+            });
+          });
     },
     handlerEdit(row) {
       this.addAndEdit = true;
