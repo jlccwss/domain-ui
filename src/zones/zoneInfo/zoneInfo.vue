@@ -1,8 +1,15 @@
 <template>
     <div>
+      <div class="breadcrumb">
+        <el-breadcrumb separator="/">
+          <el-breadcrumb-item>域名管理</el-breadcrumb-item>
+          <el-breadcrumb-item>区管理</el-breadcrumb-item>
+          <el-breadcrumb-item>{{detail.zoneName}}</el-breadcrumb-item>
+        </el-breadcrumb>
+      </div>
       <el-row class="mt-xs">
         <el-col :span="4" class="page-title">
-          区管理
+          记录
         </el-col>
         <el-col :span="20" align="right">
           <el-button @click="handlerAdd" type="primary" size="small">
@@ -57,6 +64,7 @@ export default {
       list: [],
       loading: false,
       editRow: {},
+      detail: {},
       addAndEdit: false,
       zoneId: ''
     };
@@ -64,6 +72,7 @@ export default {
   mounted() {
     this.zoneId = this.$route.params.zoneId;
     this.getList();
+    this.getDetail();
   },
   methods: {
     handlerAdd() {
@@ -92,6 +101,14 @@ export default {
             });
           });
     },
+    getDetail() {
+      const url = '/apis/zones/' + this.zoneId;
+      $http.get(url).then(res => {
+        if (res.data) {
+          this.detail = res.data;
+        }
+      })
+    },
     getList() {
       this.loading = true;
       const url = '/apis/zones/' + this.zoneId + '/rrs';
@@ -102,7 +119,7 @@ export default {
         this.loading = false;
       }, () => {
         this.loading = false;
-      })
+      });
     },
     close(refresh) {
       if (refresh) {
