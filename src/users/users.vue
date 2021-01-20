@@ -29,7 +29,23 @@
             width="160"
             trigger="hover"
             v-model="visible">
-            <p>{{row.detail}}</p>
+            <p>
+              <span>用户名：{{row.userName}}</span><br />
+              <span>角色：{{rulesMap[row.role]}}</span><br />
+              <span>性别：{{row.gender}}</span><br />
+              <span>员工编号：{{row.employeeCode}}</span><br />
+              <span>员工姓：{{row.employeeFirstName}}</span><br />
+              <span>员工名：{{row.employeeLastName}}</span><br />
+              <span>移动电话：{{row.mobileTelephone}}</span><br />
+              <span>办公电话：{{row.officeTelephone}}</span><br />
+              <span>邮箱：{{row.email}}</span><br />
+              <span>公司编号：{{row.companyCode}}</span><br />
+              <span>公司名称：{{row.companyName}}</span><br />
+              <span>部门编号：{{row.departmentCode}}</span><br />
+              <span>部门名称：{{row.departmentName}}</span><br />
+              <span>职位编号：{{row.positionCode}}</span><br />
+              <span>职位名称：{{row.positionName}}</span>
+            </p>
             <span slot="reference">{{row.userName}}</span>
           </el-popover>
         </template>
