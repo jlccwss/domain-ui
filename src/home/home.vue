@@ -21,7 +21,7 @@
         </div>
       </div>
       <div class="content">
-        <el-menu :router="true" :default-openeds="openeds" class="menu" :default-active="currentNav">
+        <el-menu :unique-opened="true" :router="true" :default-openeds="openeds" class="menu" :default-active="currentNav">
           <el-submenu index="1" v-if="authority.includes('1')">
             <template slot="title">
               <span><span class="icon dns"></span>DNS管理</span>

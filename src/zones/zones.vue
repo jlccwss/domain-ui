@@ -42,7 +42,7 @@
           {{row.createTime | dateFormat}}
         </template>
       </el-table-column>
-      <el-table-column width="180">
+      <el-table-column width="180" label="操作">
         <template slot-scope="{ row }">
           <el-button @click="handlerEdit(row)" type="text" size="small">编辑</el-button>
           <el-button @click="handlerChange(row)" type="text" size="small">修改所有者</el-button>

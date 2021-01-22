@@ -38,12 +38,12 @@
         </template>
       </el-table-column>
       <el-table-column
-        prop="createTime"
-        label="操作时间">
-      </el-table-column>
-      <el-table-column
         prop="Action"
         label="动作">
+      </el-table-column>
+      <el-table-column
+        prop="createTime"
+        label="操作时间">
       </el-table-column>
     </el-table>
     </div>
