@@ -2,8 +2,8 @@
     <div>
       <div class="breadcrumb">
         <el-breadcrumb separator="/">
-          <el-breadcrumb-item>DNS管理</el-breadcrumb-item>
-          <el-breadcrumb-item>局域网</el-breadcrumb-item>
+          <el-breadcrumb-item>域名管理</el-breadcrumb-item>
+          <el-breadcrumb-item>广域网</el-breadcrumb-item>
           <el-breadcrumb-item>{{detail.zoneName}}</el-breadcrumb-item>
         </el-breadcrumb>
       </div>
@@ -33,26 +33,6 @@
       <el-table-column
         prop="rrTtl"
         label="TTL（分钟）">
-      </el-table-column>
-      <el-table-column
-        prop="des"
-        label="备注">
-      </el-table-column>
-      <el-table-column
-        label="是否启用">
-        <template slot-scope="{ row }">
-          {{enableMap[row.enable]}}
-        </template>
-      </el-table-column>
-      <el-table-column
-        prop="centerName"
-        label="数据中心">
-      </el-table-column>
-      <el-table-column
-        label="审批状态">
-        <template slot-scope="{ row }">
-          {{approveStatus[row.approveStatus]}}
-        </template>
       </el-table-column>
       <el-table-column
         label="创建时间">
@@ -86,13 +66,7 @@ export default {
       editRow: {},
       detail: {},
       addAndEdit: false,
-      zoneId: '',
-      enableMap: {1: '启用', 0: '未启用'},
-      approveStatus: {
-        0: '未审核',
-        1: '已通过',
-        2: '已拒绝',
-      }
+      zoneId: ''
     };
   },
   mounted() {

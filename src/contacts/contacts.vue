@@ -20,7 +20,7 @@
        <el-row>
          <el-col :span="6">
           <el-form-item label="模板名称">
-            <el-input placeholder="请输入关键字"></el-input>
+            <el-input v-model="queryParams.tplName" placeholder="请输入关键字"></el-input>
           </el-form-item>
          </el-col>
          <el-col :span="6">
@@ -82,7 +82,10 @@ export default {
       loading: false,
       rulesMap: rulesMap,
       editRow: {},
-      addAndEdit: false
+      addAndEdit: false,
+      queryParams: {
+        tplName: ''
+      }
     };
   },
   mounted() {

@@ -3,13 +3,12 @@
       <div class="breadcrumb">
         <el-breadcrumb separator="/">
           <el-breadcrumb-item>DNS管理</el-breadcrumb-item>
-          <el-breadcrumb-item>局域网</el-breadcrumb-item>
-          <el-breadcrumb-item>{{detail.zoneName}}</el-breadcrumb-item>
+          <el-breadcrumb-item>广域网</el-breadcrumb-item>
         </el-breadcrumb>
       </div>
       <el-row class="mt-xs">
         <el-col :span="4" class="page-title">
-          记录
+          广域网
         </el-col>
         <el-col :span="20" align="right">
           <el-button @click="handlerAdd" type="primary" size="small">
@@ -18,41 +17,32 @@
         </el-col>
       </el-row>
      <el-table
-      :data="list"
       class="mt-xs"
+      :data="list"
       header-cell-class-name="table-head"
       style="width: 100%">
       <el-table-column
-        prop="rrName"
-        label="记录名称">
+        prop="userName"
+        label="区名称">
+        <template slot-scope="{ row }">
+          <a href="javascript: void(0)" @click="go(row.id)">{{row.zoneName}}</a>
+        </template>
       </el-table-column>
       <el-table-column
         prop="viewName"
         label="视图名称">
       </el-table-column>
       <el-table-column
-        prop="rrTtl"
-        label="TTL（分钟）">
+        prop="defaultTtl"
+        label="默认TTL">
+      </el-table-column>
+      <el-table-column
+        prop="total"
+        label="记录数">
       </el-table-column>
       <el-table-column
         prop="des"
         label="备注">
-      </el-table-column>
-      <el-table-column
-        label="是否启用">
-        <template slot-scope="{ row }">
-          {{enableMap[row.enable]}}
-        </template>
-      </el-table-column>
-      <el-table-column
-        prop="centerName"
-        label="数据中心">
-      </el-table-column>
-      <el-table-column
-        label="审批状态">
-        <template slot-scope="{ row }">
-          {{approveStatus[row.approveStatus]}}
-        </template>
       </el-table-column>
       <el-table-column
         label="创建时间">
@@ -60,61 +50,58 @@
           {{row.createTime | dateFormat}}
         </template>
       </el-table-column>
-      <el-table-column width="140" label="操作">
+      <el-table-column width="180" label="操作">
         <template slot-scope="{ row }">
           <el-button @click="handlerEdit(row)" type="text" size="small">编辑</el-button>
-          <el-button @click="handlerDel(row.id)" type="text" size="small">删除</el-button>
+          <el-button @click="handlerChange(row)" type="text" size="small">修改所有者</el-button>
+          <el-button v-if="showDel" @click="handlerDel(row.id)" type="text" size="small">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
-    <addAndEditPanel :zoneName="detail.zoneName" @close="close" v-if="addAndEdit" :editRow="editRow"></addAndEditPanel>
+    <addAndEditPanel @close="close" v-if="addAndEdit" :editRow="editRow"></addAndEditPanel>
+    <authorizationPanel @close="close" v-if="changeDialog" :editRow="editRow"></authorizationPanel>
     </div>
 </template>
 
 <script>
 import $http from '@/http';
 import addAndEditPanel from './addAndEditPanel.vue';
+import authorizationPanel from './authorizationPanel.vue';
+import { getUser } from '@/user';
+
 
 export default {
   components: {
-    addAndEditPanel
+    addAndEditPanel,
+    authorizationPanel
   },
   data() {
     return {
       list: [],
       loading: false,
       editRow: {},
-      detail: {},
       addAndEdit: false,
-      zoneId: '',
-      enableMap: {1: '启用', 0: '未启用'},
-      approveStatus: {
-        0: '未审核',
-        1: '已通过',
-        2: '已拒绝',
-      }
+      changeDialog: false,
+      showDel: false
     };
   },
   mounted() {
-    this.zoneId = this.$route.params.zoneId;
     this.getList();
-    this.getDetail();
+    let user = getUser();
+    this.showDel = user.role === 'admin';
   },
   methods: {
     handlerAdd() {
       this.addAndEdit = true;
       this.editRow = {
-        enable: 1
+        defaultTtl: 10,
+        type: 2
       };
-    },
-    handlerEdit(row) {
-      this.addAndEdit = true;
-      this.editRow = row;
     },
     handlerDel(rowId) {
       this.$confirm('删除后不可恢复', '确认要删除这条信息吗？')
           .then(() => {
-            const url = `/apis/zones/${this.zoneId}/rrs/${rowId}`;
+            const url = `/apis/zones/${rowId}`;
             $http.delete(url).then(() => {
               this.$notify.success({
                 message: '删除成功'
@@ -127,17 +114,22 @@ export default {
             });
           });
     },
-    getDetail() {
-      const url = '/apis/zones/' + this.zoneId;
-      $http.get(url).then(res => {
-        if (res.data) {
-          this.detail = res.data;
-        }
-      })
+    handlerEdit(row) {
+      this.addAndEdit = true;
+      this.editRow = row;
+    },
+    handlerChange(row) {
+      this.changeDialog = true;
+      this.editRow = row;
+    },
+    go(id) {
+      this.$router.push({
+        path: 'gzones/' + id
+      });
     },
     getList() {
       this.loading = true;
-      const url = '/apis/zones/' + this.zoneId + '/rrs';
+      const url = '/apis/zones?type=2';
       $http.get(url).then(res => {
         if (res.data.status === 0) {
           this.list = res.data.data;
@@ -145,13 +137,14 @@ export default {
         this.loading = false;
       }, () => {
         this.loading = false;
-      });
+      })
     },
     close(refresh) {
       if (refresh) {
         this.getList();
       }
       this.addAndEdit = false;
+      this.changeDialog = false;
     }
   }
 };

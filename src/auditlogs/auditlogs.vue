@@ -25,7 +25,15 @@
         label="源IP">
       </el-table-column>
       <el-table-column
-        label="详情">
+        prop="Action"
+        label="动作">
+      </el-table-column>
+      <el-table-column
+        prop="createTime"
+        label="操作时间">
+      </el-table-column>
+      <el-table-column
+        label="操作">
         <template slot-scope="{ row }">
           <el-popover
             placement="top"
@@ -33,17 +41,9 @@
             trigger="hover"
             v-model="visible">
             <p>{{row.detail}}</p>
-            <span slot="reference">详情</span>
+            <el-button type="text" slot="reference">详情</el-button>
           </el-popover>
         </template>
-      </el-table-column>
-      <el-table-column
-        prop="Action"
-        label="动作">
-      </el-table-column>
-      <el-table-column
-        prop="createTime"
-        label="操作时间">
       </el-table-column>
     </el-table>
     </div>

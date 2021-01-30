@@ -2,13 +2,13 @@
     <div>
       <div class="breadcrumb">
         <el-breadcrumb separator="/">
-          <el-breadcrumb-item>域名管理</el-breadcrumb-item>
-          <el-breadcrumb-item>区管理</el-breadcrumb-item>
+          <el-breadcrumb-item>DNS管理</el-breadcrumb-item>
+          <el-breadcrumb-item>局域网</el-breadcrumb-item>
         </el-breadcrumb>
       </div>
       <el-row class="mt-xs">
         <el-col :span="4" class="page-title">
-          区管理
+          局域网
         </el-col>
         <el-col :span="20" align="right">
           <el-button @click="handlerAdd" type="primary" size="small">
@@ -37,14 +37,23 @@
         label="默认TTL">
       </el-table-column>
       <el-table-column
+        prop="total"
+        label="记录数">
+      </el-table-column>
+      <el-table-column
+        prop="des"
+        label="备注">
+      </el-table-column>
+      <el-table-column
         label="创建时间">
         <template slot-scope="{ row }">
           {{row.createTime | dateFormat}}
         </template>
       </el-table-column>
-      <el-table-column width="180" label="操作">
+      <el-table-column width="220" label="操作">
         <template slot-scope="{ row }">
           <el-button @click="handlerEdit(row)" type="text" size="small">编辑</el-button>
+          <el-button @click="handlerExport(row)" type="text" size="small">导出</el-button>
           <el-button @click="handlerChange(row)" type="text" size="small">修改所有者</el-button>
           <el-button v-if="showDel" @click="handlerDel(row.id)" type="text" size="small">删除</el-button>
         </template>
@@ -57,10 +66,11 @@
 
 <script>
 import $http from '@/http';
+import { exportCsv } from '@/utils/export';
 import addAndEditPanel from './addAndEditPanel.vue';
 import authorizationPanel from './authorizationPanel.vue';
 import { getUser } from '@/user';
-
+import dateFormat from '@/filter/dateFilter';
 
 export default {
   components: {
@@ -74,7 +84,13 @@ export default {
       editRow: {},
       addAndEdit: false,
       changeDialog: false,
-      showDel: false
+      showDel: false,
+      enableMap: {1: '启用', 0: '未启用'},
+      approveStatus: {
+        0: '未审核',
+        1: '已通过',
+        2: '已拒绝',
+      }
     };
   },
   mounted() {
@@ -86,7 +102,8 @@ export default {
     handlerAdd() {
       this.addAndEdit = true;
       this.editRow = {
-        defaultTtl: 10
+        defaultTtl: 10,
+        type: 1
       };
     },
     handlerDel(rowId) {
@@ -109,6 +126,38 @@ export default {
       this.addAndEdit = true;
       this.editRow = row;
     },
+    handlerExport(row) {
+      const url = '/apis/zones/' + row.id + '/rrs';
+      $http.get(url).then(res => {
+        if (res.data.status === 0) {
+          let list = res.data.data;
+          if (list.length) {
+            let data = list.map(item => {
+              return [
+                item.rrName,
+                item.viewName,
+                item.rrTtl,
+                item.des,
+                this.enableMap[item.enable],
+                item.centerName,
+                this.approveStatus[item.approveStatus],
+                dateFormat(item.createTime)
+              ];
+            });
+            data.unshift(['记录名称', '视图名称', 'TTL（分钟）', '备注', '是否启用', '数据中心', '审批状态', '创建时间']);
+            exportCsv(row.zoneName, data);
+          } else {
+            this.$notify.warning({
+              message: '没有记录'
+            });
+          }
+        } else {
+          this.$notify.warning({
+            message: '导出失败'
+          });
+        }
+      });
+    },
     handlerChange(row) {
       this.changeDialog = true;
       this.editRow = row;
@@ -120,7 +169,7 @@ export default {
     },
     getList() {
       this.loading = true;
-      const url = '/apis/zones';
+      const url = '/apis/zones?type=1';
       $http.get(url).then(res => {
         if (res.data.status === 0) {
           this.list = res.data.data;

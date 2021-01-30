@@ -16,7 +16,7 @@
         </el-form-item>
         <el-form-item label="记录" prop="appids">
             <el-select style="width:100%" v-model="editRow.appids" multiple>
-              <el-option :key="app.id" :label="app.name + '('+ app.centerName + ')'" :value="app.id" v-for="app in appList"></el-option>
+              <el-option :key="app.id" :label="app.rrName + '('+ app.centerName + ')'" :value="app.id" v-for="app in appList"></el-option>
             </el-select>
         </el-form-item>
       </el-form>
@@ -69,7 +69,7 @@ export default {
       });
     },
     getAppList() {
-      const url = '/apis/apps';
+      const url = '/apis/rrs';
       $http.get(url).then(res => {
         if (res.data.status === 0) {
           this.appList = res.data.data;
@@ -82,8 +82,11 @@ export default {
     handlerSave() {
       this.$refs.form.validate(valid => {
           if (valid) {
-            const url = '/apis/apps';
+            let url = '/apis/apps';
             let func = this.editRow.id ? $http.put : $http.post;
+            if (this.editRow.id) {
+              url += '/' + this.editRow.id;
+            }
             func(url, this.editRow).then(() => {
               this.$emit('close', true);
             });

@@ -1,6 +1,4 @@
-import Vue from 'vue';
-
-Vue.filter('dateFormat' ,function(dateStr, pattern=""){
+export default function(dateStr, pattern="") {
   //根据给定的时间字符串，得到特定的时间
   var dt = new Date(dateStr)
   //yyy---mm-dd
@@ -16,4 +14,4 @@ Vue.filter('dateFormat' ,function(dateStr, pattern=""){
     var ss = dt.getSeconds() //得到秒
     return `${y}-${m}-${d} ${hh}:${mm}:${ss}`
   }
-});
+}

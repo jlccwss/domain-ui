@@ -114,8 +114,11 @@ export default {
       this.$emit('close')
     },
     handlerSave() {
-      const url = '/apis/users';
+      let url = '/apis/users';
       let func = this.editRow.id ? $http.put : $http.post;
+      if (this.editRow.id) {
+        url += '/' + this.editRow.id;
+      }
       func(url, this.editRow).then(() => {
         this.$emit('close', true);
       });

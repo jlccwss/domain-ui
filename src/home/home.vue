@@ -6,7 +6,7 @@
           <div class="logo-name">集团域名解析统一管理系统</div>
         </div>
         <div class="handler flex">
-          <i class="el-icon-bell mr-sm"></i>
+          <i class="el-icon-bell mr-sm" v-if="user.role === 'admin'"></i>
           <i class="el-icon-question mr-sm"></i>
           <div class="user-logo mr-sm"></div>
           <el-dropdown class="mr-sm" @command="handleCommand">
@@ -26,7 +26,8 @@
             <template slot="title">
               <span><span class="icon dns"></span>DNS管理</span>
             </template>
-            <el-menu-item index="/home/zones" v-if="authority.includes('zones')">区管理</el-menu-item>
+            <el-menu-item index="/home/zones" v-if="authority.includes('zones')">局域网</el-menu-item>
+            <el-menu-item index="/home/gzones" v-if="authority.includes('gzones')">广域网</el-menu-item>
           </el-submenu>
           <el-submenu index="2" v-if="authority.includes('2')">
             <template slot="title">
@@ -96,8 +97,19 @@ export default {
   mounted() {
     this.getCurRole();
     this.currentNav = this.$route.path;
+    this.initWss();
   },
   methods: {
+    initWss() {
+      const host = `${location.protocol === 'https' ? 'wss': 'ws'}://${location.host}`;
+      this.wss = new WebSocket(`${host}/apis/ws`);
+      this.wss.onopen = function() {
+        console.log('open')
+      };
+      this.wss.onmessage = function(event) {
+        console.log(event)
+      };
+    },
     getCurRole() {
       this.user = getUser()
       this.authority = authority[this.user.role];

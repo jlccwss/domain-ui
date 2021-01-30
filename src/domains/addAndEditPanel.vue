@@ -183,8 +183,11 @@ export default {
       this.$emit('close')
     },
     handlerSave() {
-      const url = '/apis/approveModule';
+      let url = '/apis/approveModule';
       let func = this.editRow.id ? $http.put : $http.post;
+      if (this.editRow.id) {
+        url += '/' + this.editRow.id;
+      }
       func(url, this.editRow).then(() => {
         this.$emit('close', true);
       });
