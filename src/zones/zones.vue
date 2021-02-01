@@ -124,7 +124,7 @@ export default {
     },
     handlerEdit(row) {
       this.addAndEdit = true;
-      this.editRow = row;
+      this.editRow = { ...row };
     },
     handlerExport(row) {
       const url = '/apis/zones/' + row.id + '/rrs';

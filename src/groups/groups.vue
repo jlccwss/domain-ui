@@ -3,7 +3,7 @@
       <div class="breadcrumb">
         <el-breadcrumb separator="/">
           <el-breadcrumb-item>灾备切换</el-breadcrumb-item>
-          <el-breadcrumb-item>分组列表</el-breadcrumb-item>
+          <el-breadcrumb-item>分组管理</el-breadcrumb-item>
         </el-breadcrumb>
       </div>
       <el-row class="mt-xs">
@@ -38,7 +38,7 @@
       <el-table-column
         label="数据中心">
         <template slot-scope="{ row }">
-          <el-button @click="changeCenter(row.id, center)" :disabled="row.status===center.id" type="text" size="small" :key="center.id" v-for="center in centerList">{{center.dataCenter}}</el-button>
+          <el-button @click="changeCenter(row.id, center)" :disabled="row.centerId===center.id" type="text" size="small" :key="center.id" v-for="center in centerList">{{center.dataCenter}}</el-button>
         </template>
       </el-table-column>
       <el-table-column
@@ -113,7 +113,7 @@ export default {
     },
     handlerEdit(row) {
       this.addAndEdit = true;
-      this.editRow = row;
+      this.editRow = { ...row };
     },
     handlerAdd() {
       this.addAndEdit = true;

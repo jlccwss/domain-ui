@@ -119,7 +119,7 @@ export default {
     },
     handlerEdit(row) {
       this.addAndEdit = true;
-      this.editRow = row;
+      this.editRow = { ...row };
     },
     handlerAdd() {
       this.addAndEdit = true;

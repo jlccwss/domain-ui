@@ -9,8 +9,8 @@
         <el-form-item prop="des" label="描述">
             <el-input v-model="editRow.des"></el-input>
         </el-form-item>
-        <el-form-item prop="status" label="数据中心">
-            <el-select v-model="editRow.status" style="width:100%">
+        <el-form-item prop="centerId" label="数据中心">
+            <el-select v-model="editRow.centerId" style="width:100%">
               <el-option :key="center.id" :label="center.dataCenter" :value="center.id" v-for="center in centerList"></el-option>
             </el-select>
         </el-form-item>
@@ -48,7 +48,7 @@ export default {
         name: [
            { required: true, message: '请输入分组名称', trigger: 'blur' },
         ],
-        status: [
+        centerId: [
            { required: true, message: '请选择数据中心', trigger: 'blur' },
         ]
       }
@@ -58,8 +58,19 @@ export default {
   mounted() {
     this.getCenterList();
     this.getAppList();
+    if (this.editRow.id) {
+      this.getDetail();
+    }
   },
   methods: {
+    getDetail() {
+      const url = '/apis/groups/' + this.editRow.id;
+      $http.get(url).then(res => {
+        if (res.data) {
+          this.editRow.appids = res.data.appids;
+        }
+      });
+    },
     getCenterList() {
       const url = '/apis/datacenter/datas';
       $http.get(url).then(res => {

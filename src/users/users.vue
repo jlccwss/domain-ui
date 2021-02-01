@@ -153,7 +153,7 @@ export default {
     },
     handlerEdit(row) {
       this.addAndEdit = true;
-      this.editRow = row;
+      this.editRow = { ...row };
     },
     getList() {
       this.loading = true;

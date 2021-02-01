@@ -109,7 +109,7 @@ export default {
     },
     handlerEdit(row) {
       this.addAndEdit = true;
-      this.editRow = row;
+      this.editRow = {...row};
     },
     handlerDel(rowId) {
       this.$confirm('删除后不可恢复', '确认要删除这条信息吗？')

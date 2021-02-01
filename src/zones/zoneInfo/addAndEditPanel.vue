@@ -25,8 +25,8 @@
         <el-form-item prop="rrValue" label="记录值">
           <el-input v-model="editRow.rrValue"></el-input>
         </el-form-item>
-        <el-form-item prop="dataCenter" label="数据中心">
-            <el-select v-model="editRow.status" style="width:100%">
+        <el-form-item prop="centerId" label="数据中心">
+            <el-select v-model="editRow.centerId" style="width:100%">
               <el-option :key="center.id" :label="center.dataCenter" :value="center.id" v-for="center in centerList"></el-option>
             </el-select>
         </el-form-item>
@@ -75,7 +75,7 @@ export default {
         rrValue: [
            { required: true, message: '请出入记录值', trigger: 'blur' },
         ],
-        status: [
+        centerId: [
            { required: true, message: '请选择数据中心', trigger: 'blur' },
         ]
       }
@@ -114,6 +114,8 @@ export default {
             let func = this.editRow.id ? $http.put : $http.post;
             if (this.editRow.id) {
               url += '/' + this.editRow.id;
+              let center = this.centerList.find(item => this.editRow.centerId === item.id);
+              this.editRow.centerName = center.dataCenter;
             }
             func(url, this.editRow).then(() => {
               this.$emit('close', true);

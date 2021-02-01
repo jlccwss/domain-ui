@@ -116,11 +116,11 @@ export default {
     },
     handlerEdit(row) {
       this.addAndEdit = true;
-      this.editRow = row;
+      this.editRow = { ...row };
     },
     handlerChange(row) {
       this.changeDialog = true;
-      this.editRow = row;
+      this.editRow = { ...row };
     },
     go(id) {
       this.$router.push({

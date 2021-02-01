@@ -63,8 +63,8 @@
             <template slot="title">
               <span><span class="icon toogale"></span>灾备切换</span>
             </template>
-            <el-menu-item index="/home/apps" v-if="authority.includes('apps')">应用列表</el-menu-item>
-            <el-menu-item index="/home/groups" v-if="authority.includes('groups')">分组列表</el-menu-item>
+            <el-menu-item index="/home/apps" v-if="authority.includes('apps')">应用管理</el-menu-item>
+            <el-menu-item index="/home/groups" v-if="authority.includes('groups')">分组管理</el-menu-item>
           </el-submenu>
         </el-menu>
         <div class="page">
