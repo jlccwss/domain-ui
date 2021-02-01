@@ -46,7 +46,9 @@
               <span>职位编号：{{row.positionCode}}</span><br />
               <span>职位名称：{{row.positionName}}</span>
             </p>
-            <span slot="reference">{{row.userName}}</span>
+            <span slot="reference">
+              <el-button type="text" size="small">{{row.userName}}</el-button>
+            </span>
           </el-popover>
         </template>
       </el-table-column>

@@ -38,8 +38,7 @@
           <el-popover
             placement="top"
             width="160"
-            trigger="hover"
-            v-model="visible">
+            trigger="hover">
             <p>{{row.detail}}</p>
             <el-button type="text" slot="reference">详情</el-button>
           </el-popover>

@@ -111,7 +111,8 @@ export default {
       };
     },
     getCurRole() {
-      this.user = getUser()
+      this.user = getUser();
+      // this.user.role = 'itInterfacer';
       this.authority = authority[this.user.role];
     },
     handleCommand(type) {

@@ -20,7 +20,6 @@
         <el-form-item prop="des" label="备注">
             <el-input
               v-model="editRow.des"
-              type="textarea"
               rows="3"
               resize="none"></el-input>
         </el-form-item>

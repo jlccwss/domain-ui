@@ -8,12 +8,12 @@
              <el-col :span="20">
                <el-input v-model="editRow.rrName"></el-input>
              </el-col>
-             <el-col :span="4" class="pl-sm">{{zoneName}}</el-col>
+             <el-col :span="4">.{{zoneName}}</el-col>
            </el-row>
         </el-form-item>
-        <el-form-item prop="defaultTtl" label="TTL">
+        <el-form-item prop="rrTtl" label="TTL">
           <el-row class="form-row">
-          <el-col :span="20"><el-input-number :min="1" style="width: 100%" size="small" v-model="editRow.defaultTtl"></el-input-number></el-col>
+          <el-col :span="20"><el-input-number :min="1" style="width: 100%" size="small" v-model="editRow.rrTtl"></el-input-number></el-col>
           <el-col :span="4" class="pl-sm">分钟</el-col>
           </el-row>
         </el-form-item>

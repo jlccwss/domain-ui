@@ -41,7 +41,7 @@
       <el-table-column
         label="是否启用">
         <template slot-scope="{ row }">
-          {{enableMap[row.enable]}}
+          <span :class="{enable: row.enable === 1, disbale: row.enable === 0}">{{enableMap[row.enable]}}</span>
         </template>
       </el-table-column>
       <el-table-column
@@ -157,5 +157,11 @@ export default {
 };
 </script>
 <style scoped lang="scss">
+.enable {
+  color: blue;
+}
 
+.disbale {
+  color: red;
+}
 </style>

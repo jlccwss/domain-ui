@@ -70,7 +70,6 @@
         </el-form-item>
         <el-form-item label="备注">
           <el-input
-            type="textarea"
             placeholder=""
             rows="3"
             resize="none"
