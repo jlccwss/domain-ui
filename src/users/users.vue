@@ -27,8 +27,7 @@
           <el-popover
             placement="top"
             width="160"
-            trigger="hover"
-            v-model="visible">
+            trigger="hover">
             <p>
               <span>用户名：{{row.userName}}</span><br />
               <span>角色：{{rulesMap[row.role]}}</span><br />
