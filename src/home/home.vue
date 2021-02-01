@@ -44,6 +44,12 @@
             <el-menu-item index="/home/records" v-if="authority.includes('records')">备案管理</el-menu-item>
             <el-menu-item index="/home/website" v-if="authority.includes('website')">网站信息表</el-menu-item>
           </el-submenu>
+          <el-submenu index="7" v-if="authority.includes('7')">
+            <template slot="title">
+              <span><span class="icon sys"></span>IP管理</span>
+            </template>
+            <el-menu-item index="/home/subnet" v-if="authority.includes('subnet')">子网管理</el-menu-item>
+          </el-submenu>
           <el-submenu index="4" v-if="authority.includes('4')">
             <template slot="title">
               <span><span class="icon sys"></span>系统管理</span>

@@ -23,6 +23,7 @@ import contacts from './contacts/contacts.vue';
 import website from './website/website.vue';
 import records from './records/records.vue';
 import recordInfo from './records/recordInfo.vue';
+import subnet from './subnet/subnet.vue';
 
 const router = new VueRouter({
   routes: [
@@ -118,7 +119,11 @@ const router = new VueRouter({
           name: 'contacts',
           component: contacts
         },
-        
+        {
+          path: 'subnet',
+          name: 'subnet',
+          component: subnet
+        },
       ]
     }
   ]
