@@ -84,7 +84,7 @@ export default {
         this.loading = false;
       }, () => {
         this.loading = false;
-      })
+      });
     },
     getCenterList() {
       const url = '/apis/datacenter/datas';

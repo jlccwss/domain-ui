@@ -46,7 +46,7 @@
           </el-submenu>
           <el-submenu index="7" v-if="authority.includes('7')">
             <template slot="title">
-              <span><span class="icon sys"></span>IP管理</span>
+              <span><span class="icon ip"></span>IP管理</span>
             </template>
             <el-menu-item index="/home/subnet" v-if="authority.includes('subnet')">子网管理</el-menu-item>
           </el-submenu>
@@ -267,6 +267,10 @@ export default {
           background-image: url(./../assets/icp-icon.png);
         }
 
+        &.ip {
+          background-image: url(./../assets/ip-icon.png);
+        }
+
         &.sys {
           background-image: url(./../assets/sys-icon.png);
         }
@@ -291,6 +295,10 @@ export default {
 
         &.icp {
           background-image: url(./../assets/icp-icon-active.png);
+        }
+
+        &.ip {
+          background-image: url(./../assets/ip-icon-active.png);
         }
 
         &.sys {

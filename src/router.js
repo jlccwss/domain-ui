@@ -24,12 +24,14 @@ import website from './website/website.vue';
 import records from './records/records.vue';
 import recordInfo from './records/recordInfo.vue';
 import subnet from './subnet/subnet.vue';
+import notFound from './404/404.vue';
 
 const router = new VueRouter({
   routes: [
     { path: '/', redirect: '/login' },
     { path: '/login', name: 'login', component: login },
     { path: '/bigshow', name: 'bigshow', component: bigshow },
+    { path: '/404', name: '404', component: notFound },
     {
       path: '/home',
       component: home,
@@ -124,20 +126,25 @@ const router = new VueRouter({
           name: 'subnet',
           component: subnet
         },
+        {
+          path: '404',
+          name: 'home404',
+          component: notFound
+        },
       ]
     }
   ]
 });
 
 router.beforeEach((to, from, next) => {
-  if (['login', 'bigshow'].includes(to.name)) {
+  if (['login', 'bigshow', '404'].includes(to.name)) {
     next();
   } else {
     $http.get('/apis/current_role').then(res => {
       let user = res.data;
       setUser(user);
       let authorityArr = authority[user.role];
-      if (authorityArr.includes(to.name)) {
+      if (authorityArr.includes(to.name) || to.name === 'home404') {
         next();
       } else {
         next({ name: authorityArr[0] })

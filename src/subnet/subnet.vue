@@ -10,11 +10,11 @@
         <el-col :span="4" class="page-title">
           子网管理
         </el-col>
-        <el-col :span="20" align="right">
+        <!-- <el-col :span="20" align="right">
           <el-button @click="handlerAdd()" type="primary" size="small">
             创建
           </el-button>
-        </el-col>
+        </el-col> -->
       </el-row>
      <el-table
       :data="list"
@@ -70,7 +70,7 @@ export default {
     };
   },
   mounted() {
-    this.getList();
+    // this.getList();
     this.getCenterList();
   },
   methods: {
