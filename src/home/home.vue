@@ -24,14 +24,14 @@
         <el-menu :unique-opened="true" :router="true" :default-openeds="openeds" class="menu" :default-active="currentNav">
           <el-submenu index="1" v-if="authority.includes('1')">
             <template slot="title">
-              <span><span class="icon dns"></span>DNS管理</span>
+              <span><span class="icon dns"></span>域名记录管理</span>
             </template>
-            <el-menu-item index="/home/zones" v-if="authority.includes('zones')">局域网</el-menu-item>
+            <el-menu-item index="/home/zones" v-if="authority.includes('zones')">互联网</el-menu-item>
             <el-menu-item index="/home/gzones" v-if="authority.includes('gzones')">广域网</el-menu-item>
           </el-submenu>
           <el-submenu index="2" v-if="authority.includes('2')">
             <template slot="title">
-              <span><span class="icon domain"></span>公网域名</span>
+              <span><span class="icon domain"></span>域名注册管理</span>
             </template>
             <el-menu-item index="/home/domains" v-if="authority.includes('domains')">域名管理</el-menu-item>
             <el-menu-item index="/home/sslCertificates" v-if="authority.includes('sslCertificates')">SSL证书</el-menu-item>
@@ -48,7 +48,9 @@
             <template slot="title">
               <span><span class="icon ip"></span>IP管理</span>
             </template>
-            <el-menu-item index="/home/subnet" v-if="authority.includes('subnet')">子网管理</el-menu-item>
+            <el-menu-item index="/home/addressManage" v-if="authority.includes('addressManage')">地址管理</el-menu-item>
+            <el-menu-item index="/home/ranking" v-if="authority.includes('ranking')">使用排行</el-menu-item>
+            <el-menu-item index="/home/subnet" v-if="authority.includes('subnet')">子网上报</el-menu-item>
           </el-submenu>
           <el-submenu index="4" v-if="authority.includes('4')">
             <template slot="title">

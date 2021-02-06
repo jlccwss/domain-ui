@@ -172,6 +172,7 @@ export default {
   line-height:30px;
   border-bottom: 1px solid rgba(0,145,255,0.44);
   padding-left: 12px;
+  text-align: left;
 }
 .cur-day {
   height: 125px;
@@ -180,6 +181,7 @@ export default {
 .thrid-title {
   color: #fff;
   font-size: 14px;
+  text-align: left;
 }
 .des {
   opacity: 0.66;

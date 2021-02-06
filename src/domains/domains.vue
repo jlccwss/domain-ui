@@ -2,7 +2,7 @@
     <div>
       <div class="breadcrumb">
         <el-breadcrumb separator="/">
-          <el-breadcrumb-item>公网域名</el-breadcrumb-item>
+          <el-breadcrumb-item>域名注册管理</el-breadcrumb-item>
           <el-breadcrumb-item>域名注册</el-breadcrumb-item>
         </el-breadcrumb>
       </div>

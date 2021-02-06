@@ -2,8 +2,8 @@
     <div>
       <div class="breadcrumb">
         <el-breadcrumb separator="/">
-          <el-breadcrumb-item>DNS管理</el-breadcrumb-item>
-          <el-breadcrumb-item>局域网</el-breadcrumb-item>
+          <el-breadcrumb-item>域名记录管理</el-breadcrumb-item>
+          <el-breadcrumb-item>互联网</el-breadcrumb-item>
           <el-breadcrumb-item>{{detail.zoneName}}</el-breadcrumb-item>
         </el-breadcrumb>
       </div>

@@ -77,6 +77,7 @@ export default {
         this.option.series = [{
           type: 'bar',
           data,
+          barWidth: 20,
           label: {
               show: true,
               position: 'right',
@@ -85,7 +86,7 @@ export default {
           itemStyle: {
             normal: {
               color: function(params) {
-                var colorList = ['#000', '#fff', '#13C2C2', '#2FC25B ', '#FACC14', '#F04864', '#1890FF', '#8543E0', '#1890FF', '#6DD400'];
+                var colorList = ['#36CFC9', '#F7B500', '#FA6400', '#FF85C0 ', '#096DD9', '#FF4D4F', '#FFEC3D', '#A0D911', '#9254DE', '#32C5FF'];
                 return colorList[params.dataIndex] || 'red';
               }
             }

@@ -72,7 +72,7 @@ export default {
       this.userList = this.allUserList.filter(item => item.userName.includes(this.userSearch));
     },
     getViewList() {
-      const url = '/apis/views';
+      const url = '/apis/views?type=1';
       $http.get(url).then(res => {
         if (res.data.status === 0) {
           this.viewList = res.data.data;

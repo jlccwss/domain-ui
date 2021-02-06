@@ -24,6 +24,8 @@ import website from './website/website.vue';
 import records from './records/records.vue';
 import recordInfo from './records/recordInfo.vue';
 import subnet from './subnet/subnet.vue';
+import ranking from './ranking/ranking.vue';
+import addressManage from './addressManage/addressManage.vue';
 import notFound from './404/404.vue';
 
 const router = new VueRouter({
@@ -125,6 +127,16 @@ const router = new VueRouter({
           path: 'subnet',
           name: 'subnet',
           component: subnet
+        },
+        {
+          path: 'addressManage',
+          name: 'addressManage',
+          component: addressManage
+        },
+        {
+          path: 'ranking',
+          name: 'ranking',
+          component: ranking
         },
         {
           path: '404',

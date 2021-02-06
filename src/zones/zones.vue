@@ -2,13 +2,13 @@
     <div>
       <div class="breadcrumb">
         <el-breadcrumb separator="/">
-          <el-breadcrumb-item>DNS管理</el-breadcrumb-item>
-          <el-breadcrumb-item>局域网</el-breadcrumb-item>
+          <el-breadcrumb-item>域名记录管理</el-breadcrumb-item>
+          <el-breadcrumb-item>互联网</el-breadcrumb-item>
         </el-breadcrumb>
       </div>
       <el-row class="mt-xs">
         <el-col :span="4" class="page-title">
-          局域网
+          互联网
         </el-col>
         <el-col :span="20" align="right">
           <el-button @click="handlerAdd" type="primary" size="small">
