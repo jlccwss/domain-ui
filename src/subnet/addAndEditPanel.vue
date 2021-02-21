@@ -50,6 +50,9 @@ export default {
       rules: {
         subnet: [
            { required: true, message: '请输入子网', trigger: 'blur' },
+        ],
+        masklen: [
+           { required: true, message: '请输入掩码长度', trigger: 'blur' },
         ]
       }
     };
