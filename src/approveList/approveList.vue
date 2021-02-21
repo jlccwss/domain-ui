@@ -12,6 +12,8 @@
         </el-col>
       </el-row>
      <el-table
+      v-loading="loading"
+      max-height="700"
       :data="list"
       class="mt-xs"
       style="width: 100%">
@@ -64,6 +66,16 @@
         </template>
       </el-table-column>
     </el-table>
+    <el-row class="pagination-con">
+      <el-pagination
+        @size-change="handleSizeChange"
+        @current-change="handleCurrentChange"
+        :current-page="pagination.currpage"
+        :page-size="pagination.pagesize"
+        layout="total, prev, pager, next, jumper"
+        :total="pagination.total">
+      </el-pagination>
+    </el-row>
     <addAndEditPanel @close="close" v-if="addAndEdit" :editRow="editRow"></addAndEditPanel>
     </div>
 </template>
@@ -87,16 +99,29 @@ export default {
         0: 'wait',
         1: 'success',
         2: 'error'
-      }
+      },
+      pagination: {
+        currpage: 1,
+        pagesize: 10
+      },
     };
   },
   mounted() {
     this.getList();
   },
   methods: {
+    handleCurrentChange(pageNum) {
+      this.pagination.currpage = pageNum;
+      this.getList();
+    },
+    handleSizeChange(pageSize) {
+      this.pagination.pagesize = pageSize;
+      this.getList();
+    },
     getList() {
       this.loading = true;
-      const url = '/apis/approveList';
+      const { currpage, pagesize } = this.pagination;
+      const url = `/apis/approveList?pageNum=${currpage}&pageSize=${pagesize}`;
       const list = ['flowPath1', 'flowPath2', 'flowPath3', 'flowPath4'];
       const userName = getUser().userName;
       $http.get(url).then(res => {
@@ -119,6 +144,7 @@ export default {
             return record;
           });
           this.list = data;
+          this.pagination.total = res.data.total;
         }
         this.loading = false;
       }, () => {

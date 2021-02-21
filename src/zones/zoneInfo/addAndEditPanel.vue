@@ -5,10 +5,10 @@
       <el-form ref="form" :model="editRow" size="small" :rules="rules">
          <el-form-item prop="rrName" label="记录名称">
            <el-row class="form-row">
-             <el-col :span="20">
+             <el-col :span="14">
                <el-input v-model="editRow.rrName"></el-input>
              </el-col>
-             <el-col :span="4">.{{zoneName}}</el-col>
+             <el-col :span="10">.{{zoneName}}</el-col>
            </el-row>
         </el-form-item>
         <el-form-item prop="rrTtl" label="TTL">

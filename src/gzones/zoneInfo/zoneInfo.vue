@@ -14,17 +14,39 @@
         <el-col :span="20" align="right">
           <el-button @click="handlerAdd" type="primary" size="small">
             创建
-          </el-button>
+          </el-button>``
         </el-col>
       </el-row>
+      <el-form class="mt-xs" size="small" label-width="120px" label-position="right">
+       <el-row>
+         <el-col :span="6">
+          <el-form-item label="记录名称">
+            <el-input v-model="params.search" placeholder="记录名称"></el-input>
+          </el-form-item>
+         </el-col>
+         <el-col :span="6">
+          <el-button size="small" type="primary" @click="handlerSearch">查询</el-button>
+         </el-col>
+       </el-row>
+    </el-form>
      <el-table
       :data="list"
       class="mt-xs"
+      v-loading="loading"
+      max-height="700"
       header-cell-class-name="table-head"
       style="width: 100%">
       <el-table-column
         prop="rrName"
         label="记录名称">
+      </el-table-column>
+      <el-table-column
+        prop="rrType"
+        label="记录类型">
+      </el-table-column>
+      <el-table-column
+        prop="rrValue"
+        label="记录值">
       </el-table-column>
       <el-table-column
         prop="viewName"
@@ -67,6 +89,16 @@
         </template>
       </el-table-column>
     </el-table>
+    <el-row class="pagination-con">
+      <el-pagination
+        @size-change="handleSizeChange"
+        @current-change="handleCurrentChange"
+        :current-page="pagination.currpage"
+        :page-size="pagination.pagesize"
+        layout="total, prev, pager, next, jumper"
+        :total="pagination.total">
+      </el-pagination>
+    </el-row>
     <addAndEditPanel :zoneName="detail.zoneName" @close="close" v-if="addAndEdit" :editRow="editRow"></addAndEditPanel>
     </div>
 </template>
@@ -92,7 +124,12 @@ export default {
         0: '未审核',
         1: '已通过',
         2: '已拒绝',
-      }
+      },
+      params: {},
+      pagination: {
+        currpage: 1,
+        pagesize: 10
+      },
     };
   },
   mounted() {
@@ -101,10 +138,23 @@ export default {
     this.getDetail();
   },
   methods: {
+    handlerSearch() {
+      this.pagination.currpage = 1;
+      this.getList();
+    },
+    handleCurrentChange(pageNum) {
+      this.pagination.currpage = pageNum;
+      this.getList();
+    },
+    handleSizeChange(pageSize) {
+      this.pagination.pagesize = pageSize;
+      this.getList();
+    },
     handlerAdd() {
       this.addAndEdit = true;
       this.editRow = {
-        enable: 1
+        enable: 1,
+        rrTtl: 10
       };
     },
     handlerEdit(row) {
@@ -137,10 +187,16 @@ export default {
     },
     getList() {
       this.loading = true;
-      const url = '/apis/zones/' + this.zoneId + '/rrs';
+      const { currpage, pagesize } = this.pagination;
+      const { search } = this.params;
+      let url = `/apis/zones/${this.zoneId}/rrs?pageNum=${currpage}&pageSize=${pagesize}`;
+      if (search) {
+        url += `&search=${search}`;
+      }
       $http.get(url).then(res => {
         if (res.data.status === 0) {
           this.list = res.data.data;
+          this.pagination.total = res.data.total;
         }
         this.loading = false;
       }, () => {
@@ -158,7 +214,7 @@ export default {
 </script>
 <style scoped lang="scss">
 .enable {
-  color: blue;
+  color: green;
 }
 
 .disbale {

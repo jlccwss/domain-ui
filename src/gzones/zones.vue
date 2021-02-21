@@ -20,6 +20,8 @@
       class="mt-xs"
       :data="list"
       header-cell-class-name="table-head"
+      v-loading="loading"
+      max-height="700"
       style="width: 100%">
       <el-table-column
         prop="userName"
@@ -58,6 +60,16 @@
         </template>
       </el-table-column>
     </el-table>
+    <el-row class="pagination-con">
+      <el-pagination
+        @size-change="handleSizeChange"
+        @current-change="handleCurrentChange"
+        :current-page="pagination.currpage"
+        :page-size="pagination.pagesize"
+        layout="total, prev, pager, next, jumper"
+        :total="pagination.total">
+      </el-pagination>
+    </el-row>
     <addAndEditPanel @close="close" v-if="addAndEdit" :editRow="editRow"></addAndEditPanel>
     <authorizationPanel @close="close" v-if="changeDialog" :editRow="editRow"></authorizationPanel>
     </div>
@@ -82,7 +94,11 @@ export default {
       editRow: {},
       addAndEdit: false,
       changeDialog: false,
-      showDel: false
+      showDel: false,
+      pagination: {
+        currpage: 1,
+        pagesize: 10
+      },
     };
   },
   mounted() {
@@ -91,6 +107,14 @@ export default {
     this.showDel = user.role === 'admin';
   },
   methods: {
+    handleCurrentChange(pageNum) {
+      this.pagination.currpage = pageNum;
+      this.getList();
+    },
+    handleSizeChange(pageSize) {
+      this.pagination.pagesize = pageSize;
+      this.getList();
+    },
     handlerAdd() {
       this.addAndEdit = true;
       this.editRow = {
@@ -129,10 +153,12 @@ export default {
     },
     getList() {
       this.loading = true;
-      const url = '/apis/zones?type=2';
+      const { currpage, pagesize } = this.pagination;
+      const url = `/apis/zones?type=2&pageNum=${currpage}&pageSize=${pagesize}`;
       $http.get(url).then(res => {
         if (res.data.status === 0) {
           this.list = res.data.data;
+          this.pagination.total = res.data.total;
         }
         this.loading = false;
       }, () => {

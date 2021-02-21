@@ -19,6 +19,8 @@
      <el-table
       :data="list"
       class="mt-xs"
+      v-loading="loading"
+      max-height="700"
       style="width: 100%">
       <el-table-column
         prop="name"
@@ -48,6 +50,16 @@
         </template>
       </el-table-column>
     </el-table>
+    <el-row class="pagination-con">
+      <el-pagination
+        @size-change="handleSizeChange"
+        @current-change="handleCurrentChange"
+        :current-page="pagination.currpage"
+        :page-size="pagination.pagesize"
+        layout="total, prev, pager, next, jumper"
+        :total="pagination.total">
+      </el-pagination>
+    </el-row>
     <addAndEditPanel @close="close" v-if="addAndEdit" :editRow="editRow"></addAndEditPanel>
     </div>
 </template>
@@ -66,7 +78,11 @@ export default {
       loading: false,
       editRow: {},
       addAndEdit: false,
-      centerList: []
+      centerList: [],
+      pagination: {
+        currpage: 1,
+        pagesize: 10
+      },
     };
   },
   mounted() {
@@ -74,12 +90,22 @@ export default {
     this.getCenterList();
   },
   methods: {
+    handleCurrentChange(pageNum) {
+      this.pagination.currpage = pageNum;
+      this.getList();
+    },
+    handleSizeChange(pageSize) {
+      this.pagination.pagesize = pageSize;
+      this.getList();
+    },
     getList() {
       this.loading = true;
-      const url = '/apis/apps';
+      const { currpage, pagesize } = this.pagination;
+      const url = `/apis/apps?pageNum=${currpage}&pageSize=${pagesize}`;
       $http.get(url).then(res => {
         if (res.data.status === 0) {
           this.list = res.data.data;
+          this.pagination.total = res.data.total;
         }
         this.loading = false;
       }, () => {
@@ -87,7 +113,7 @@ export default {
       });
     },
     getCenterList() {
-      const url = '/apis/datacenter/datas';
+      const url = `/apis/datacenter/datas`;
       $http.get(url).then(res => {
         if (res.data.status === 0) {
           this.centerList = res.data.data;

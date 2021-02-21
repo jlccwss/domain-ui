@@ -77,7 +77,7 @@ export default {
         this.option.series = [{
           type: 'bar',
           data,
-          barWidth: 20,
+          barWidth: 17,
           label: {
               show: true,
               position: 'right',

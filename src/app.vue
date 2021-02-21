@@ -21,4 +21,10 @@ export default {
   padding: 0;
   height: 100%;
 }
+
+.pagination-con {
+  background: #fff;
+  text-align: right;
+  padding: 6px;
+}
 </style>

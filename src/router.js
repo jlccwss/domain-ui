@@ -25,7 +25,6 @@ import records from './records/records.vue';
 import recordInfo from './records/recordInfo.vue';
 import subnet from './subnet/subnet.vue';
 import ranking from './ranking/ranking.vue';
-import addressManage from './addressManage/addressManage.vue';
 import notFound from './404/404.vue';
 
 const router = new VueRouter({
@@ -129,11 +128,6 @@ const router = new VueRouter({
           component: subnet
         },
         {
-          path: 'addressManage',
-          name: 'addressManage',
-          component: addressManage
-        },
-        {
           path: 'ranking',
           name: 'ranking',
           component: ranking
@@ -148,18 +142,30 @@ const router = new VueRouter({
   ]
 });
 
+let getRolePromise;
+function getRole() {
+  if (!getRolePromise) {
+    getRolePromise = $http.get('/apis/current_role');
+  }
+  return getRolePromise;
+}
+
 router.beforeEach((to, from, next) => {
   if (['login', 'bigshow', '404'].includes(to.name)) {
     next();
   } else {
-    $http.get('/apis/current_role').then(res => {
+    getRole().then(res => {
       let user = res.data;
       setUser(user);
       let authorityArr = authority[user.role];
+      if (to.path === '/home/addressManage' && from.name) {
+        next({ name: from.name });
+        return;
+      }
       if (authorityArr.includes(to.name) || to.name === 'home404') {
         next();
       } else {
-        next({ name: authorityArr[0] })
+        next({ name: authorityArr[0] });
       }
     }, () => next({ name: 'login' }));
   }

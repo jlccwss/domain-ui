@@ -15,7 +15,7 @@
             </el-select>
         </el-form-item>
         <el-form-item prop="appids" label="应用">
-            <el-select style="width:100%" v-model="editRow.appids" multiple>
+            <el-select style="width:100%" filterable v-model="editRow.appids" multiple>
               <el-option :key="app.id" :label="app.name + '('+ app.centerName + ')'" :value="app.id" v-for="app in appList"></el-option>
             </el-select>
         </el-form-item>

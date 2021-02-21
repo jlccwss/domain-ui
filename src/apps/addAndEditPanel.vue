@@ -15,7 +15,7 @@
             </el-select>
         </el-form-item>
         <el-form-item label="记录" prop="rrids">
-            <el-select style="width:100%" v-model="editRow.rrids" multiple>
+            <el-select style="width:100%" v-model="editRow.rrids" multiple filterable>
               <el-option :key="app.id" :label="app.rrName + '('+ app.centerName + ')'" :value="app.id" v-for="app in appList"></el-option>
             </el-select>
         </el-form-item>
