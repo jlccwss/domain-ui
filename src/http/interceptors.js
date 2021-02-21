@@ -38,7 +38,7 @@ export function errorInterceptor(error) {
 
 export function responseInterceptor(response) {
   // status may be changed after call it
-  if (response.status !== 200) {
+  if (![200, 302].includes(response.status)) {
     notificationFactory.error(response.statusText);
   }
   return response;

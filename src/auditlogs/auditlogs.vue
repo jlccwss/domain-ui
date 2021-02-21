@@ -54,6 +54,7 @@
         label="操作时间">
       </el-table-column>
       <el-table-column
+        prop="result"
         label="操作结果">
       </el-table-column>
       <el-table-column

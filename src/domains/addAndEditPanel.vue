@@ -172,7 +172,7 @@ export default {
   },
   methods: {
     getUserList() {
-      const url = '/apis/users';
+      const url = '/apis/usersall';
       $http.get(url).then(res => {
         if (res.data.status === 0) {
           this.userList = res.data.data;

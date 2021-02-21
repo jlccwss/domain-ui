@@ -29,7 +29,7 @@
       <el-table-column
         label="启用状态">
         <template slot-scope="{ row }">
-          {{row.status === 1 ? '开启' : '关闭'}}
+          <span :class="{enable: row.status === 1, disbale: row.status === 0}">{{row.status === 1 ? '开启' : '关闭'}}</span>
         </template>
       </el-table-column>
       <el-table-column
@@ -159,3 +159,12 @@ export default {
   }
 };
 </script>
+<style scoped lang="scss">
+.enable {
+  color: green;
+}
+
+.disbale {
+  color: red;
+}
+</style>

@@ -92,7 +92,7 @@ export default {
       this.selectUsers = this.selectUsers.filter(id => id !== userId);
     },
     getUserList() {
-      const url = '/apis/users';
+      const url = '/apis/usersall';
       $http.get(url).then(res => {
         if (res.data.status === 0) {
           this.allUserList =  this.userList = res.data.data;

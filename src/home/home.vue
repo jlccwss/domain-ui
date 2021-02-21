@@ -109,7 +109,10 @@ export default {
   },
   methods: {
     navToAddress() {
-      window.open('/apis/ipamurl');
+      var ww = window.open('/apis/ipamurl');
+      ww.onload = function() {
+        ww.close();
+      };
     },
     initWss() {
       const host = `${location.protocol === 'https' ? 'wss': 'ws'}://${location.host}`;

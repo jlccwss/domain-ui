@@ -10,34 +10,62 @@
         <el-col :span="4" class="page-title">
           子网管理
         </el-col>
-        <!-- <el-col :span="20" align="right">
+        <el-col :span="20" align="right">
           <el-button @click="handlerAdd()" type="primary" size="small">
             创建
           </el-button>
-        </el-col> -->
+        </el-col>
       </el-row>
+      <el-form class="mt-xs" size="small" label-width="120px" label-position="right">
+       <el-row>
+         <el-col :span="6">
+          <el-form-item label="子网">
+            <el-input v-model="params.searchSubnet" placeholder="子网"></el-input>
+          </el-form-item>
+         </el-col>
+         <el-col :span="6">
+          <el-button size="small" type="primary" @click="handlerSearch">查询</el-button>
+         </el-col>
+       </el-row>
+    </el-form>
      <el-table
       :data="list"
+      v-loading="loading"
+      max-height="700"
       class="mt-xs"
       style="width: 100%">
       <el-table-column
-        prop="name"
-        label="应用名称">
+        prop="subnet"
+        label="子网">
+      </el-table-column>
+      <el-table-column
+        prop="masklen"
+        label="掩码长度">
+      </el-table-column>
+      <el-table-column
+        prop="useRate"
+        label="使用率">
+      </el-table-column>
+      <el-table-column
+        prop="company"
+        label="公司名称">
+      </el-table-column>
+      <el-table-column
+        prop="partment"
+        label="部门">
+      </el-table-column>
+      <el-table-column
+        prop="manager"
+        label="责任人">
       </el-table-column>
       <el-table-column
         prop="des"
-        label="描述">
+        label="备注">
       </el-table-column>
       <el-table-column
         label="创建时间">
         <template slot-scope="{ row }">
           {{row.createTime | dateFormat}}
-        </template>
-      </el-table-column>
-      <el-table-column
-        label="数据中心">
-        <template slot-scope="{ row }">
-          <el-button @click="changeCenter(row.id, center)" :disabled="row.centerId===center.id" type="text" size="small" :key="center.id" v-for="center in centerList">{{center.dataCenter}}</el-button>
         </template>
       </el-table-column>
       <el-table-column
@@ -48,6 +76,16 @@
         </template>
       </el-table-column>
     </el-table>
+    <el-row class="pagination-con">
+      <el-pagination
+        @size-change="handleSizeChange"
+        @current-change="handleCurrentChange"
+        :current-page="pagination.currpage"
+        :page-size="pagination.pagesize"
+        layout="total, prev, pager, next, jumper"
+        :total="pagination.total">
+      </el-pagination>
+    </el-row>
     <addAndEditPanel @close="close" v-if="addAndEdit" :editRow="editRow"></addAndEditPanel>
     </div>
 </template>
@@ -66,58 +104,56 @@ export default {
       loading: false,
       editRow: {},
       addAndEdit: false,
-      centerList: []
+      centerList: [],
+      pagination: {
+        currpage: 1,
+        pagesize: 10
+      },
+      params: {}
     };
   },
   mounted() {
-    // this.getList();
-    this.getCenterList();
+    this.getList();
   },
   methods: {
+    handlerSearch() {
+      this.pagination.currpage = 1;
+      this.getList();
+    },
+    handleCurrentChange(pageNum) {
+      this.pagination.currpage = pageNum;
+      this.getList();
+    },
+    handleSizeChange(pageSize) {
+      this.pagination.pagesize = pageSize;
+      this.getList();
+    },
     getList() {
       this.loading = true;
-      const url = '/apis/apps';
+      const { currpage, pagesize } = this.pagination;
+      const { searchSubnet } = this.params;
+      let url = `/apis/subnets?pageNum=${currpage}&pageSize=${pagesize}`;
+      if (searchSubnet) {
+        url += `&searchSubnet=${searchSubnet}`;
+      }
       $http.get(url).then(res => {
         if (res.data.status === 0) {
           this.list = res.data.data;
+          this.pagination.total = res.data.total;
         }
         this.loading = false;
       }, () => {
         this.loading = false;
       });
     },
-    getCenterList() {
-      const url = '/apis/datacenter/datas';
-      $http.get(url).then(res => {
-        if (res.data.status === 0) {
-          this.centerList = res.data.data;
-        }
-      });
-    },
     handlerEdit(row) {
       this.addAndEdit = true;
       this.editRow = { ...row };
     },
-    changeCenter(rowId, center) {
-      this.$confirm('是否切换到 '+ center.dataCenter +' 数据中心?', '切换数据中心')
-          .then(() => {
-            const url = `/apis/apps/${rowId}/switch/${center.id}`;
-            $http.post(url).then(() => {
-              this.$notify.success({
-                message: '数据中心切换成功'
-              });
-              this.getList();
-            }, () => {
-              this.$notify.error({
-                message: '数据中心切换失败!'
-              });
-            });
-          });
-    },
     handlerDel(rowId) {
       this.$confirm('删除后不可恢复', '确认要删除这条信息吗？')
           .then(() => {
-            const url = `/apis/apps/${rowId}`;
+            const url = `/apis/subnets/${rowId}`;
             $http.delete(url).then(() => {
               this.$notify.success({
                 message: '删除成功'
