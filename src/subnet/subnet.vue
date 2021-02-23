@@ -3,12 +3,12 @@
       <div class="breadcrumb">
         <el-breadcrumb separator="/">
           <el-breadcrumb-item>IP管理</el-breadcrumb-item>
-          <el-breadcrumb-item>子网管理</el-breadcrumb-item>
+          <el-breadcrumb-item>子网上报</el-breadcrumb-item>
         </el-breadcrumb>
       </div>
       <el-row class="mt-xs">
         <el-col :span="4" class="page-title">
-          子网管理
+          子网上报
         </el-col>
         <el-col :span="20" align="right">
           <el-button @click="handlerAdd()" type="primary" size="small">
@@ -35,12 +35,12 @@
       class="mt-xs"
       style="width: 100%">
       <el-table-column
-        prop="subnet"
-        label="子网">
+        prop="name"
+        label="名称">
       </el-table-column>
       <el-table-column
-        prop="masklen"
-        label="掩码长度">
+        prop="subnet"
+        label="子网">
       </el-table-column>
       <el-table-column
         prop="useRate"
@@ -168,7 +168,9 @@ export default {
     },
     handlerAdd() {
       this.addAndEdit = true;
-      this.editRow = {};
+      this.editRow = {
+        version: 4
+      };
     },
     close(refresh) {
       if (refresh) {

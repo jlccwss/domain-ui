@@ -36,14 +36,14 @@
             <el-menu-item index="/home/domains" v-if="authority.includes('domains')">域名管理</el-menu-item>
             <el-menu-item index="/home/sslCertificates" v-if="authority.includes('sslCertificates')">SSL证书</el-menu-item>
           </el-submenu> -->
-          <el-submenu index="3" v-if="authority.includes('3')">
+          <!-- <el-submenu index="3" v-if="authority.includes('3')">
             <template slot="title">
               <span><span class="icon icp"></span>ICP备案</span>
             </template>
-            <!-- <el-menu-item index="icps" v-if="authority.includes('icps')">ICP备案</el-menu-item> -->
+            <el-menu-item index="icps" v-if="authority.includes('icps')">ICP备案</el-menu-item>
             <el-menu-item index="/home/records" v-if="authority.includes('records')">备案管理</el-menu-item>
             <el-menu-item index="/home/website" v-if="authority.includes('website')">网站信息表</el-menu-item>
-          </el-submenu>
+          </el-submenu> -->
           <el-submenu index="7" v-if="authority.includes('7')">
             <template slot="title">
               <span><span class="icon ip"></span>IP管理</span>

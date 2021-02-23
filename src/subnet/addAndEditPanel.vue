@@ -3,11 +3,18 @@
     <div class="left-panel flex-col">
       <el-card shadow="never" class="box-card flex-auto" header="新增编辑">
       <el-form ref="form" :rules="rules" :model="editRow" size="small">
-         <el-form-item label="子网" prop="subnet">
-            <el-input v-model="editRow.subnet"></el-input>
+        <el-form-item label="子网名称" prop="name">
+            <el-input v-model="editRow.name"></el-input>
         </el-form-item>
-        <el-form-item label="掩码长度" prop="masklen">
-            <el-input-number :min="1" style="width: 100%" size="small" v-model="editRow.masklen"></el-input-number>
+        <el-form-item label="子网地址" prop="subnet">
+            <el-input :disabled="!!editRow.id" v-model="editRow.subnet"></el-input>
+            <div class="tip">示例:192.168.1.0/24</div>
+        </el-form-item>
+        <el-form-item label="ip类型" prop="version">
+          <div class="form-row">
+            <el-radio v-model="editRow.version" :label="4">IPv4</el-radio>
+            <el-radio v-model="editRow.version" :label="6">IPv6</el-radio>
+          </div>
         </el-form-item>
         <el-form-item label="使用率" prop="useRate">
             <el-input v-model="editRow.useRate"></el-input>
@@ -49,10 +56,10 @@ export default {
       form: {},
       rules: {
         subnet: [
-           { required: true, message: '请输入子网', trigger: 'blur' },
+           { required: true, message: '请输入子网地址', trigger: 'blur' },
         ],
-        masklen: [
-           { required: true, message: '请输入掩码长度', trigger: 'blur' },
+        name: [
+           { required: true, message: '请输入子网名称', trigger: 'blur' },
         ]
       }
     };
@@ -84,5 +91,9 @@ export default {
     width: 500px;
     text-align: left;
     background: #fff;
+}
+
+.tip {
+  color: #F56C6C;
 }
 </style>
