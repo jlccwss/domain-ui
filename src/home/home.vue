@@ -109,10 +109,13 @@ export default {
   },
   methods: {
     navToAddress() {
-      var ww = window.open('/apis/ipamurl');
-      ww.onload = function() {
-        ww.close();
-      };
+      $http.get('/apis/current_role').then(() => {
+        window.open('/apis/ipamurl');
+      });
+      // var ww = window.open('/apis/ipamurl');
+      // ww.onload = function() {
+      //   ww.close();
+      // };
     },
     initWss() {
       const host = `${location.protocol === 'https' ? 'wss': 'ws'}://${location.host}`;

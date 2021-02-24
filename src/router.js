@@ -150,6 +150,10 @@ function getRole() {
   return getRolePromise;
 }
 
+function clearRole() {
+  getRolePromise = null;
+}
+
 router.beforeEach((to, from, next) => {
   if (['login', 'bigshow', '404'].includes(to.name)) {
     next();
@@ -167,7 +171,10 @@ router.beforeEach((to, from, next) => {
       } else {
         next({ name: authorityArr[0] });
       }
-    }, () => next({ name: 'login' }));
+    }, () => {
+      clearRole();
+      next({ name: 'login' });
+    });
   }
 })
 

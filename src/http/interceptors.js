@@ -1,4 +1,5 @@
 import Vue from 'vue';
+import router from '../router';
 
 const notificationFactory = (() => {
   const instances = {};
@@ -31,7 +32,13 @@ export function errorInterceptor(error) {
         };
 
     notificationFactory.error(response.status + ',' + response.statusText);
+    if (response.status === 401) {
+      router.push({
+        name: 'login'
+      });
+    }
   }
+  
   return Promise.reject(error);
 }
 
@@ -41,5 +48,6 @@ export function responseInterceptor(response) {
   if (![200, 302].includes(response.status)) {
     notificationFactory.error(response.statusText);
   }
+
   return response;
 }
