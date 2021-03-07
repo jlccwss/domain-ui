@@ -82,9 +82,10 @@
           {{row.createTime | dateFormat}}
         </template>
       </el-table-column>
-      <el-table-column width="140" label="操作">
+      <el-table-column width="180" label="操作">
         <template slot-scope="{ row }">
           <el-button @click="handlerEdit(row)" type="text" size="small">编辑</el-button>
+          <el-button v-if="isAdmin" @click="handlerChange(row)" type="text" size="small">修改所有者</el-button>
           <el-button @click="handlerDel(row.id)" type="text" size="small">删除</el-button>
         </template>
       </el-table-column>
@@ -99,6 +100,7 @@
         :total="pagination.total">
       </el-pagination>
     </el-row>
+    <authorizationPanel @close="close" v-if="changeDialog" :editRow="editRow"></authorizationPanel>
     <addAndEditPanel :zoneName="detail.zoneName" @close="close" v-if="addAndEdit" :editRow="editRow"></addAndEditPanel>
     </div>
 </template>
@@ -106,14 +108,18 @@
 <script>
 import $http from '@/http';
 import addAndEditPanel from './addAndEditPanel.vue';
+import { getUser } from '@/user';
+import authorizationPanel from './authorizationPanel.vue';
 
 export default {
   components: {
-    addAndEditPanel
+    addAndEditPanel,
+    authorizationPanel
   },
   data() {
     return {
       list: [],
+      isAdmin: false,
       loading: false,
       editRow: {},
       detail: {},
@@ -130,10 +136,13 @@ export default {
         currpage: 1,
         pagesize: 10
       },
+      changeDialog: false
     };
   },
   mounted() {
     this.zoneId = this.$route.params.zoneId;
+    let user = getUser();
+    this.isAdmin = user.role === 'admin';
     this.getList();
     this.getDetail();
   },
@@ -185,6 +194,10 @@ export default {
         }
       })
     },
+    handlerChange(row) {
+      this.changeDialog = true;
+      this.editRow = row;
+    },
     getList() {
       this.loading = true;
       const { currpage, pagesize } = this.pagination;
@@ -208,6 +221,7 @@ export default {
         this.getList();
       }
       this.addAndEdit = false;
+      this.changeDialog = false;
     }
   }
 };

@@ -77,8 +77,14 @@ export default {
             if (this.editRow.id) {
               url += '/' + this.editRow.id;
             }
-            func(url, this.editRow).then(() => {
-              this.$emit('close', true);
+            func(url, this.editRow).then(res => {
+              if (res.data.status) {
+                this.$notify.error({
+                  message: res.data.msg
+                });
+              } else {
+                this.$emit('close', true);
+              }
             });
           }
       });

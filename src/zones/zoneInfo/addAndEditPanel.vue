@@ -117,8 +117,14 @@ export default {
               let center = this.centerList.find(item => this.editRow.centerId === item.id);
               this.editRow.centerName = center.dataCenter;
             }
-            func(url, this.editRow).then(() => {
-              this.$emit('close', true);
+            func(url, this.editRow).then(res => {
+              if (res.data.status) {
+                this.$notify.error({
+                  message: res.data.msg
+                });
+              } else {
+                this.$emit('close', true);
+              }
             });
           }
       });

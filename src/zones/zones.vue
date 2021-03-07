@@ -11,7 +11,7 @@
           互联网
         </el-col>
         <el-col :span="20" align="right">
-          <el-button @click="handlerAdd" type="primary" size="small">
+          <el-button v-if="isAdmin" @click="handlerAdd" type="primary" size="small">
             创建
           </el-button>
         </el-col>
@@ -54,10 +54,10 @@
       </el-table-column>
       <el-table-column width="220" label="操作">
         <template slot-scope="{ row }">
-          <el-button @click="handlerEdit(row)" type="text" size="small">编辑</el-button>
+          <el-button v-if="isAdmin" @click="handlerEdit(row)" type="text" size="small">编辑</el-button>
           <el-button @click="handlerExport(row)" type="text" size="small">导出</el-button>
-          <el-button @click="handlerChange(row)" type="text" size="small">修改所有者</el-button>
-          <el-button v-if="showDel" @click="handlerDel(row.id)" type="text" size="small">删除</el-button>
+          <el-button v-if="isAdmin" @click="handlerChange(row)" type="text" size="small">修改所有者</el-button>
+          <el-button v-if="isAdmin" @click="handlerDel(row.id)" type="text" size="small">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -96,7 +96,7 @@ export default {
       editRow: {},
       addAndEdit: false,
       changeDialog: false,
-      showDel: false,
+      isAdmin: false,
       enableMap: {1: '启用', 0: '未启用'},
       pagination: {
         currpage: 1,
@@ -112,7 +112,7 @@ export default {
   mounted() {
     this.getList();
     let user = getUser();
-    this.showDel = user.role === 'admin';
+    this.isAdmin = user.role === 'admin';
   },
   methods: {
     handleCurrentChange(pageNum) {

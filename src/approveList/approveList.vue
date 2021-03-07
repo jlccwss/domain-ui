@@ -39,7 +39,7 @@
             <el-step :status="finishStep[row.flowPath3Status]" :title="row.flowPath3"></el-step>
             <el-step :status="finishStep[row.flowPath4Status]" :title="row.flowPath4"></el-step>
           </el-steps>
-          <el-row :style="{paddingLeft: row.step * 110 + 'px'}">
+          <el-row :style="{paddingLeft: row.step * 110 + 'px'}" v-if="![1, 2].includes(row.finishStatus)">
             <el-button :disabled="row.disabled" type="primary" size="mini" @click="handlerApprove(row.id)">通过</el-button>
             <el-button :disabled="row.disabled" size="mini" @click="handlerReject(row.id)">驳回</el-button>
           </el-row>
@@ -64,6 +64,10 @@
         <template slot-scope="{ row }">
           {{row.createTime | dateFormat}}
         </template>
+      </el-table-column>
+      <el-table-column
+        prop="reason"
+        label="备注">
       </el-table-column>
     </el-table>
     <el-row class="pagination-con">
@@ -152,22 +156,27 @@ export default {
       });
     },
     handlerReject(rowId) {
-      const url = `/apis/approveList/${rowId}/reject`;
-      $http.post(url).then(() => {
-          this.$notify.success({
-            message: '驳回成功'
+      this.$prompt('请输入原因', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+      }).then(({ value }) => {
+        const url = `/apis/approveList/${rowId}/reject/${value}`;
+        $http.post(url).then(() => {
+            this.$notify.success({
+              message: '驳回成功'
+            });
+            this.getList();
           });
-          this.getList();
-        });
+      });
     },
     handlerApprove(rowId) {
       const url = `/apis/approveList/${rowId}/approve`;
       $http.post(url).then(() => {
-          this.$notify.success({
-            message: '通过成功'
-          });
-          this.getList();
+        this.$notify.success({
+          message: '通过成功'
         });
+        this.getList();
+      });
     }
   }
 };

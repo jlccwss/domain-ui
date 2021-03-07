@@ -29,21 +29,22 @@
             <el-menu-item index="/home/zones" v-if="authority.includes('zones')">互联网</el-menu-item>
             <el-menu-item index="/home/gzones" v-if="authority.includes('gzones')">广域网</el-menu-item>
           </el-submenu>
-          <!-- <el-submenu index="2" v-if="authority.includes('2')">
+          <el-submenu index="2" v-if="authority.includes('2')">
             <template slot="title">
               <span><span class="icon domain"></span>域名注册管理</span>
             </template>
             <el-menu-item index="/home/domains" v-if="authority.includes('domains')">域名管理</el-menu-item>
+            <el-menu-item index="/home/registerDomain" v-if="authority.includes('registerDomain')">域名注册</el-menu-item>
             <el-menu-item index="/home/sslCertificates" v-if="authority.includes('sslCertificates')">SSL证书</el-menu-item>
-          </el-submenu> -->
-          <!-- <el-submenu index="3" v-if="authority.includes('3')">
+          </el-submenu>
+          <el-submenu index="3" v-if="authority.includes('3')">
             <template slot="title">
               <span><span class="icon icp"></span>ICP备案</span>
             </template>
-            <el-menu-item index="icps" v-if="authority.includes('icps')">ICP备案</el-menu-item>
+            <!-- <el-menu-item index="icps" v-if="authority.includes('icps')">ICP备案</el-menu-item> -->
             <el-menu-item index="/home/records" v-if="authority.includes('records')">备案管理</el-menu-item>
-            <el-menu-item index="/home/website" v-if="authority.includes('website')">网站信息表</el-menu-item>
-          </el-submenu> -->
+            <!-- <el-menu-item index="/home/website" v-if="authority.includes('website')">网站信息表</el-menu-item> -->
+          </el-submenu>
           <el-submenu index="7" v-if="authority.includes('7')">
             <template slot="title">
               <span><span class="icon ip"></span>IP管理</span>
@@ -58,7 +59,7 @@
             </template>
             <el-menu-item index="/home/users" v-if="authority.includes('users')">账号管理</el-menu-item>
             <el-menu-item index="/home/auditlogs" v-if="authority.includes('auditlogs')">操作日志</el-menu-item>
-            <!-- <el-menu-item index="/home/contacts" v-if="authority.includes('contacts')">联系人模板</el-menu-item> -->
+            <el-menu-item index="/home/contacts" v-if="authority.includes('contacts')">联系人模板</el-menu-item>
           </el-submenu>
           <el-submenu index="5" v-if="authority.includes('5')">
             <template slot="title">
@@ -109,9 +110,10 @@ export default {
   },
   methods: {
     navToAddress() {
+      var ww = window.open('/apis/ipamurl');
       $http.get('/apis/current_role').then(() => {
-        window.open('/apis/ipamurl');
-      });
+        // ww.close()
+      }, () => ww.close());
       // var ww = window.open('/apis/ipamurl');
       // ww.onload = function() {
       //   ww.close();

@@ -3,18 +3,18 @@
       <div class="breadcrumb">
         <el-breadcrumb separator="/">
           <el-breadcrumb-item>域名注册管理</el-breadcrumb-item>
-          <el-breadcrumb-item>域名注册</el-breadcrumb-item>
+          <el-breadcrumb-item>域名管理</el-breadcrumb-item>
         </el-breadcrumb>
       </div>
       <el-row class="mt-xs">
         <el-col :span="4" class="page-title">
           域名管理
         </el-col>
-        <el-col :span="20" align="right">
+        <!-- <el-col :span="20" align="right">
           <el-button @click="handlerAdd()" type="primary" size="small">
             注册
           </el-button>
-        </el-col>
+        </el-col> -->
       </el-row>
      <el-form class="mt-xs" size="small" label-width="120px" label-position="right">
        <el-row>
@@ -24,6 +24,11 @@
           </el-form-item>
          </el-col>
          <el-col :span="6">
+           <el-button size="small">查询</el-button>
+           <el-button size="small">导出</el-button>
+           <el-button size="small">批量下载证书</el-button>
+         </el-col>
+         <!-- <el-col :span="6">
           <el-form-item label="TLD">
             <el-select class="w-full">
               <el-option label="全部" value="1"></el-option>
@@ -36,9 +41,9 @@
               <el-option label="全部" value="1"></el-option>
             </el-select>
           </el-form-item>
-         </el-col>
+         </el-col> -->
        </el-row>
-       <el-row>
+       <!-- <el-row>
          <el-col :span="12">
           <el-form-item label="注册时间">
             <el-date-picker
@@ -63,12 +68,7 @@
             </el-date-picker>
           </el-form-item>
          </el-col>
-       </el-row>
-       <el-row class="align-left">
-         <el-button size="small">查询</el-button>
-         <el-button size="small">导出</el-button>
-         <el-button size="small">批量下载证书</el-button>
-       </el-row>
+       </el-row> -->
     </el-form>
      <el-table
       :data="list"
@@ -106,7 +106,8 @@
       <el-table-column
         label="操作">
         <template slot-scope="{ row }">
-          <el-button @click="handlerRenew(row.id)" type="text" size="small">续费</el-button>
+          <el-button @click="handlerRenew(row.id)" type="text" size="small">域名续费</el-button>
+          <el-button @click="handlerRenew(row.id)" type="text" size="small">购买证书</el-button>
         </template>
       </el-table-column>
     </el-table>

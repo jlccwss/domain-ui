@@ -10,13 +10,13 @@
         <el-col :span="4" class="page-title">
           联系人模板
         </el-col>
-        <el-col :span="20" align="right">
+        <!-- <el-col :span="20" align="right">
           <el-button @click="handlerAdd" type="primary" size="small">
             新建模板
           </el-button>
-        </el-col>
+        </el-col> -->
       </el-row>
-      <el-form class="mt-xs" size="small" label-width="120px" label-position="right">
+      <!-- <el-form class="mt-xs" size="small" label-width="120px" label-position="right">
        <el-row>
          <el-col :span="6">
           <el-form-item label="模板名称">
@@ -36,10 +36,12 @@
           <el-button size="small">清空</el-button>
          </el-col>
        </el-row>
-    </el-form>
+    </el-form> -->
      <el-table
       :data="list"
       class="mt-xs"
+      v-loading="loading"
+      max-height="700"
       header-cell-class-name="table-head"
       style="width: 100%">
       <el-table-column
@@ -57,12 +59,23 @@
       </el-table-column>
       <el-table-column width="150" label="操作">
         <template slot-scope="{ row }">
-          <el-button @click="handlerEdit(row)" type="text" size="small">编辑</el-button>
+          <el-button @click="handlerView(row)" type="text" size="small">查看</el-button>
+          <!-- <el-button @click="handlerEdit(row)" type="text" size="small">编辑</el-button>
           <el-button @click="handlerDel(row.id)" type="text" size="small">删除</el-button>
-          <el-button @click="handlerAuth(row.id)" type="text" size="small">授权</el-button>
+          <el-button @click="handlerAuth(row.id)" type="text" size="small">授权</el-button> -->
         </template>
       </el-table-column>
     </el-table>
+    <el-row class="pagination-con">
+      <el-pagination
+        @size-change="handleSizeChange"
+        @current-change="handleCurrentChange"
+        :current-page="pagination.currpage"
+        :page-size="pagination.pagesize"
+        layout="total, prev, pager, next, jumper"
+        :total="pagination.total">
+      </el-pagination>
+    </el-row>
     <addAndEditPanel @close="close" v-if="addAndEdit" :editRow="editRow"></addAndEditPanel>
     </div>
 </template>
@@ -85,27 +98,41 @@ export default {
       addAndEdit: false,
       queryParams: {
         tplName: ''
-      }
+      },
+      pagination: {
+        currpage: 1,
+        pagesize: 10
+      },
     };
   },
   mounted() {
     this.getList();
   },
   methods: {
+    handleCurrentChange(pageNum) {
+      this.pagination.currpage = pageNum;
+      this.getList();
+    },
+    handleSizeChange(pageSize) {
+      this.pagination.pagesize = pageSize;
+      this.getList();
+    },
     handlerAdd() {
       this.addAndEdit = true;
       this.editRow = {};
     },
-    handlerEdit(row) {
+    handlerView(row) {
       this.addAndEdit = true;
       this.editRow = { ...row };
     },
     getList() {
       this.loading = true;
-      const url = '/apis/users';
+      const { currpage, pagesize } = this.pagination;
+      const url = `/apis/users?pageNum=${currpage}&pageSize=${pagesize}`;
       $http.get(url).then(res => {
         if (res.data.status === 0) {
           this.list = res.data.data;
+          this.pagination.total = res.data.total;
         }
         this.loading = false;
       }, () => {

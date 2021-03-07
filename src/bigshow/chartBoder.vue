@@ -32,6 +32,8 @@ export default {
   height: 15px;
   .horisontal {
     border-left: 2px transparent solid;
+    border-right-width: 0;
+    border-top-width: 0;
   }
 }
 .right-top-b {
@@ -42,6 +44,8 @@ export default {
   height: 15px;
   .horisontal {
     border-right: 2px transparent solid;
+    border-left-width: 0;
+    border-top-width: 0;
   }
 }
 .left-bottom-b {
@@ -50,8 +54,13 @@ export default {
   left: 0;
   width: 15px;
   height: 15px;
+  z-index: 1;
   .horisontal {
     border-left: 2px transparent solid;
+    border-right-width: 0;
+    border-top-width: 0;
+    margin-top: 2px;
+    margin-bottom: -2px;
   }
 }
 .right-bottom-b {
@@ -62,6 +71,10 @@ export default {
   height: 15px;
   .horisontal {
     border-right: 2px transparent solid;
+    border-left-width: 0;
+    border-top-width: 0;
+    margin-top: 2px;
+    margin-bottom: -2px;
   }
 }
 .vertical {

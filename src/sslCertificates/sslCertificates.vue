@@ -10,11 +10,11 @@
         <el-col :span="4" class="page-title">
           SSL证书
         </el-col>
-        <el-col :span="20" align="right">
+        <!-- <el-col :span="20" align="right">
           <el-button @click="handlerAdd" type="primary" size="small">
             创建
           </el-button>
-        </el-col>
+        </el-col> -->
       </el-row>
      <el-table
       :data="list"
@@ -23,19 +23,28 @@
       style="width: 100%">
       <el-table-column
         prop="flowName"
-        label="模板名称">
+        label="证书">
       </el-table-column>
       <el-table-column
-        label="创建时间">
-        <template slot-scope="{ row }">
-          {{row.createTime | dateFormat}}
-        </template>
+        prop="flowName"
+        label="品牌">
+      </el-table-column>
+      <el-table-column
+        prop="flowName"
+        label="状态">
+      </el-table-column>
+      <el-table-column
+        prop="flowName"
+        label="绑定域名">
+      </el-table-column>
+      <el-table-column
+        prop="flowName"
+        label="有效期">
       </el-table-column>
       <el-table-column
         label="操作">
         <template slot-scope="{ row }">
-          <el-button @click="handlerEdit(row)" type="text" size="small">编辑</el-button>
-          <el-button @click="handlerDel(row.id)" type="text" size="small">删除</el-button>
+          <el-button @click="handlerDel(row.id)" type="text" size="small">下载</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -66,7 +75,7 @@ export default {
   methods: {
     getList() {
       this.loading = true;
-      const url = '/apis/approveModule';
+      const url = '/ssl/product/list';
       $http.get(url).then(res => {
         if (res.data.status === 0) {
           this.list = res.data.data;

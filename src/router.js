@@ -25,7 +25,9 @@ import records from './records/records.vue';
 import recordInfo from './records/recordInfo.vue';
 import subnet from './subnet/subnet.vue';
 import ranking from './ranking/ranking.vue';
+import registerDomain from './registerDomain/registerDomain.vue';
 import notFound from './404/404.vue';
+import todo from './todo/todo.vue';
 
 const router = new VueRouter({
   routes: [
@@ -33,6 +35,7 @@ const router = new VueRouter({
     { path: '/login', name: 'login', component: login },
     { path: '/bigshow', name: 'bigshow', component: bigshow },
     { path: '/404', name: '404', component: notFound },
+    { path: '/todo', name: 'todo', component: todo },
     {
       path: '/home',
       component: home,
@@ -137,6 +140,11 @@ const router = new VueRouter({
           name: 'home404',
           component: notFound
         },
+        {
+          path: 'registerDomain',
+          name: 'registerDomain',
+          component: registerDomain
+        },
       ]
     }
   ]
@@ -155,9 +163,12 @@ function clearRole() {
 }
 
 router.beforeEach((to, from, next) => {
-  if (['login', 'bigshow', '404'].includes(to.name)) {
+  if (['login', 'bigshow', '404', 'todo'].includes(to.name)) {
     next();
   } else {
+    if (from.name === 'login') {
+      clearRole();
+    }
     getRole().then(res => {
       let user = res.data;
       setUser(user);
