@@ -18,55 +18,63 @@
       </el-row>
      <el-table
       :data="list"
+      v-loading="loading"
+      max-height="700"
       class="mt-xs"
       header-cell-class-name="table-head"
       style="width: 100%">
       <el-table-column
-        prop="flowName"
+        prop="certType"
         label="证书">
       </el-table-column>
       <el-table-column
-        prop="flowName"
+        prop="certBrand"
         label="品牌">
       </el-table-column>
       <el-table-column
-        prop="flowName"
+        prop="status"
         label="状态">
       </el-table-column>
       <el-table-column
-        prop="flowName"
+        prop="commonName"
         label="绑定域名">
       </el-table-column>
       <el-table-column
-        prop="flowName"
+        prop="period"
         label="有效期">
       </el-table-column>
       <el-table-column
         label="操作">
         <template slot-scope="{ row }">
-          <el-button @click="handlerDel(row.id)" type="text" size="small">下载</el-button>
+          <el-button @click="handlerDown(row.certificateUrl)" type="text" size="small">下载</el-button>
         </template>
       </el-table-column>
     </el-table>
-    <addAndEditPanel @close="close" v-if="addAndEdit" :editRow="editRow"></addAndEditPanel>
+    <el-row class="pagination-con">
+      <el-pagination
+        @size-change="handleSizeChange"
+        @current-change="handleCurrentChange"
+        :current-page="pagination.currpage"
+        :page-size="pagination.pagesize"
+        layout="total, prev, pager, next, jumper"
+        :total="pagination.total">
+      </el-pagination>
+    </el-row>
     </div>
 </template>
 
 <script>
 import $http from '@/http';
-import addAndEditPanel from './addAndEditPanel.vue';
 
 export default {
-  components: {
-    addAndEditPanel
-  },
   data() {
     return {
       list: [],
-      centerList: [],
       loading: false,
-      editRow: {},
-      addAndEdit: false
+      pagination: {
+        currpage: 1,
+        pagesize: 10
+      },
     };
   },
   mounted() {
@@ -75,64 +83,20 @@ export default {
   methods: {
     getList() {
       this.loading = true;
-      const url = '/ssl/product/list';
+      const { currpage, pagesize } = this.pagination;
+      const url = `/apis/ssls/list?pageNum=${currpage}&pageSize=${pagesize}`;
       $http.get(url).then(res => {
-        if (res.data.status === 0) {
+        if (res.data.success) {
           this.list = res.data.data;
+          this.pagination.total = res.data.totalRowNum;
         }
         this.loading = false;
       }, () => {
         this.loading = false;
       });
     },
-    changeCenter(rowId, center) {
-      this.$confirm('是否切换到 '+ center.dataCenter +' 数据中心?', '切换数据中心')
-          .then(() => {
-            const url = `/apis/groups/${rowId}/switch/${center.id}`;
-            $http.post(url).then(() => {
-              this.$notify.success({
-                message: '数据中心切换成功'
-              });
-              this.getList();
-            }, () => {
-              this.$notify.error({
-                message: '数据中心切换失败!'
-              });
-            });
-          });
-    },
-    handlerEdit(row) {
-      this.addAndEdit = true;
-      this.editRow = { ...row };
-    },
-    handlerAdd() {
-      this.addAndEdit = true;
-      this.editRow = {
-        flowType: 1,
-        status: 1
-      };
-    },
-    handlerDel(rowId) {
-      this.$confirm('删除后不可恢复', '确认要删除这条信息吗？')
-          .then(() => {
-            const url = `/apis/groups/${rowId}`;
-            $http.delete(url).then(() => {
-              this.$notify.success({
-                message: '删除成功'
-              });
-              this.getList();
-            }, () => {
-              this.$notify.error({
-                message: '删除失败'
-              });
-            });
-          });
-    },
-    close(refresh) {
-      if (refresh) {
-        this.getList();
-      }
-      this.addAndEdit = false;
+    handlerDown(url) {
+      window.open('/apis' + url);
     }
   }
 };

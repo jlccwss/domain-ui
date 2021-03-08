@@ -17,88 +17,125 @@
             placeholder=""
             rows="3"
             resize="none"
-            v-model="editRow.flowName">
+            v-model="domain.domainName">
           </el-input>
         </el-form-item>
         <el-form-item>
             <el-button size="small" @click="next" type="primary">确定</el-button>
         </el-form-item>
-        <el-form-item label="可注册域名">
-            <el-checkbox v-model="checked1">.unicom</el-checkbox>
-            <el-checkbox v-model="checked2">.联通</el-checkbox>
+        <el-form-item label="TLD">
+            <el-checkbox-group v-model="domainList">
+              <el-checkbox label=".com">.com</el-checkbox>
+              <el-checkbox label=".cn">.cn</el-checkbox>
+              <el-checkbox label=".cc">.cc</el-checkbox>
+              <el-checkbox label=".com.cn">.com.cn</el-checkbox>
+            </el-checkbox-group>
         </el-form-item>
       </el-form>
       <div v-if="step===2" class="form">
-        <el-row class="mt-xs">域名可注册</el-row>
+        <el-row class="mt-xs align-left">域名可注册</el-row>
         <el-table
-              :data="[{flowName: 1}, {flowName: 2}]"
+              :data="registerList"
               class="mt-xs"
               header-cell-class-name="table-head"
+              @selection-change="handleSelectionChange"
               style="width: 100%">
               <el-table-column
                 type="selection"
                 width="55">
               </el-table-column>
               <el-table-column
-                prop="flowName"
+                prop="domainName"
                 label="域名">
               </el-table-column>
               <el-table-column
-                prop="flowName"
                 label="查询结果">
+                <template>可注册</template>
               </el-table-column>
               <el-table-column
                 label="注册期限">
                 <template slot-scope="{ row }">
                   <el-col :span="18">
-                    <el-select class="w-full" size="small" v-model="row.flowName">
-                    <el-option label="1" value="1"></el-option>
-                    <el-option label="2" value="2"></el-option>
-                  </el-select>
+                    <el-select class="w-full" size="small" v-model="row.period">
+                      <el-option label="1" value="1"></el-option>
+                      <el-option label="2" value="2"></el-option>
+                    </el-select>
                   </el-col>
                   <el-col align="right" :span="6">年</el-col>
                 </template>
               </el-table-column>
               <el-table-column
-                prop="flowName"
+                prop="price"
                 label="费用">
               </el-table-column>
             </el-table>
             <el-row class="mt-xs">
+              <el-col :span="4">Registrant</el-col>
+              <el-col :span="6">
+                <el-select class="w-full" size="small" v-model="registerData.registrantTemplateId">
+                  <el-option :key="contact.id" v-for="contact in contactList" :label="contact.name" :value="contact.id"></el-option>
+                </el-select>
+              </el-col>
+            </el-row>
+            <el-row class="mt-xs">
+              <el-col :span="4">Admin</el-col>
+              <el-col :span="6">
+                <el-select class="w-full" size="small" v-model="registerData.adminTemplateId">
+                  <el-option :key="contact.id" v-for="contact in contactList" :label="contact.name" :value="contact.id"></el-option>
+                </el-select>
+              </el-col>
+            </el-row>
+            <el-row class="mt-xs">
+              <el-col :span="4">Tech</el-col>
+              <el-col :span="6">
+                <el-select class="w-full" size="small" v-model="registerData.techTemplateId">
+                  <el-option :key="contact.id" v-for="contact in contactList" :label="contact.name" :value="contact.id"></el-option>
+                </el-select>
+              </el-col>
+            </el-row>
+            <el-row class="mt-xs">
+              <el-col :span="4">billingTemplateId</el-col>
+              <el-col :span="6">
+                <el-select class="w-full" size="small" v-model="registerData.billingTemplateId">
+                  <el-option :key="contact.id" v-for="contact in contactList" :label="contact.name" :value="contact.id"></el-option>
+                </el-select>
+              </el-col>
+            </el-row>
+            <el-row class="mt-xs">
               <el-button size="small" type="primary" @click="register">注册选中域名</el-button>
             </el-row>
-            <el-row class="mt-xs">不可注册域名</el-row>
+            <el-row class="mt-xs align-left">不可注册域名</el-row>
             <el-table
-              :data="[{flowName: 1}, {flowName: 2}]"
+              :data="unRegisterList"
               class="mt-xs"
               header-cell-class-name="table-head"
               style="width: 100%">
               <el-table-column
-                prop="flowName"
+                prop="domainName"
                 label="域名">
               </el-table-column>
               <el-table-column
-                prop="flowName"
                 label="查询结果">
+                <template>不可注册</template>
               </el-table-column>
             </el-table>
       </div>
       <div v-if="step===3">
-        <el-row class="mt-xs">域名订单创建成功</el-row>
+        <el-row class="mt-xs align-left">域名订单创建成功</el-row>
         <el-table
-              :data="[{flowName: 1}, {flowName: 2}]"
+              :data="registerResList"
               class="mt-xs"
               header-cell-class-name="table-head"
               style="width: 100%">
               <el-table-column
-                prop="flowName"
+                prop="serialNumber"
                 label="单号">
               </el-table-column>
               <el-table-column
-                prop="flowName"
+                prop="domainName"
                 label="域名">
               </el-table-column>
-              <el-table-column
+              <!-- <el-table-column
                 prop="flowName"
                 label="会员名">
               </el-table-column>
@@ -113,10 +150,10 @@
               <el-table-column
                 prop="flowName"
                 label="上游机构">
-              </el-table-column>
+              </el-table-column> -->
               <el-table-column
-                prop="flowName"
                 label="状态">
+                <template>操作成功</template>
               </el-table-column>
             </el-table>
       </div>
@@ -124,25 +161,131 @@
 </template>
 
 <script>
-// import $http from '@/http';
+import $http from '@/http';
 
 export default {
   data() {
     return {
       list: [],
       step: 1,
-      editRow: {}
+      domain: {},
+      editRow: {},
+      domainList: [],
+      unRegisterList: [],
+      registerList: [],
+      selectDomains: [],
+      contactList: [],
+      registerData: {},
+      registerResList: []
     };
   },
   mounted() {
- 
+    this.getContactList();
   },
   methods: {
-    next() {
-      this.step = 2;
+    getContactList() {
+      const url = '/apis/contact/template/list';
+      $http.post(url).then(res => {
+        if (res.data.success) {
+          this.contactList = res.data.data;
+          console.log(this.contactList)
+        }
+      })
     },
+    next() {
+      if (!this.domain.domainName) {
+        this.$notify.warning({
+          message: '请填写注册域名'
+        });
+        return;
+      }
+
+      if (!this.domainList.length) {
+        this.$notify.warning({
+          message: '请选择TLD'
+        });
+        return;
+      }
+      const { domainName } = this.domain;
+      const https = this.domainList.map(domain => {
+        const url = `/apis/domain/check/${domainName}${domain}`;
+        return $http.get(url)
+      });
+
+      this.step = 2;
+
+      Promise.all(https).then(arr => {
+        let errMessage = '';
+        let registerList = [];
+        let unRegisterList = [];
+        arr.forEach(res => {
+          if (res.data.success)  {
+            let data = res.data.data;
+            if (data.available) {
+              registerList.push(data);
+            } else {
+              unRegisterList.push(data);
+            }
+          } else {
+              errMessage = res.data.message
+          }
+        });
+
+        this.registerList = registerList;
+        this.unRegisterList = unRegisterList;
+        if (errMessage) {
+          this.$notify.error({
+            message: errMessage
+          });
+        }
+      });
+    },
+
     register() {
+      console.log(this.selectDomains)
+      if (!this.selectDomains.length) {
+        this.$notify.warning({
+          message: '请选择注册域名'
+        });
+        return;
+      }
+
+      const https = this.selectDomains.map(domain => {
+        const url = `/apis/domain/create/`;
+        let data = {
+          domainName: domain.domainName,
+          period: domain.period,
+          price: domain.price,
+          ...this.registerData
+        };
+        return $http.post(url, data);
+      });
+
       this.step = 3;
+
+      Promise.all(https).then(arr => {
+        let errMessage = '';
+        let result = [];
+        arr.forEach(res => {
+          if (res.data.success)  {
+            let data = res.data.data;
+            result.push(data);
+          } else {
+            errMessage = res.data.message
+          }
+        });
+
+        this.registerResList = result;
+        if (errMessage) {
+          this.$notify.error({
+            message: errMessage
+          });
+        }
+      });    
+    },
+
+    handleSelectionChange(val) {
+      this.selectDomains = val;
     }
   }
 };

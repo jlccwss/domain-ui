@@ -50,12 +50,14 @@
         width="50">
       </el-table-column>
       <el-table-column
-        prop="userName"
+        prop="name"
         label="模板名称">
       </el-table-column>
       <el-table-column
-        prop="gender"
         label="实名状态">
+        <template slot-scope="{ row }">
+          {{statusMap[row.auditStatus]}}
+        </template>
       </el-table-column>
       <el-table-column width="150" label="操作">
         <template slot-scope="{ row }">
@@ -103,6 +105,12 @@ export default {
         currpage: 1,
         pagesize: 10
       },
+      statusMap: {
+        UNAUDIT: '未提交审核材料',
+        AUDITIND: '审核中',
+        UNPASS: '未审核通过',
+        PASS: '审核通过'
+      }
     };
   },
   mounted() {
@@ -128,11 +136,11 @@ export default {
     getList() {
       this.loading = true;
       const { currpage, pagesize } = this.pagination;
-      const url = `/apis/users?pageNum=${currpage}&pageSize=${pagesize}`;
-      $http.get(url).then(res => {
-        if (res.data.status === 0) {
+      const url = `/apis/contact/template/list?pageNum=${currpage}&pageSize=${pagesize}`;
+      $http.post(url).then(res => {
+        if (res.data.success) {
           this.list = res.data.data;
-          this.pagination.total = res.data.total;
+          this.pagination.total = res.data.totalRowNum;
         }
         this.loading = false;
       }, () => {

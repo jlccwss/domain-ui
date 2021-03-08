@@ -7,48 +7,50 @@
             {{ editRow.name }}
         </el-form-item>
         <el-form-item label="注册类型">
-            {{typeMap[editRow.type]}}
+            <el-select disabled style="width:100%" v-model="editRow.role">
+              <el-option :key="role.id" :label="role.name" :value="role.role" v-for="role in roleList"></el-option>
+            </el-select>
         </el-form-item>
         <el-form-item label="证件类型">
-            {{typeMap[editRow.certificateType]}}
+            <el-input disabled v-model="editRow.certificateType"></el-input>
         </el-form-item>
         <el-form-item label="联系人姓名(中文)">
-            {{editRow.contactName}}
+            <el-input disabled v-model="editRow.gender"></el-input>
         </el-form-item>
         <el-form-item label="联系人姓名(英文)">
-            {{editRow.intContactName}}
+            <el-input disabled v-model="editRow.employeeCode"></el-input>
         </el-form-item>
-        <el-form-item label="联系人证件号码">
-            {{editRow.certificateNumber}}
+        <el-form-item label="联系人整件号码">
+            <el-input disabled v-model="editRow.employeeFirstName"></el-input>
         </el-form-item>
         <el-form-item label="邮箱">
-            {{editRow.province}}
+            <el-input disabled v-model="editRow.employeeLastName"></el-input>
         </el-form-item>
         <el-form-item label="省份城市">
-            {{editRow.city}}
+            <el-input disabled v-model="editRow.mobileTelephone"></el-input>
         </el-form-item>
         <el-form-item label="地址(中文)">
-            {{editRow.address}}
+            <el-input disabled v-model="editRow.officeTelephone"></el-input>
         </el-form-item>
         <el-form-item label="地址(英文)">
-            {{editRow.intAddress}}
+            <el-input disabled v-model="editRow.email"></el-input>
         </el-form-item>
         <el-form-item label="电话">
           <el-row class="form-row">
-            <el-col disabled :span="13">{{editRow.phone}}</el-col>
+            <el-col disabled :span="13"><el-input disabled v-model="editRow.companyCode"></el-input></el-col>
             <el-col class="ml-sm" :span="2">分机</el-col>
-            <el-col disabled :span="8">{{editRow.phoneExt}}</el-col>
+            <el-col disabled :span="8"><el-input disabled v-model="editRow.companyCode"></el-input></el-col>
           </el-row>
         </el-form-item>
         <el-form-item label="传真">
           <el-row class="form-row">
-            <el-col disabled :span="13">{{editRow.fax}}</el-col>
+            <el-col :span="13"><el-input disabled v-model="editRow.companyCode"></el-input></el-col>
             <el-col class="ml-sm" :span="2">分机</el-col>
-            <el-col disabled :span="8">{{editRow.faxExt}}</el-col>
+            <el-col :span="8"><el-input disabled v-model="editRow.companyCode"></el-input></el-col>
           </el-row>
         </el-form-item>
         <el-form-item label="邮编">
-            {{editRow.postalCode}}
+            <el-input disabled v-model="editRow.departmentCode"></el-input>
         </el-form-item>
       </el-form>
     </el-card>
@@ -70,10 +72,6 @@ export default {
   data() {
     return {
       roleList: [],
-      typeMap: {
-        1: '个人',
-        2: '组织'
-      }
     };
   },
   props: ['editRow'],
