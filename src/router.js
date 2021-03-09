@@ -111,7 +111,7 @@ const router = new VueRouter({
           component: records
         },
         {
-          path: 'records/:zoneId',
+          path: 'records/:recordId',
           name: 'recordInfo',
           component: recordInfo,
         },

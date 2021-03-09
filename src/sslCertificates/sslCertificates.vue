@@ -32,8 +32,8 @@
         label="品牌">
       </el-table-column>
       <el-table-column
-        prop="status"
         label="状态">
+        <template slot-scope="{ row }">{{statusMap[row.status]}}</template>
       </el-table-column>
       <el-table-column
         prop="commonName"
@@ -46,7 +46,7 @@
       <el-table-column
         label="操作">
         <template slot-scope="{ row }">
-          <el-button @click="handlerDown(row.certificateUrl)" type="text" size="small">下载</el-button>
+          <el-button :disabled="row.status!=='issued'" @click="handlerDown(row.serialNumber)" type="text" size="small">下载</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -75,12 +75,25 @@ export default {
         currpage: 1,
         pagesize: 10
       },
+      statusMap: {
+        cancel: '已取消',
+        pendingAudit: '审核中',
+        issued: '已核发'
+      }
     };
   },
   mounted() {
     this.getList();
   },
   methods: {
+    handleCurrentChange(pageNum) {
+      this.pagination.currpage = pageNum;
+      this.getList();
+    },
+    handleSizeChange(pageSize) {
+      this.pagination.pagesize = pageSize;
+      this.getList();
+    },
     getList() {
       this.loading = true;
       const { currpage, pagesize } = this.pagination;
@@ -95,8 +108,8 @@ export default {
         this.loading = false;
       });
     },
-    handlerDown(url) {
-      window.open('/apis' + url);
+    handlerDown(id) {
+      window.open('/apis/ssl/download/' + id);
     }
   }
 };

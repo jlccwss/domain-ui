@@ -13,12 +13,15 @@
       </el-row>
       <el-form class="mt-xs form" ref="form" :model="editRow" label-width="120px" v-if="step===1">
          <el-form-item label="注册域名">
-           <el-input
-            placeholder=""
-            rows="3"
-            resize="none"
-            v-model="domain.domainName">
-          </el-input>
+           <el-row>
+             <el-col :span="12">
+               <el-input
+                  placeholder=""
+                  resize="none"
+                  v-model="domain.domainName">
+                </el-input>
+             </el-col>
+           </el-row>
         </el-form-item>
         <el-form-item>
             <el-button size="small" @click="next" type="primary">确定</el-button>
@@ -29,6 +32,7 @@
               <el-checkbox label=".cn">.cn</el-checkbox>
               <el-checkbox label=".cc">.cc</el-checkbox>
               <el-checkbox label=".com.cn">.com.cn</el-checkbox>
+              <el-checkbox label=".wang">.wang</el-checkbox>
             </el-checkbox-group>
         </el-form-item>
       </el-form>
@@ -53,24 +57,24 @@
                 <template>可注册</template>
               </el-table-column>
               <el-table-column
+                width="200"
                 label="注册期限">
                 <template slot-scope="{ row }">
-                  <el-col :span="18">
+                  <el-col :span="9">
                     <el-select class="w-full" size="small" v-model="row.period">
-                      <el-option label="1" value="1"></el-option>
-                      <el-option label="2" value="2"></el-option>
+                      <el-option :key="year" v-for="year in years" :label="year" :value="year"></el-option>
                     </el-select>
                   </el-col>
-                  <el-col align="right" :span="6">年</el-col>
+                  <el-col class="pl-sm" align="left" :span="9">年</el-col>
                 </template>
               </el-table-column>
-              <el-table-column
+              <!-- <el-table-column
                 prop="price"
                 label="费用">
-              </el-table-column>
+              </el-table-column> -->
             </el-table>
             <el-row class="mt-xs">
-              <el-col :span="4">Registrant</el-col>
+              <el-col :span="4">注册人</el-col>
               <el-col :span="6">
                 <el-select class="w-full" size="small" v-model="registerData.registrantTemplateId">
                   <el-option :key="contact.id" v-for="contact in contactList" :label="contact.name" :value="contact.id"></el-option>
@@ -78,7 +82,7 @@
               </el-col>
             </el-row>
             <el-row class="mt-xs">
-              <el-col :span="4">Admin</el-col>
+              <el-col :span="4">管理联系人</el-col>
               <el-col :span="6">
                 <el-select class="w-full" size="small" v-model="registerData.adminTemplateId">
                   <el-option :key="contact.id" v-for="contact in contactList" :label="contact.name" :value="contact.id"></el-option>
@@ -86,7 +90,7 @@
               </el-col>
             </el-row>
             <el-row class="mt-xs">
-              <el-col :span="4">Tech</el-col>
+              <el-col :span="4">技术联系人</el-col>
               <el-col :span="6">
                 <el-select class="w-full" size="small" v-model="registerData.techTemplateId">
                   <el-option :key="contact.id" v-for="contact in contactList" :label="contact.name" :value="contact.id"></el-option>
@@ -94,7 +98,7 @@
               </el-col>
             </el-row>
             <el-row class="mt-xs">
-              <el-col :span="4">billingTemplateId</el-col>
+              <el-col :span="4">财务联系人</el-col>
               <el-col :span="6">
                 <el-select class="w-full" size="small" v-model="registerData.billingTemplateId">
                   <el-option :key="contact.id" v-for="contact in contactList" :label="contact.name" :value="contact.id"></el-option>
@@ -176,7 +180,8 @@ export default {
       selectDomains: [],
       contactList: [],
       registerData: {},
-      registerResList: []
+      registerResList: [],
+      years: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
     };
   },
   mounted() {
@@ -222,7 +227,7 @@ export default {
           if (res.data.success)  {
             let data = res.data.data;
             if (data.available) {
-              registerList.push(data);
+              registerList.push({...data, period: 1});
             } else {
               unRegisterList.push(data);
             }
@@ -250,12 +255,20 @@ export default {
         return;
       }
 
+      if (!this.registerData.registrantTemplateId) {
+        this.$notify.warning({
+          message: '请选择注册人'
+        });
+        return;
+      }
+
       const https = this.selectDomains.map(domain => {
         const url = `/apis/domain/create/`;
+        let price = domain.price * domain.period;
         let data = {
           domainName: domain.domainName,
           period: domain.period,
-          price: domain.price,
+          price: price.toFixed(2),
           ...this.registerData
         };
         return $http.post(url, data);
