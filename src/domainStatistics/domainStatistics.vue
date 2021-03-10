@@ -41,30 +41,23 @@
       header-cell-class-name="table-head"
       style="width: 100%">
       <el-table-column
-        prop="name"
+        prop="domain"
         label="域名地址">
       </el-table-column>
       <el-table-column
-        prop="tld"
+        prop="total"
         label="访问量">
       </el-table-column>
       <el-table-column
         label="开始时间">
         <template slot-scope="{ row }">
-          {{row.crdate | dateFormat}}
+          {{row.beginTime | dateFormat}}
         </template>
       </el-table-column>
       <el-table-column
         label="结束时间">
         <template slot-scope="{ row }">
-          {{row.crdate | dateFormat}}
-        </template>
-      </el-table-column>
-      <el-table-column
-        label="操作">
-        <template slot-scope="{ row }">
-          <el-button @click="handlerRenew(row)" type="text" size="small">域名续费</el-button>
-          <el-button @click="handlerPay(row)" type="text" size="small">购买证书</el-button>
+          {{row.endTime | dateFormat}}
         </template>
       </el-table-column>
     </el-table>
