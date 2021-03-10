@@ -125,9 +125,9 @@ export default {
         url += `&time=${time}`;
       }
       $http.get(url).then(res => {
-        if (res.data.success) {
+        if (res.data.status === 0) {
           this.list = res.data.data;
-          this.pagination.total = res.data.totalRowNum;
+          this.pagination.total = res.data.total;
         }
         this.loading = false;
       }, () => {
