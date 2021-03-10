@@ -38,54 +38,46 @@
     </el-form> -->
      <el-table
       :data="list"
+      v-loading="loading"
+      max-height="700"
       class="mt-xs"
       header-cell-class-name="table-head"
       style="width: 100%">
       <el-table-column
-        prop="flowName"
-        label="序号">
+        prop="domain"
+        label="备案域名">
       </el-table-column>
       <el-table-column
-        prop="flowName"
-        label="主办单位名称">
-      </el-table-column>
-      <el-table-column
-        prop="flowName"
-        label="主办单位性质">
-      </el-table-column>
-      <el-table-column
-        prop="flowName"
-        label="投资人或主管单位">
-      </el-table-column>
-      <el-table-column
-        label="主体负责人">
+        label="备案提交时间">
         <template slot-scope="{ row }">
-          {{row.createTime | dateFormat}}
+          <span :class="{enable: row.enable === 1, disbale: row.enable === 2}">{{row.createTime | dateFormat}}</span>
         </template>
       </el-table-column>
       <el-table-column
-        label="网站名称">
-        <template slot-scope="{ row }">
-          {{row.createTime | dateFormat}}
-        </template>
+        prop="wangzhanTel"
+        label="负责人手机号">
       </el-table-column>
       <el-table-column
-        prop="flowName"
-        label="网站域名">
+        prop="email"
+        label="联系邮箱">
       </el-table-column>
       <el-table-column
-        prop="flowName"
-        label="更新时间">
-      </el-table-column>
-      <el-table-column
-        prop="flowName"
         label="审核状态">
+        <template slot-scope="{ row }">
+          {{approveMap[row.approveStatus]}}
+        </template>
       </el-table-column>
       <el-table-column
+        prop="icpNo"
+        label="备案编号">
+      </el-table-column>
+      <el-table-column
+        width="180"
         label="操作">
         <template slot-scope="{ row }">
-          <el-button v-if="isAdmin" @click="handlerEdit(row.id)" type="text" size="small">编辑</el-button>
-          <el-button v-if="isAdmin" @click="handlerDel(row.id)" type="text" size="small">删除</el-button>
+          <el-button v-if="isAdmin" @click="handlerUpdate(row)" type="text" size="small">修改备案号</el-button>
+          <el-button @click="handlerEdit(row.id)" type="text" size="small">编辑</el-button>
+          <el-button @click="handlerDel(row.id)" type="text" size="small">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -99,16 +91,23 @@
         :total="pagination.total">
       </el-pagination>
     </el-row>
+    <addAndEditPanel @close="close" v-if="addAndEdit" :editRow="editRow"></addAndEditPanel>
     </div>
 </template>
 
 <script>
 import $http from '@/http';
+import { getUser } from '@/user';
+import addAndEditPanel from './addAndEditPanel.vue';
 
 export default {
+  components: {
+    addAndEditPanel
+  },
   data() {
     return {
       list: [],
+      isAdmin: false,
       centerList: [],
       loading: false,
       editRow: {},
@@ -117,12 +116,23 @@ export default {
         currpage: 1,
         pagesize: 10
       },
+      approveMap: {
+        0: '未审核',
+        1: '通过',
+        2: '驳回'
+      }
     };
   },
   mounted() {
+    let user = getUser();
+    this.isAdmin = user.role === 'admin';
     this.getList();
   },
   methods: {
+    handlerUpdate(row) {
+      this.addAndEdit = true;
+      this.editRow = { ...row };
+    },
     handleCurrentChange(pageNum) {
       this.pagination.currpage = pageNum;
       this.getList();
@@ -133,7 +143,8 @@ export default {
     },
     getList() {
       this.loading = true;
-      const url = '/apis/icps';
+      const { currpage, pagesize } = this.pagination;
+      const url = `/apis/icps?pageNum=${currpage}&pageSize=${pagesize}`;
       $http.get(url).then(res => {
         if (res.data.status === 0) {
           this.list = res.data.data;
@@ -179,3 +190,12 @@ export default {
   }
 };
 </script>
+<style scoped lang="scss">
+.enable {
+  color: green;
+}
+
+.disbale {
+  color: red;
+}
+</style>

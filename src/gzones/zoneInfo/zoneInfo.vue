@@ -204,7 +204,7 @@ export default {
       const { search } = this.params;
       let url = `/apis/zones/${this.zoneId}/rrs?pageNum=${currpage}&pageSize=${pagesize}`;
       if (search) {
-        url += `&searchName==${search}`;
+        url += `&searchName=${search}`;
       }
       $http.get(url).then(res => {
         if (res.data.status === 0) {

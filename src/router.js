@@ -28,6 +28,7 @@ import ranking from './ranking/ranking.vue';
 import registerDomain from './registerDomain/registerDomain.vue';
 import notFound from './404/404.vue';
 import todo from './todo/todo.vue';
+import domainStatistics from './domainStatistics/domainStatistics.vue';
 
 const router = new VueRouter({
   routes: [
@@ -54,6 +55,11 @@ const router = new VueRouter({
           path: 'gzones',
           name: 'gzones',
           component: gzones,
+        },
+        {
+          path: 'domainStatistics',
+          name: 'domainStatistics',
+          component: domainStatistics,
         },
         {
           path: 'zones/:zoneId',

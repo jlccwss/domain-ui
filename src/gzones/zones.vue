@@ -52,7 +52,7 @@
           {{row.createTime | dateFormat}}
         </template>
       </el-table-column>
-      <el-table-column width="180" label="操作">
+      <el-table-column width="220" label="操作">
         <template slot-scope="{ row }">
           <el-button v-if="isAdmin" @click="handlerEdit(row)" type="text" size="small">编辑</el-button>
           <el-button @click="handlerExport(row)" type="text" size="small">导出</el-button>

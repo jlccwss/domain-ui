@@ -28,6 +28,7 @@
             </template>
             <el-menu-item index="/home/zones" v-if="authority.includes('zones')">互联网</el-menu-item>
             <el-menu-item index="/home/gzones" v-if="authority.includes('gzones')">广域网</el-menu-item>
+            <el-menu-item index="/home/domainStatistics" v-if="authority.includes('domainStatistics')">域名统计</el-menu-item>
           </el-submenu>
           <el-submenu index="2" v-if="authority.includes('2')">
             <template slot="title">

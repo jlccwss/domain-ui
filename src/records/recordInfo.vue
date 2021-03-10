@@ -63,6 +63,7 @@
               :auto-upload="false">
                 <el-button size="small" type="primary">点击上传</el-button>
             </el-upload>
+            <a class="ml-sm" href="/网站备案信息真实性核验单V12.doc">下载模板</a>
         </el-form-item>
         <el-form-item class="align-left" label="含背景布网站负责人照片（联系管理员索取背景布）">
           <span class="mr-sm">{{info.wangzhanFan}}</span>
@@ -86,7 +87,7 @@
         </el-form-item>
         <el-form-item>
           <el-button @click="handlerSave" size="small" type="primary">保存</el-button>
-          <el-button size="small">取消</el-button>
+          <el-button @click="handlerCancel" size="small">取消</el-button>
         </el-form-item>
       </el-form>
     </div>
@@ -118,7 +119,8 @@ export default {
       let recordId = this.$route.params.recordId;
       const url = '/apis/icp/' + recordId;
       $http.get(url).then(res => {
-        console.log(res)
+        this.editRow = res.data;
+        this.info = { ...this.editRow };
       });
     },
     getZhizhaoFile(file, files) {
@@ -151,6 +153,11 @@ export default {
         this.editRow[key] = res;
       });
     },
+    handlerCancel() {
+      this.$router.push({
+        name: 'records'
+      });
+    },
     handlerSave() {
       if (!this.editRow.domain) {
         this.$notify.warning({
@@ -168,6 +175,7 @@ export default {
           this.$notify.error({
             message: res.data.msg
           });
+          this.handlerCancel();
         } else {
           this.$emit('close', true);
         }

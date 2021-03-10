@@ -268,7 +268,7 @@ export default {
         let data = {
           domainName: domain.domainName,
           period: domain.period,
-          price: price.toFixed(2),
+          price: Number(price.toFixed(3)),
           ...this.registerData
         };
         return $http.post(url, data);
