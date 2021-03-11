@@ -6,22 +6,20 @@
           <el-breadcrumb-item>备案管理</el-breadcrumb-item>
         </el-breadcrumb>
       </div>
-      <el-form class="mt-xs form" label-position="right" label-width="340px">
-        <!-- <el-row type="flex" justify="center">
-          <el-col :span="18">
-            <el-steps :active="active" finish-status="success" label-wi>
-              <el-step title="填写主体信息"></el-step>
-              <el-step title="填写网站信息"></el-step>
-              <el-step title="上传附件"></el-step>
-              <el-step title="完成"></el-step>
-            </el-steps>
-          </el-col>
-        </el-row> -->
+      <el-form class="mt-xs form" label-position="right" label-width="340px" v-if="!isView">
         <el-form-item label="备案域名">
             <el-input v-model="editRow.domain"></el-input>
         </el-form-item>
         <el-form-item class="align-left" label="营业执照副本彩色电子件">
-            <span class="mr-sm">{{info.zhizhao}}</span>
+            <span class="mr-sm img-target">
+              {{info.zhizhao}}
+              <el-image
+                class="img"
+                v-if="editRow.zhizhao"
+                :src="editRow.zhizhao"
+                :fit="fit">
+              </el-image>
+            </span>
             <el-upload
               class="display-inline"
               action="#"
@@ -31,8 +29,16 @@
                 <el-button size="small" type="primary">点击上传</el-button>
             </el-upload>
         </el-form-item>
-        <el-form-item class="align-left" label="主体负责人的身份证正反面（彩色）">
-            <span class="mr-sm">{{info.zhutiZheng}}</span>
+        <el-form-item class="align-left" label="主体负责人的身份证正面（彩色）">
+            <span class="mr-sm img-target">
+              {{info.zhutiZheng}}
+              <el-image
+                class="img"
+                v-if="editRow.zhutiZheng"
+                :src="editRow.zhutiZheng"
+                :fit="fit">
+              </el-image>
+            </span>
             <el-upload
               class="display-inline"
               action="#"
@@ -42,8 +48,16 @@
                 <el-button size="small" type="primary">点击上传</el-button>
             </el-upload>
         </el-form-item>
-        <el-form-item class="align-left" label="网站负责人的身份证正反面（彩色）">
-            <span class="mr-sm">{{info.zhutiFan}}</span>
+        <el-form-item class="align-left" label="主体负责人的身份证反面（彩色）">
+            <span class="mr-sm img-target">
+              {{info.zhutiFan}}
+              <el-image
+                class="img"
+                v-if="editRow.zhutiFan"
+                :src="editRow.zhutiFan"
+                :fit="fit">
+              </el-image>
+            </span>
             <el-upload
               class="display-inline"
               action="#"
@@ -53,8 +67,16 @@
                 <el-button size="small" type="primary">点击上传</el-button>
             </el-upload>
         </el-form-item>
-        <el-form-item class="align-left" label="网站真实性核验单电子件加盖公章（模版可下载）">
-            <span class="mr-sm">{{info.wangzhanZheng}}</span>
+        <el-form-item class="align-left" label="网站负责人的身份证正面（彩色）">
+            <span class="mr-sm img-target">
+              {{info.wangzhanZheng}}
+              <el-image
+                class="img"
+                v-if="editRow.wangzhanZheng"
+                :src="editRow.wangzhanZheng"
+                :fit="fit">
+              </el-image>
+            </span>
             <el-upload
               class="display-inline"
               action="#"
@@ -63,15 +85,53 @@
               :auto-upload="false">
                 <el-button size="small" type="primary">点击上传</el-button>
             </el-upload>
-            <a class="ml-sm" href="/网站备案信息真实性核验单V12.doc">下载模板</a>
         </el-form-item>
-        <el-form-item class="align-left" label="含背景布网站负责人照片（联系管理员索取背景布）">
-          <span class="mr-sm">{{info.wangzhanFan}}</span>
+        <el-form-item class="align-left" label="网站负责人的身份证反面（彩色）">
+            <span class="mr-sm img-target">
+              {{info.wangzhanFan}}
+              <el-image
+                class="img"
+                v-if="editRow.wangzhanFan"
+                :src="editRow.wangzhanFan"
+                :fit="fit">
+              </el-image>
+            </span>
             <el-upload
               class="display-inline"
               action="#"
               :show-file-list="false"
               :on-change="getWangzhanFanFile"
+              :auto-upload="false">
+                <el-button size="small" type="primary">点击上传</el-button>
+            </el-upload>
+        </el-form-item>
+        <el-form-item class="align-left" label="网站真实性核验单电子件加盖公章（模版可下载）">
+            <span class="mr-sm">{{info.wangzhanheyan}}</span>
+            <el-upload
+              class="display-inline"
+              action="#"
+              :show-file-list="false"
+              :on-change="getWangzhanHeyanFile"
+              :auto-upload="false">
+                <el-button size="small" type="primary">点击上传</el-button>
+            </el-upload>
+            <a class="ml-sm" href="/网站备案信息真实性核验单V12.doc">下载模板</a>
+        </el-form-item>
+        <el-form-item class="align-left" label="含背景布网站负责人照片（联系管理员索取背景布）">
+          <span class="mr-sm img-target">
+              {{info.beijingPhoto}}
+              <el-image
+                class="img"
+                v-if="editRow.beijingPhoto"
+                :src="editRow.beijingPhoto"
+                :fit="fit">
+              </el-image>
+            </span>
+            <el-upload
+              class="display-inline"
+              action="#"
+              :show-file-list="false"
+              :on-change="getBeijingPhotoFile"
               :auto-upload="false">
                 <el-button size="small" type="primary">点击上传</el-button>
             </el-upload>
@@ -90,28 +150,47 @@
           <el-button @click="handlerCancel" size="small">取消</el-button>
         </el-form-item>
       </el-form>
+      <record-info-view :edit-row="editRow" v-if="isView"></record-info-view>
     </div>
 </template>
 
 <script>
 import $http from '@/http';
+import recordInfoView from './recordInfoView.vue'
 import { getBase64 } from './utils';
 export default {
+  components: {
+    recordInfoView
+  },
   data() {
     return {
-      editRow: {},
+      editRow: {
+        zhizhao: '',
+        zhutiZheng: '',
+        zhutiFan: '',
+        wangzhanZheng: '',
+        wangzhanFan: '',
+        wangzhanheyan: '',
+        beijingPhoto: ''
+      },
       info: {
         zhizhao: '',
         zhutiZheng: '',
         zhutiFan: '',
         wangzhanZheng: '',
-        wangzhanFan: ''
-      }
+        wangzhanFan: '',
+        wangzhanheyan: '',
+        beijingPhoto: ''
+      },
+      isView: false
     };
   },
   created() {
     if (this.$route.params.recordId !== 'add') {
       this.getDetail();
+    }
+    if (this.$route.query.view) {
+      this.isView = true;
     }
   },
   methods: {
@@ -124,19 +203,25 @@ export default {
       });
     },
     getZhizhaoFile(file, files) {
-      this.getFile(file, files, 'zhizhao')
+      this.getFile(file, files, 'zhizhao');
     },
     getZhutiZhengFile(file, files) {
-      this.getFile(file, files, 'zhutiZheng')
+      this.getFile(file, files, 'zhutiZheng');
     },
     getZhutiFanFile(file, files) {
-      this.getFile(file, files, 'zhutiFan')
+      this.getFile(file, files, 'zhutiFan');
     },
     getWangzhanZhengFile(file, files) {
-      this.getFile(file, files, 'wangzhanZheng')
+      this.getFile(file, files, 'wangzhanZheng');
     },
     getWangzhanFanFile(file, files) {
-      this.getFile(file, files, 'wangzhanFan')
+      this.getFile(file, files, 'wangzhanFan');
+    },
+    getWangzhanHeyanFile(file, files) {
+      this.getFile(file, files, 'wangzhanheyan');
+    },
+    getBeijingPhotoFile(file, files) {
+      this.getFile(file, files, 'beijingPhoto');
     },
     getFile(file, files, key) {
       if (file.size > 5 * 1024 *1024) {
@@ -154,6 +239,7 @@ export default {
       });
     },
     handlerCancel() {
+      console.log(1)
       this.$router.push({
         name: 'records'
       });
@@ -175,9 +261,11 @@ export default {
           this.$notify.error({
             message: res.data.msg
           });
-          this.handlerCancel();
         } else {
-          this.$emit('close', true);
+          this.$notify.success({
+            message: '保存成功'
+          });
+          this.handlerCancel();
         }
       });
     }
@@ -187,5 +275,23 @@ export default {
 <style scoped lang="scss">
 .form {
   width: 80%;
+}
+
+.img-target {
+  cursor: pointer;
+  position: relative;
+  .img {
+    display: none;
+    position: absolute;
+    z-index: 10;
+  }
+  
+  &:hover {
+    color: #409EFF;
+    .img {
+      display: block;
+      background: #fff;
+    }
+  }
 }
 </style>

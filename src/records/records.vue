@@ -72,12 +72,13 @@
         label="备案编号">
       </el-table-column>
       <el-table-column
-        width="180"
+        width="220"
         label="操作">
         <template slot-scope="{ row }">
           <el-button v-if="isAdmin" @click="handlerUpdate(row)" type="text" size="small">修改备案号</el-button>
           <el-button @click="handlerEdit(row.id)" type="text" size="small">编辑</el-button>
           <el-button @click="handlerDel(row.id)" type="text" size="small">删除</el-button>
+          <el-button @click="handlerView(row.id)" type="text" size="small">查看</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -91,27 +92,19 @@
         :total="pagination.total">
       </el-pagination>
     </el-row>
-    <addAndEditPanel @close="close" v-if="addAndEdit" :editRow="editRow"></addAndEditPanel>
     </div>
 </template>
 
 <script>
 import $http from '@/http';
 import { getUser } from '@/user';
-import addAndEditPanel from './addAndEditPanel.vue';
 
 export default {
-  components: {
-    addAndEditPanel
-  },
   data() {
     return {
       list: [],
       isAdmin: false,
-      centerList: [],
       loading: false,
-      editRow: {},
-      addAndEdit: false,
       pagination: {
         currpage: 1,
         pagesize: 10
@@ -160,6 +153,14 @@ export default {
         path: 'records/' + id
       });
     },
+    handlerView(id) {
+      this.$router.push({
+        path: 'records/' + id,
+        query: {
+          view: true
+        }
+      });
+    },
     handlerAdd() {
       this.$router.push({
         path: 'records/add'
@@ -180,12 +181,6 @@ export default {
               });
             });
           });
-    },
-    close(refresh) {
-      if (refresh) {
-        this.getList();
-      }
-      this.addAndEdit = false;
     }
   }
 };

@@ -113,7 +113,6 @@ export default {
       if (searchName) {
         url += `&searchName=${searchName}`;
       }
-      console.log(time)
       if (time) {
         url += `&time=${time}`;
       }
