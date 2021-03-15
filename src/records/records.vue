@@ -92,19 +92,26 @@
         :total="pagination.total">
       </el-pagination>
     </el-row>
+    <addAndEditPanel @close="close" v-if="addAndEdit" :editRow="editRow"></addAndEditPanel>
     </div>
 </template>
 
 <script>
 import $http from '@/http';
 import { getUser } from '@/user';
+import addAndEditPanel from './addAndEditPanel.vue';
 
 export default {
+  components: {
+    addAndEditPanel
+  },
   data() {
     return {
       list: [],
       isAdmin: false,
       loading: false,
+      addAndEdit: false,
+      editRow: {},
       pagination: {
         currpage: 1,
         pagesize: 10
@@ -181,6 +188,12 @@ export default {
               });
             });
           });
+    },
+    close(refresh) {
+      if (refresh) {
+        this.getList();
+      }
+      this.addAndEdit = false;
     }
   }
 };

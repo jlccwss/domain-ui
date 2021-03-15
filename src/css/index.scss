@@ -91,3 +91,8 @@ html, body {
 * {
   user-select: auto;
 }
+
+.scroll-auto {
+  overflow: auto;
+  height: 100%;
+}

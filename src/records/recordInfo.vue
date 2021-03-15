@@ -1,5 +1,5 @@
   <template>
-    <div>
+    <div class="scroll-auto">
       <div class="breadcrumb">
         <el-breadcrumb separator="/">
           <el-breadcrumb-item>icp备案</el-breadcrumb-item>
@@ -11,11 +11,9 @@
             <el-input v-model="editRow.domain"></el-input>
         </el-form-item>
         <el-form-item class="align-left" label="营业执照副本彩色电子件">
-            <span class="mr-sm img-target">
-              {{info.zhizhao}}
+            <span class="mr-sm img-target" v-if="editRow.zhizhao">
               <el-image
                 class="img"
-                v-if="editRow.zhizhao"
                 :src="editRow.zhizhao"
                 :fit="fit">
               </el-image>
@@ -30,11 +28,9 @@
             </el-upload>
         </el-form-item>
         <el-form-item class="align-left" label="主体负责人的身份证正面（彩色）">
-            <span class="mr-sm img-target">
-              {{info.zhutiZheng}}
+            <span class="mr-sm img-target" v-if="editRow.zhutiZheng">
               <el-image
                 class="img"
-                v-if="editRow.zhutiZheng"
                 :src="editRow.zhutiZheng"
                 :fit="fit">
               </el-image>
@@ -49,11 +45,9 @@
             </el-upload>
         </el-form-item>
         <el-form-item class="align-left" label="主体负责人的身份证反面（彩色）">
-            <span class="mr-sm img-target">
-              {{info.zhutiFan}}
+            <span class="mr-sm img-target" v-if="editRow.zhutiFan">
               <el-image
                 class="img"
-                v-if="editRow.zhutiFan"
                 :src="editRow.zhutiFan"
                 :fit="fit">
               </el-image>
@@ -68,11 +62,9 @@
             </el-upload>
         </el-form-item>
         <el-form-item class="align-left" label="网站负责人的身份证正面（彩色）">
-            <span class="mr-sm img-target">
-              {{info.wangzhanZheng}}
+            <span class="mr-sm img-target" v-if="editRow.wangzhanZheng">
               <el-image
                 class="img"
-                v-if="editRow.wangzhanZheng"
                 :src="editRow.wangzhanZheng"
                 :fit="fit">
               </el-image>
@@ -87,11 +79,9 @@
             </el-upload>
         </el-form-item>
         <el-form-item class="align-left" label="网站负责人的身份证反面（彩色）">
-            <span class="mr-sm img-target">
-              {{info.wangzhanFan}}
+            <span class="mr-sm img-target" v-if="editRow.wangzhanFan">
               <el-image
                 class="img"
-                v-if="editRow.wangzhanFan"
                 :src="editRow.wangzhanFan"
                 :fit="fit">
               </el-image>
@@ -106,7 +96,6 @@
             </el-upload>
         </el-form-item>
         <el-form-item class="align-left" label="网站真实性核验单电子件加盖公章（模版可下载）">
-            <span class="mr-sm">{{info.wangzhanheyan}}</span>
             <el-upload
               class="display-inline"
               action="#"
@@ -118,11 +107,9 @@
             <a class="ml-sm" href="/网站备案信息真实性核验单V12.doc">下载模板</a>
         </el-form-item>
         <el-form-item class="align-left" label="含背景布网站负责人照片（联系管理员索取背景布）">
-          <span class="mr-sm img-target">
-              {{info.beijingPhoto}}
+          <span class="mr-sm img-target" v-if="editRow.beijingPhoto">
               <el-image
                 class="img"
-                v-if="editRow.beijingPhoto"
                 :src="editRow.beijingPhoto"
                 :fit="fit">
               </el-image>
@@ -173,15 +160,6 @@ export default {
         wangzhanheyan: '',
         beijingPhoto: ''
       },
-      info: {
-        zhizhao: '',
-        zhutiZheng: '',
-        zhutiFan: '',
-        wangzhanZheng: '',
-        wangzhanFan: '',
-        wangzhanheyan: '',
-        beijingPhoto: ''
-      },
       isView: false
     };
   },
@@ -197,9 +175,8 @@ export default {
     getDetail() {
       let recordId = this.$route.params.recordId;
       const url = '/apis/icp/' + recordId;
-      $http.get(url).then(res => {
+      $http.post(url).then(res => {
         this.editRow = res.data;
-        this.info = { ...this.editRow };
       });
     },
     getZhizhaoFile(file, files) {
@@ -233,13 +210,11 @@ export default {
       if (files.length > 1) {
         files.shift();
       }
-      this.info[key] = file.name;
       getBase64(file.raw).then(res => {
         this.editRow[key] = res;
       });
     },
     handlerCancel() {
-      console.log(1)
       this.$router.push({
         name: 'records'
       });
@@ -278,20 +253,11 @@ export default {
 }
 
 .img-target {
-  cursor: pointer;
-  position: relative;
   .img {
-    display: none;
-    position: absolute;
     z-index: 10;
-  }
-  
-  &:hover {
-    color: #409EFF;
-    .img {
-      display: block;
-      background: #fff;
-    }
+    background: #fff;
+    width: 200px;
+    height: 200px;
   }
 }
 </style>

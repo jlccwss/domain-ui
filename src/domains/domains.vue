@@ -10,66 +10,7 @@
         <el-col :span="4" class="page-title">
           域名管理
         </el-col>
-        <!-- <el-col :span="20" align="right">
-          <el-button @click="handlerAdd()" type="primary" size="small">
-            注册
-          </el-button>
-        </el-col> -->
       </el-row>
-     <!-- <el-form class="mt-xs" size="small" label-width="120px" label-position="right"> -->
-       <!-- <el-row> -->
-         <!-- <el-col :span="6">
-          <el-form-item label="域名">
-            <el-input ></el-input>
-          </el-form-item>
-         </el-col>
-         <el-col :span="6">
-           <el-button size="small" @click="handlerQuery">查询</el-button>
-           <el-button size="small">导出</el-button>
-           <el-button size="small">批量下载证书</el-button>
-         </el-col> -->
-         <!-- <el-col :span="6">
-          <el-form-item label="TLD">
-            <el-select class="w-full">
-              <el-option label="全部" value="1"></el-option>
-            </el-select>
-          </el-form-item>
-         </el-col>
-         <el-col :span="6">
-          <el-form-item label="实名审核状态">
-            <el-select class="w-full">
-              <el-option label="全部" value="1"></el-option>
-            </el-select>
-          </el-form-item>
-         </el-col> -->
-       <!-- </el-row> -->
-       <!-- <el-row>
-         <el-col :span="12">
-          <el-form-item label="注册时间">
-            <el-date-picker
-              v-model="value1"
-              type="daterange"
-              class="w-full"
-              range-separator="-"
-              start-placeholder="开始日期"
-              end-placeholder="结束日期">
-            </el-date-picker>
-          </el-form-item>
-         </el-col>
-         <el-col :span="12">
-          <el-form-item label="到期时间">
-            <el-date-picker
-              v-model="value1"
-              type="daterange"
-              class="w-full"
-              range-separator="-"
-              start-placeholder="开始日期"
-              end-placeholder="结束日期">
-            </el-date-picker>
-          </el-form-item>
-         </el-col>
-       </el-row> -->
-    <!-- </el-form> -->
      <el-table
       :data="list"
       v-loading="loading"
@@ -106,8 +47,10 @@
         </template>
       </el-table-column>
       <el-table-column
+        width="240"
         label="操作">
         <template slot-scope="{ row }">
+          <el-button @click="handlerChange(row)" type="text" size="small">修改所有者</el-button>
           <el-button @click="handlerRenew(row)" type="text" size="small">域名续费</el-button>
           <el-button @click="handlerPay(row)" type="text" size="small">购买证书</el-button>
         </template>
@@ -123,17 +66,17 @@
         :total="pagination.total">
       </el-pagination>
     </el-row>
-    <addAndEditPanel @close="close" v-if="addAndEdit" :editRow="editRow"></addAndEditPanel>
+    <authorizationPanel @close="close" v-if="changeDialog" :editRow="editRow"></authorizationPanel>
     </div>
 </template>
 
 <script>
 import $http from '@/http';
-import addAndEditPanel from './addAndEditPanel.vue';
+import authorizationPanel from './authorizationPanel.vue';
 
 export default {
   components: {
-    addAndEditPanel
+    authorizationPanel
   },
   data() {
     return {
@@ -142,6 +85,7 @@ export default {
       loading: false,
       editRow: {},
       addAndEdit: false,
+      changeDialog: false,
       pagination: {
         currpage: 1,
         pagesize: 10
@@ -152,6 +96,10 @@ export default {
     this.getList();
   },
   methods: {
+    handlerChange(row) {
+      this.changeDialog = true;
+      this.editRow = row;
+    },
     handlerQuery() {
       this.pagination.currpage = 1;
       this.getList();
@@ -245,7 +193,7 @@ export default {
       if (refresh) {
         this.getList();
       }
-      this.addAndEdit = false;
+      this.changeDialog = false;
     }
   }
 };
