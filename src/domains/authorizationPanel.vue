@@ -102,7 +102,7 @@ export default {
           });
         return;
       }
-      let url = '/apis/domain/' + this.editRow.id;
+      let url = '/apis/register/domain/' + this.editRow.id;
       let user = this.allUserList.find(user => user.id === this.selectUsers[0]);
       if (user) {
         this.editRow.createBy = user.userName;
