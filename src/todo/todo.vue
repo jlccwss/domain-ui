@@ -110,13 +110,13 @@ export default {
         this.loading = false;
       });
     },
-    handlerReject() {
+    handlerReject(rowId) {
       const { user } =  this.$route.query;
       this.$prompt('请输入原因', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
       }).then(({ value }) => {
-        const url = `/apis/todo/${user}/approveList/reject/${value}`;
+        const url = `/apis/todo/${user}/approveList/${rowId}/reject/${value}`;
         $http.post(url).then(() => {
             this.$notify.success({
               message: '驳回成功'
@@ -125,10 +125,10 @@ export default {
           });
       });
     },
-    handlerApprove() {
+    handlerApprove(rowId) {
       const { user } =  this.$route.query;
       // const url = `/apis/approveList/${rowId}/approve`;
-      const url = `/apis/todo/${user}/approveList/approve`;
+      const url = `/apis/todo/${user}/approveList/${rowId}/approve`;
       $http.post(url).then(() => {
           this.$notify.success({
             message: '通过成功'

@@ -35,8 +35,8 @@
               <span>角色：{{rulesMap[row.role]}}</span><br />
               <span>性别：{{row.gender}}</span><br />
               <span>员工编号：{{row.employeeCode}}</span><br />
-              <span>员工姓：{{row.employeeFirstName}}</span><br />
-              <span>员工名：{{row.employeeLastName}}</span><br />
+              <span>员工姓：{{row.employeeLastName}}</span><br />
+              <span>员工名：{{row.employeeFirstName}}</span><br />
               <span>移动电话：{{row.mobileTelephone}}</span><br />
               <span>办公电话：{{row.officeTelephone}}</span><br />
               <span>邮箱：{{row.email}}</span><br />
@@ -66,11 +66,11 @@
         label="员工编号">
       </el-table-column> -->
       <el-table-column
-        prop="employeeFirstName"
+        prop="employeeLastName"
         label="员工姓">
       </el-table-column>
       <el-table-column
-        prop="employeeLastName"
+        prop="employeeFirstName"
         label="员工名">
       </el-table-column>
       <el-table-column
