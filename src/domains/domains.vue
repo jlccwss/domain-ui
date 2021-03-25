@@ -23,11 +23,11 @@
         label="域名">
       </el-table-column>
       <el-table-column
-        prop="tld"
+        prop="tldId"
         label="TLD">
       </el-table-column>
       <el-table-column
-        prop="registrantName"
+        prop="registrant"
         label="注册人">
       </el-table-column>
       <el-table-column

@@ -1,5 +1,5 @@
 import Vue from 'vue';
-import router from '../router';
+// import router from '../router';
 
 const notificationFactory = (() => {
   const instances = {};
@@ -31,12 +31,15 @@ export function errorInterceptor(error) {
           statusText: '<empty response>'
         };
 
-    notificationFactory.error(response.status + ',' + response.statusText);
     if (response.status === 401) {
-      router.push({
-        name: 'login'
-      });
+      // router.push({
+      //   name: 'login'
+      // });
+      location.href = '/apis/oauth/login';
+      return Promise.reject(error);
     }
+
+    notificationFactory.error(response.status + ',' + response.statusText);
   }
   
   return Promise.reject(error);

@@ -190,7 +190,7 @@ router.beforeEach((to, from, next) => {
       }
     }, () => {
       clearRole();
-      next({ name: 'login' });
+      // next({ name: 'login' });
     });
   }
 })

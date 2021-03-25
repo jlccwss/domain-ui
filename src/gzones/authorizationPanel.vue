@@ -13,7 +13,7 @@
               </el-input>
               <div class="item-list" style="border-right: none">
                 <div class="item" @click="addUser(user.id)" :key="user.id" v-for="user in userList">
-                  {{user.userName}}
+                  {{user.userName}}<span v-if="user.employeeFirstName || user.employeeLastName">({{user.employeeLastName}}{{user.employeeFirstName}})</span>{{user.companyName}}
                 </div>
               </div>
           </el-col>

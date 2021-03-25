@@ -193,7 +193,6 @@ export default {
       $http.post(url).then(res => {
         if (res.data.success) {
           this.contactList = res.data.data;
-          console.log(this.contactList)
         }
       })
     },
@@ -217,14 +216,12 @@ export default {
         return $http.get(url)
       });
 
-      this.step = 2;
-
       Promise.all(https).then(arr => {
         let errMessage = '';
         let registerList = [];
         let unRegisterList = [];
         arr.forEach(res => {
-          if (res.data.success)  {
+          if (res.data.success || (!res.data.success && res.data.data))  {
             let data = res.data.data;
             if (data.available) {
               registerList.push({...data, period: 1});
@@ -238,6 +235,9 @@ export default {
 
         this.registerList = registerList;
         this.unRegisterList = unRegisterList;
+        if (this.registerList.length || this.unRegisterList.length) {
+          this.step = 2;
+        }
         if (errMessage) {
           this.$notify.error({
             message: errMessage
@@ -247,7 +247,6 @@ export default {
     },
 
     register() {
-      console.log(this.selectDomains)
       if (!this.selectDomains.length) {
         this.$notify.warning({
           message: '请选择注册域名'
@@ -283,6 +282,11 @@ export default {
           if (res.data.success)  {
             let data = res.data.data;
             result.push(data);
+            setTimeout(() => {
+              this.$router.push({
+                name: 'domains'
+              });
+            }, 500);
           } else {
             errMessage = res.data.message
           }
