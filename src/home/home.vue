@@ -108,6 +108,11 @@ export default {
     this.getCurRole();
     this.currentNav = this.$route.path;
     this.initWss();
+    this.$router.afterEach((to) => {
+      if (this.currentNav !== to.path) {
+        this.currentNav = to.path;
+      }
+    });
   },
   methods: {
     navToAddress() {

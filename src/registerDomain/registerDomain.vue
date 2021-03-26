@@ -197,6 +197,13 @@ export default {
       })
     },
     next() {
+      let a = 1;
+      if (a===1) {
+        this.$router.push({
+          path: '/home/domains'
+        });
+        return
+      }
       if (!this.domain.domainName) {
         this.$notify.warning({
           message: '请填写注册域名'
@@ -221,7 +228,7 @@ export default {
         let registerList = [];
         let unRegisterList = [];
         arr.forEach(res => {
-          if (res.data.success || (!res.data.success && res.data.data))  {
+          if (res.data.code === 1000 || res.data.code === 3000)  {
             let data = res.data.data;
             if (data.available) {
               registerList.push({...data, period: 1});
@@ -279,9 +286,12 @@ export default {
         let errMessage = '';
         let result = [];
         arr.forEach(res => {
-          if (res.data.success)  {
+          if (res.data.code === 1000 || res.data.code === 3000)  {
             let data = res.data.data;
-            result.push(data);
+            if (data) {
+              result.push(data);
+            }
+            this.$notify.success(res.data.message);
             setTimeout(() => {
               this.$router.push({
                 name: 'domains'
@@ -297,7 +307,16 @@ export default {
           this.$notify.error({
             message: errMessage
           });
+          setTimeout(() => {
+            this.$router.push({
+              name: 'domains'
+            });
+          }, 500);
         }
+      }, () => {
+        this.$router.push({
+          name: 'domains'
+        });
       });    
     },
 

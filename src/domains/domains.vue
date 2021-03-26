@@ -119,7 +119,7 @@ export default {
       $http.post(url).then(res => {
         if (res.data.success) {
           this.list = res.data.data;
-          this.pagination.total = res.data.totalRowNum;
+          this.pagination.total = res.data.TotalRowNum;
         }
         this.loading = false;
       }, () => {
