@@ -197,13 +197,6 @@ export default {
       })
     },
     next() {
-      let a = 1;
-      if (a===1) {
-        this.$router.push({
-          path: '/home/domains'
-        });
-        return
-      }
       if (!this.domain.domainName) {
         this.$notify.warning({
           message: '请填写注册域名'
@@ -280,7 +273,7 @@ export default {
         return $http.post(url, data);
       });
 
-      this.step = 3;
+      // this.step = 3;
 
       Promise.all(https).then(arr => {
         let errMessage = '';
@@ -292,11 +285,11 @@ export default {
               result.push(data);
             }
             this.$notify.success(res.data.message);
-            setTimeout(() => {
+            // setTimeout(() => {
               this.$router.push({
                 name: 'domains'
               });
-            }, 500);
+            // }, 500);
           } else {
             errMessage = res.data.message
           }
@@ -307,11 +300,11 @@ export default {
           this.$notify.error({
             message: errMessage
           });
-          setTimeout(() => {
+          // setTimeout(() => {
             this.$router.push({
               name: 'domains'
             });
-          }, 500);
+          // }, 500);
         }
       }, () => {
         this.$router.push({
