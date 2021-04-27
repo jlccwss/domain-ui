@@ -6,15 +6,10 @@
           <el-breadcrumb-item>操作日志</el-breadcrumb-item>
         </el-breadcrumb>
       </div>
-      <el-row class="mt-xs">
-        <el-col :span="4" class="page-title">
-          操作日志
-        </el-col>
-      </el-row>
-      <el-form class="mt-xs" size="small" label-width="120px" label-position="right">
+      <el-form class="mt-xs" size="small" label-position="right">
        <el-row>
          <el-col :span="6">
-          <el-form-item label="操作时间：">
+          <el-form-item label="操作时间：" label-width="90px">
             <el-date-picker
               v-model="params.date"
               type="datetimerange"

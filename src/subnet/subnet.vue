@@ -6,25 +6,18 @@
           <el-breadcrumb-item>子网上报</el-breadcrumb-item>
         </el-breadcrumb>
       </div>
-      <el-row class="mt-xs">
-        <el-col :span="4" class="page-title">
-          子网上报
-        </el-col>
-        <el-col :span="20" align="right">
-          <el-button @click="handlerAdd()" type="primary" size="small">
-            创建
-          </el-button>
-        </el-col>
-      </el-row>
-      <el-form class="mt-xs" size="small" label-width="120px" label-position="right">
+      <el-form class="mt-xs" size="small" label-position="right">
        <el-row>
          <el-col :span="6">
-          <el-form-item label="子网">
+          <el-form-item label="子网" label-width="40px">
             <el-input v-model="params.searchSubnet" placeholder="子网"></el-input>
           </el-form-item>
          </el-col>
-         <el-col :span="6">
+         <el-col :span="6" align="left" :offset="1">
           <el-button size="small" type="primary" @click="handlerSearch">查询</el-button>
+          <el-button @click="handlerAdd()" type="primary" size="small">
+            创建
+          </el-button>
          </el-col>
        </el-row>
     </el-form>

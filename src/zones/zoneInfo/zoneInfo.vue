@@ -7,25 +7,18 @@
           <el-breadcrumb-item>{{detail.zoneName}}</el-breadcrumb-item>
         </el-breadcrumb>
       </div>
-      <el-row class="mt-xs">
-        <el-col :span="4" class="page-title">
-          记录
-        </el-col>
-        <el-col :span="20" align="right">
-          <el-button @click="handlerAdd" type="primary" size="small">
-            创建
-          </el-button>
-        </el-col>
-      </el-row>
-      <el-form class="mt-xs" size="small" label-width="120px" label-position="right">
+      <el-form class="mt-xs" size="small" label-position="right">
        <el-row>
          <el-col :span="6">
-          <el-form-item label="记录名称">
+          <el-form-item label="记录名称" label-width="70px">
             <el-input v-model="params.search" placeholder="记录名称"></el-input>
           </el-form-item>
          </el-col>
-         <el-col :span="6">
+         <el-col :span="6" :offset="1" align="left">
           <el-button size="small" type="primary" @click="handlerSearch">查询</el-button>
+          <el-button @click="handlerAdd" type="primary" size="small">
+            创建
+          </el-button>
          </el-col>
        </el-row>
     </el-form>
@@ -77,6 +70,7 @@
         </template>
       </el-table-column>
       <el-table-column
+        width="160"
         label="创建时间">
         <template slot-scope="{ row }">
           {{row.createTime | dateFormat}}

@@ -8,7 +8,7 @@
       </div>
       <el-row class="mt-xs">
         <el-col :span="4" class="page-title">
-          广域网
+          <!-- 广域网 -->
         </el-col>
         <el-col :span="20" align="right">
           <el-button v-if="isAdmin" @click="handlerAdd" type="primary" size="small">

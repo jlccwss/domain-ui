@@ -10,15 +10,38 @@
             <el-input v-model="editRow.des"></el-input>
         </el-form-item>
         <el-form-item label="数据中心" prop="centerId">
-            <el-select :disabled="!!editRow.id" v-model="editRow.centerId" style="width:100%">
+            <el-select :disabled="!!editRow.id" v-model="editRow.centerId" class="w-full">
               <el-option :key="center.id" :label="center.dataCenter" :value="center.id" v-for="center in centerList"></el-option>
             </el-select>
         </el-form-item>
         <el-form-item label="记录" prop="rrids">
-            <el-select style="width:100%" v-model="editRow.rrids" multiple filterable>
-              <el-option :key="app.id" :label="app.rrName + '('+ app.centerName + ')'" :value="app.id" v-for="app in appList"></el-option>
+           <el-input placeholder="请输入内容" v-model="search" class="input-with-select">
+            <el-select v-model="type" slot="prepend" placeholder="请选择">
+              <el-option label="互联网" value="1"></el-option>
+              <el-option label="广域网" value="2"></el-option>
             </el-select>
+            <el-button slot="append" @click="handlerSearch" icon="el-icon-search"></el-button>
+          </el-input>
         </el-form-item>
+        <el-table v-loading="loading" :data="rrlist" @selection-change="handleSelectionChange">
+          <el-table-column
+            type="selection"
+            width="55">
+          </el-table-column>
+          <el-table-column label="名称">
+            <template slot-scope="{ row }">
+              {{row.rrName}}({{row.centerName}})
+            </template>
+          </el-table-column>
+        </el-table>
+         <el-pagination
+          layout="prev, pager, next"
+          @size-change="handleSizeChange"
+          @current-change="handleCurrentChange"
+          :current-page="pagination.currpage"
+          :page-size="pagination.pagesize"
+          :total="pagination.total">
+        </el-pagination>
       </el-form>
     </el-card>
     <el-row class="p-sm">
@@ -41,9 +64,15 @@ import $http from '@/http';
 export default {
   data() {
     return {
+      loading: false,
+      multipleSelection: [],
+      search: '',
       form: {},
       centerList: [],
+      pagination: { currpage: 1, pagesize: 10 },
       appList: [],
+      rrlist: [],
+      type: '1',
       rules: {
         name: [
            { required: true, message: '请输入应用名称', trigger: 'blur' },
@@ -57,7 +86,7 @@ export default {
   props: ['editRow'],
   mounted() {
     this.getCenterList();
-    this.getAppList();
+    // this.getAppList();
     if (this.editRow.id) {
       this.getDetail();
     }
@@ -79,18 +108,52 @@ export default {
         }
       });
     },
-    getAppList() {
-      const url = '/apis/rrs';
-      $http.get(url).then(res => {
-        if (res.data.status === 0) {
-          this.appList = res.data.data;
-        }
-      });
-    },
+    // getAppList() {
+    //   const url = '/apis/rrs';
+    //   $http.get(url).then(res => {
+    //     if (res.data.status === 0) {
+    //       this.appList = res.data.data;
+    //     }
+    //   });
+    // },
     handlerCancel() {
       this.$emit('close')
     },
+    handleCurrentChange(pageNum) {
+      this.pagination.currpage = pageNum;
+      this.getList();
+    },
+    handleSizeChange(pageSize) {
+      this.pagination.pagesize = pageSize;
+      this.getList();
+    },
+    handlerSearch() {
+      this.pagination = { currpage: 1, pagesize: 10 };
+      this.getList();
+    },
+    getList() {
+      const { currpage, pagesize } = this.pagination;
+      let url = `/apis/type/${this.type}/rrs?pageNum=${currpage}&pageSize=${pagesize}`;
+      if (this.search) {
+        url += `&searchName=${this.search}`;
+      }
+      this.loading = true;
+      $http.get(url).then(res => {
+        if (res.data.status === 0) {
+          this.rrlist = res.data.data;
+          this.pagination.total = res.data.total;
+        }
+        this.loading = false;
+      }, () => {
+        this.loading = false;
+      });
+    },
+    handleSelectionChange(val) {
+      this.multipleSelection = val;
+    },
     handlerSave() {
+      const ids = this.multipleSelection.map(row => row.id);
+      this.editRow.rrids = ids;
       this.$refs.form.validate(valid => {
           if (valid) {
             let url = '/apis/apps';
@@ -118,5 +181,9 @@ export default {
     width: 500px;
     text-align: left;
     background: #fff;
+}
+
+.input-with-select /deep/ .el-input--suffix {
+  width: 100px;
 }
 </style>

@@ -6,11 +6,6 @@
           <el-breadcrumb-item>域名注册</el-breadcrumb-item>
         </el-breadcrumb>
       </div>
-      <el-row class="mt-xs">
-        <el-col :span="4" class="page-title">
-          域名注册
-        </el-col>
-      </el-row>
       <el-form class="mt-xs form" ref="form" :model="editRow" label-width="120px" v-if="step===1">
          <el-form-item label="注册域名">
            <el-row>

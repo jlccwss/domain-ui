@@ -6,21 +6,17 @@
           <el-breadcrumb-item>域名统计</el-breadcrumb-item>
         </el-breadcrumb>
       </div>
-      <el-row class="mt-xs">
-        <el-col :span="4" class="page-title">
-          域名统计
-        </el-col>
-      </el-row>
-     <el-form class="mt-xs" size="small" label-width="120px" label-position="right">
+     <el-form class="mt-xs" size="small" label-position="right">
        <el-row>
          <el-col :span="6">
-          <el-form-item label="域名">
+          <el-form-item label="域名" label-width="40px">
             <el-input v-model="params.searchName" placeholder="请输入域名"></el-input>
           </el-form-item>
          </el-col>
-         <el-col :span="6">
-          <el-form-item label="月份">
+         <el-col :span="6" :offset="1">
+          <el-form-item label="月份" label-width="40px">
             <el-date-picker
+              class="w-full"
               value-format="yyyy-MM-dd HH:mm:ss"
               v-model="params.time"
               type="month"
@@ -28,7 +24,7 @@
             </el-date-picker>
           </el-form-item>
          </el-col>
-         <el-col :span="6">
+         <el-col :span="6" :offset="1" align="left">
           <el-button size="small" type="primary" @click="handlerQuery">查询</el-button>
          </el-col>
        </el-row>

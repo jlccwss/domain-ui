@@ -6,16 +6,6 @@
           <el-breadcrumb-item>联系人模板</el-breadcrumb-item>
         </el-breadcrumb>
       </div>
-      <el-row class="mt-xs">
-        <el-col :span="4" class="page-title">
-          联系人模板
-        </el-col>
-        <!-- <el-col :span="20" align="right">
-          <el-button @click="handlerAdd" type="primary" size="small">
-            新建模板
-          </el-button>
-        </el-col> -->
-      </el-row>
       <!-- <el-form class="mt-xs" size="small" label-width="120px" label-position="right">
        <el-row>
          <el-col :span="6">

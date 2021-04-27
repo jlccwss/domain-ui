@@ -6,16 +6,6 @@
           <el-breadcrumb-item>SSL证书</el-breadcrumb-item>
         </el-breadcrumb>
       </div>
-      <el-row class="mt-xs">
-        <el-col :span="4" class="page-title">
-          SSL证书
-        </el-col>
-        <!-- <el-col :span="20" align="right">
-          <el-button @click="handlerAdd" type="primary" size="small">
-            创建
-          </el-button>
-        </el-col> -->
-      </el-row>
      <el-table
       :data="list"
       v-loading="loading"

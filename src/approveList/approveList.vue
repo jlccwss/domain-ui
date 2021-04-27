@@ -6,11 +6,6 @@
           <el-breadcrumb-item>审批管理</el-breadcrumb-item>
         </el-breadcrumb>
       </div>
-      <el-row class="mt-xs">
-        <el-col :span="4" class="page-title">
-          审批管理
-        </el-col>
-      </el-row>
      <el-table
       v-loading="loading"
       max-height="700"
