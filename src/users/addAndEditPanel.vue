@@ -11,9 +11,9 @@
               <el-option :key="role.id" :label="role.name" :value="role.role" v-for="role in roleList"></el-option>
             </el-select>
         </el-form-item>
-        <el-form-item label="密码">
+        <!-- <el-form-item label="密码">
             <el-input v-model="editRow.passWord" show-password></el-input>
-        </el-form-item>
+        </el-form-item> -->
         <el-form-item label="性别">
             <el-input v-model="editRow.gender"></el-input>
         </el-form-item>

@@ -14,7 +14,7 @@
             {{user.userName}}<i class="el-icon-arrow-down el-icon--right"></i>
             </span>
             <el-dropdown-menu slot="dropdown">
-              <el-dropdown-item command="changePwd">修改密码</el-dropdown-item>
+              <!-- <el-dropdown-item command="changePwd">修改密码</el-dropdown-item> -->
               <el-dropdown-item command="logout">登出</el-dropdown-item>
             </el-dropdown-menu>
           </el-dropdown>
@@ -52,7 +52,7 @@
             </template>
             <el-menu-item index="/home/addressManage" @click="navToAddress" v-if="authority.includes('addressManage')">地址管理</el-menu-item>
             <!-- <el-menu-item index="/home/ranking" v-if="authority.includes('ranking')">使用排行</el-menu-item> -->
-            <el-menu-item index="/home/subnet" v-if="authority.includes('subnet')">子网上报</el-menu-item>
+            <!-- <el-menu-item index="/home/subnet" v-if="authority.includes('subnet')">子网上报</el-menu-item> -->
           </el-submenu>
           <el-submenu index="4" v-if="authority.includes('4')">
             <template slot="title">

@@ -33,8 +33,13 @@ export default {
             formatter: function(v) {
               if (v < 10000) {
                 return v;
+              } 
+
+              if (v < 10000 * 10000) {
+                return v/10000 + '万';
               }
-              return v/10000 + '万';
+
+              return (v/(10000*10000)).toFixed(2) + '亿';
             },
           },
           axisLine: {
@@ -54,6 +59,12 @@ export default {
             textStyle: {
                 color: '#fff'
             },
+            formatter: function(name) {
+                if (name.length < 20) {
+                  return name;
+                }
+                return name.slice(0,20) + '...';
+            }
           }, 
           splitLine: {
             show: false,
@@ -81,7 +92,10 @@ export default {
           label: {
               show: true,
               position: 'right',
-              color: '#fff'
+              color: '#fff',
+              formatter: function(v) {
+                return (v.data.value/(10000*10000)).toFixed(2);
+              }
           },
           itemStyle: {
             normal: {
