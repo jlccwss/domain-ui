@@ -1,6 +1,9 @@
 <template>
-    <div class="barChart" ref="chart">
-    </div>
+<div>
+  <div class="barChart" ref="chart">
+  </div>
+  <div v-if="tooltipShow" :style="{left: left+'px', top: top+ 'px'}" class="tooltip">{{tooltipText}}</div>
+</div>
 </template>
 
 <script>
@@ -11,6 +14,10 @@ export default {
   mixins: [baseChart],
   data() {
     return {
+      left: 0,
+      top: 0,
+      tooltipText: '',
+      tooltipShow: false,
       option: {
         grid: {
             left: '3%',
@@ -54,10 +61,15 @@ export default {
           axisLine: {
             show: false
           },
+          silent: false,
+          triggerEvent:true,
           axisLabel: {
             show: true,
             textStyle: {
                 color: '#fff'
+            },
+            tooltip: {
+                show: true
             },
             formatter: function(name) {
                 if (name.length < 20) {
@@ -74,7 +86,29 @@ export default {
       }
     };
   },
+  mounted() {
+    this.initEvent();
+  },
   methods: {
+    initEvent() {
+      this.myChart.on('mouseover', params => {
+          if (params.componentType === 'yAxis') {
+            this.$nextTick(() => {
+              this.tooltipShow = true;
+              this.tooltipText = params.value;
+              this.left = params.event.offsetX;
+              this.top = params.event.offsetY;
+            });
+          }
+      });
+      this.myChart.on('mouseout', params => {
+          if (params.componentType === 'yAxis') {
+            this.$nextTick(() => {
+              this.tooltipShow = false;
+            });
+          }
+      });
+    },
     fetchData() {
       const url = '/apis/stats/7/groups/*/members/*/views/*/' + this.type + '?topn=10';
       $http.get(url).then(res => {
@@ -93,8 +127,16 @@ export default {
               show: true,
               position: 'right',
               color: '#fff',
-              formatter: function(v) {
-                return (v.data.value/(10000*10000)).toFixed(2);
+              formatter: function(d) {
+                let v = d.value;
+                if (v < 10000) {
+                  return v;
+                } 
+                if (v < 10000 * 10000) {
+                  return v/10000 + '万';
+                }
+
+                return (v/(10000*10000)).toFixed(2) + '亿';
               }
           },
           itemStyle: {
@@ -115,5 +157,12 @@ export default {
 <style scoped>
 .barChart {
   height: 100%;
+}
+
+.tooltip {
+  position: absolute;
+  background: #fff;
+  border-radius: 3px;
+  padding: 3px 5px;
 }
 </style>

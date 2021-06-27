@@ -25,12 +25,13 @@ export default {
       $http.get(url).then(res => {
         if (res.data.qpsTotal) {
           let num = res.data.qpsTotal + '';
-          if (num.length < 10) {
-            num = '0'.repeat(10 - num.length) + num;
+          this.$emit('total', num);
+          if (num.length < 11) {
+            num = '0'.repeat(11 - num.length) + num;
           }
           this.total = num;
         } else {
-          this.total = '0000000000';
+          this.total = '00000000000';
         }
       });
     }

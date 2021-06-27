@@ -28,8 +28,8 @@
         <div class="flex-col flex-auto mr-20">
           <div class="chart cur-day flex-col mb-20">
             <chart-boder></chart-boder>
-            <div class="thrid-title">当日解析量<span class="des">{{time}}</span></div>
-            <text-chart class="flex-auto"></text-chart>
+            <div class="thrid-title">当日解析量({{totalStr}})<span class="des">{{time}}</span></div>
+            <text-chart @total="changeTotal" class="flex-auto"></text-chart>
           </div>
           <div class="chart flex-col flex-auto">
             <chart-boder></chart-boder>
@@ -68,7 +68,8 @@ import chartBoder from './chartBoder.vue';
 export default {
   data() {
     return {
-      time: ''
+      time: '',
+      totalStr: ''
     };
   },
   components: {
@@ -83,6 +84,15 @@ export default {
     this.calTime();
   },
   methods: {
+    changeTotal(v) {
+      if (v < 10000) {
+        this.totalStr = v;
+      }  else if (v < 10000 * 10000) {
+        this.totalStr =  (v/10000).toFixed(2) + '万';
+      } else {
+        this.totalStr = (v/(10000*10000)).toFixed(2) + '亿';
+      }
+    },
     calTime() {
       let date = new Date();
       let month = date.getMonth() + 1;

@@ -14,22 +14,22 @@
         </el-form-item>
         <el-form-item label="第一审批人">
             <el-select v-model="editRow.flowPath1" style="width:100%">
-              <el-option :key="user.id" :label="user.userName" :value="user.userName" v-for="user in userList"></el-option>
+              <el-option :key="user.id" :label="user.userName + '('+user.employeeFirstName+user.employeeLastName+')'" :value="user.userName" v-for="user in userList"></el-option>
             </el-select>
         </el-form-item>
         <el-form-item label="第二审批人">
             <el-select v-model="editRow.flowPath2" style="width:100%">
-              <el-option :key="user.id" :label="user.userName" :value="user.userName" v-for="user in userList"></el-option>
+              <el-option :key="user.id" :label="user.userName + '('+user.employeeFirstName+user.employeeLastName+')'" :value="user.userName" v-for="user in userList"></el-option>
             </el-select>
         </el-form-item>
         <el-form-item label="第三审批人">
             <el-select v-model="editRow.flowPath3" style="width:100%">
-              <el-option :key="user.id" :label="user.userName" :value="user.userName" v-for="user in userList"></el-option>
+              <el-option :key="user.id" :label="user.userName + '('+user.employeeFirstName+user.employeeLastName+')'" :value="user.userName" v-for="user in userList"></el-option>
             </el-select>
         </el-form-item>
         <el-form-item label="第四审批人">
             <el-select v-model="editRow.flowPath4" style="width:100%">
-              <el-option :key="user.id" :label="user.userName" :value="user.userName" v-for="user in userList"></el-option>
+              <el-option :key="user.id" :label="user.userName + '('+user.employeeFirstName+user.employeeLastName+')'" :value="user.userName" v-for="user in userList"></el-option>
             </el-select>
         </el-form-item>
         <el-form-item label="开启">

@@ -26,6 +26,7 @@
          </el-col>
          <el-col :span="6" :offset="1" align="left">
           <el-button size="small" type="primary" @click="handlerQuery">查询</el-button>
+          <el-button size="small" type="primary" @click="handlerExport">导出</el-button>
          </el-col>
        </el-row>
     </el-form>
@@ -72,6 +73,8 @@
 
 <script>
 import $http from '@/http';
+import { exportCsv } from '@/utils/export';
+import dateFormat from '@/filter/dateFilter';
 
 export default {
   data() {
@@ -100,6 +103,34 @@ export default {
     handleSizeChange(pageSize) {
       this.pagination.pagesize = pageSize;
       this.getList();
+    },
+    handlerExport() {
+      const url = `/apis/topn?pageNum=1&pageSize=999999`;
+      $http.get(url).then(res => {
+        if (res.data.status === 0) {
+          let list = res.data.data;
+          if (list.length) {
+            let data = list.map(item => {
+              return [
+                item.domain,
+                item.total,
+                dateFormat(item.beginTime),
+                dateFormat(item.endTime)
+              ];
+            });
+            data.unshift(['域名地址', '访问量', '开始时间', '结束时间']);
+            exportCsv('域名统计导出数据', data);
+          } else {
+            this.$notify.warning({
+              message: '没有记录'
+            });
+          }
+        } else {
+          this.$notify.warning({
+            message: '导出失败'
+          });
+        }
+      });
     },
     getList() {
       this.loading = true;

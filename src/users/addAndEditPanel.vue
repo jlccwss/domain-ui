@@ -21,10 +21,10 @@
             <el-input v-model="editRow.employeeCode"></el-input>
         </el-form-item>
         <el-form-item label="员工姓">
-            <el-input v-model="editRow.employeeFirstName"></el-input>
+            <el-input v-model="editRow.employeeLastName"></el-input>
         </el-form-item>
         <el-form-item label="员工名">
-            <el-input v-model="editRow.employeeLastName"></el-input>
+            <el-input v-model="editRow.employeeFirstName"></el-input>
         </el-form-item>
         <el-form-item label="移动电话">
             <el-input v-model="editRow.mobileTelephone"></el-input>
