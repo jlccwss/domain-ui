@@ -27,3 +27,5 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 http://jlccwss.vicp.cc:18888/#/login
 admin
 admin
+
+http://jlccwss.vicp.cc:18888/apis/login/admin/admin/login

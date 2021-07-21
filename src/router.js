@@ -32,7 +32,7 @@ import domainStatistics from './domainStatistics/domainStatistics.vue';
 
 const router = new VueRouter({
   routes: [
-    { path: '/', redirect: '/login' },
+    { path: '/', redirect: '/home/zones' },
     { path: '/login', name: 'login', component: login },
     { path: '/bigshow', name: 'bigshow', component: bigshow },
     { path: '/404', name: '404', component: notFound },
@@ -178,12 +178,22 @@ router.beforeEach((to, from, next) => {
     getRole().then(res => {
       let user = res.data;
       setUser(user);
-      let authorityArr = authority[user.role];
+      let isAdmin = user.admin === 'admin';
+      let authorityArr = [];
+
+      if (!isAdmin) {
+        let roleids = user.roleid || [];
+        roleids.forEach(id => {
+          authorityArr = authorityArr.concat(authority[id]);
+        })
+        // authorityArr = authority['admin'];
+        // authorityArr = ['2', '3', '4', '5', '6', '7', '8'];//authority['admin'];
+      }
       if (to.path === '/home/addressManage' && from.name) {
         next({ name: from.name });
         return;
       }
-      if (authorityArr.includes(to.name) || to.name === 'home404') {
+      if (authorityArr.includes(to.name) || to.name === 'home404' || isAdmin) {
         next();
       } else {
         next({ name: authorityArr[0] });

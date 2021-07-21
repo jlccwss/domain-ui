@@ -6,11 +6,11 @@
          <el-form-item label="用户名">
             <el-input v-model="editRow.userName"></el-input>
         </el-form-item>
-        <el-form-item label="角色">
+        <!-- <el-form-item label="角色">
             <el-select style="width:100%" v-model="editRow.role">
               <el-option :key="role.id" :label="role.name" :value="role.role" v-for="role in roleList"></el-option>
             </el-select>
-        </el-form-item>
+        </el-form-item> -->
         <!-- <el-form-item label="密码">
             <el-input v-model="editRow.passWord" show-password></el-input>
         </el-form-item> -->
@@ -80,17 +80,17 @@ export default {
   },
   props: ['editRow'],
   mounted() {
-    this.getRoleList();
+    // this.getRoleList();
   },
   methods: {
-    getRoleList() {
-      const url = '/apis/roles';
-      $http.get(url).then(res => {
-        if (res.data.status === 0) {
-          this.roleList = res.data.data;
-        }
-      });
-    },
+    // getRoleList() {
+    //   const url = '/apis/roles';
+    //   $http.get(url).then(res => {
+    //     if (res.data.status === 0) {
+    //       this.roleList = res.data.data;
+    //     }
+    //   });
+    // },
     handlerCancel() {
       this.$emit('close')
     },

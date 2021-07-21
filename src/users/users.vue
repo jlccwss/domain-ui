@@ -32,7 +32,7 @@
             trigger="hover">
             <p>
               <span>用户名：{{row.userName}}</span><br />
-              <span>角色：{{rulesMap[row.role]}}</span><br />
+              <!-- <span>角色：{{rulesMap[row.role]}}</span><br /> -->
               <span>性别：{{row.gender}}</span><br />
               <span>员工编号：{{row.employeeCode}}</span><br />
               <span>员工姓：{{row.employeeFirstName}}</span><br />
@@ -53,10 +53,10 @@
           </el-popover>
         </template>
       </el-table-column>
-      <el-table-column
+      <!-- <el-table-column
         label="角色">
         <template slot-scope="{ row }">{{rulesMap[row.role]}}</template>
-      </el-table-column>
+      </el-table-column> -->
       <!-- <el-table-column
         prop="gender"
         label="性别">
@@ -118,9 +118,10 @@
           {{row.createTime | dateFormat}}
         </template>
       </el-table-column>
-      <el-table-column width="120" label="操作">
+      <el-table-column width="160" label="操作">
         <template slot-scope="{ row }">
           <el-button @click="handlerEdit(row)" type="text" size="small">编辑</el-button>
+          <el-button @click="handlerMenu(row)" type="text" size="small">菜单权限</el-button>
           <el-button @click="handlerDel(row.id)" type="text" size="small">删除</el-button>
         </template>
       </el-table-column>
@@ -136,6 +137,7 @@
       </el-pagination>
     </el-row>
     <addAndEditPanel @close="close" v-if="addAndEdit" :editRow="editRow"></addAndEditPanel>
+    <editRolePanel @close="hideMenu" v-if="editMenu" :editRow="editRow"></editRolePanel>
     </div>
 </template>
 
@@ -143,10 +145,12 @@
 import $http from '@/http';
 import { rulesMap } from './const';
 import addAndEditPanel from './addAndEditPanel.vue';
+import editRolePanel from './editRolePanel.vue';
 
 export default {
   components: {
-    addAndEditPanel
+    addAndEditPanel,
+    editRolePanel
   },
   data() {
     return {
@@ -155,6 +159,7 @@ export default {
       rulesMap: rulesMap,
       editRow: {},
       addAndEdit: false,
+      editMenu: false,
       pagination: {
         currpage: 1,
         pagesize: 10
@@ -180,6 +185,13 @@ export default {
     handlerEdit(row) {
       this.addAndEdit = true;
       this.editRow = { ...row };
+    },
+    handlerMenu(row) {
+      this.editRow = { ...row };
+      this.editMenu = true;
+    },
+    hideMenu() {
+      this.editMenu = false;
     },
     getList() {
       this.loading = true;

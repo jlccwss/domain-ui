@@ -6,16 +6,22 @@
           <el-breadcrumb-item>广域网</el-breadcrumb-item>
         </el-breadcrumb>
       </div>
-      <el-row class="mt-xs">
-        <el-col :span="4" class="page-title">
+      <el-form class="mt-xs" size="small" label-width="120px" label-position="right">
+      <el-row>
+        <el-col :span="6" class="page-title">
           <!-- 广域网 -->
+          <el-form-item label="文本框" label-width="70px">
+            <el-input v-model="params.search" placeholder="文本框"></el-input>
+          </el-form-item>
         </el-col>
-        <el-col :span="20" align="right">
+        <el-col :span="18" align="right">
+          <el-button size="small" type="primary" @click="handlerSearch">查询</el-button>
           <el-button v-if="isAdmin" @click="handlerAdd" type="primary" size="small">
             创建
           </el-button>
         </el-col>
       </el-row>
+      </el-form>
      <el-table
       class="mt-xs"
       :data="list"
@@ -92,6 +98,7 @@ export default {
   data() {
     return {
       list: [],
+      params: {},
       loading: false,
       editRow: {},
       addAndEdit: false,
@@ -109,6 +116,10 @@ export default {
     this.isAdmin = user.role === 'admin';
   },
   methods: {
+    handlerSearch() {
+      this.pagination.currpage = 1;
+      this.getList();
+    },
     handleCurrentChange(pageNum) {
       this.pagination.currpage = pageNum;
       this.getList();
@@ -188,7 +199,11 @@ export default {
     getList() {
       this.loading = true;
       const { currpage, pagesize } = this.pagination;
-      const url = `/apis/zones?type=2&pageNum=${currpage}&pageSize=${pagesize}`;
+      let url = `/apis/zones?type=2&pageNum=${currpage}&pageSize=${pagesize}`;
+      const { search } = this.params;
+      if (search) {
+        url += `&searchName=${search}`;
+      }
       $http.get(url).then(res => {
         if (res.data.status === 0) {
           this.list = res.data.data;

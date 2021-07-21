@@ -15,7 +15,19 @@
             </el-select>
         </el-form-item>
         <el-form-item label="记录" prop="rrids">
-           <el-input placeholder="请输入内容" v-model="search" class="input-with-select">
+           <el-table :data="selectRRList">
+             <el-table-column label="名称">
+              <template slot-scope="{ row }">
+                {{row.rrName}}({{row.centerName}})
+              </template>
+            </el-table-column>
+            <el-table-column label="操作">
+              <template slot-scope="{ row }">
+                <el-button @click="handleDel(row)" type="text">删除</el-button>
+              </template>
+            </el-table-column>
+           </el-table>
+           <el-input placeholder="请输入内容" v-model="search" class="input-with-select mt-xs">
             <el-select v-model="type" slot="prepend" placeholder="请选择">
               <el-option label="互联网" value="1"></el-option>
               <el-option label="广域网" value="2"></el-option>
@@ -42,6 +54,9 @@
           :page-size="pagination.pagesize"
           :total="pagination.total">
         </el-pagination>
+        <el-row style="text-align:right">
+          <el-button type="primary" size="small" @click="handleAdd">添加</el-button>
+        </el-row>
       </el-form>
     </el-card>
     <el-row class="p-sm">
@@ -65,6 +80,7 @@ export default {
   data() {
     return {
       loading: false,
+      selectRRList: [],
       multipleSelection: [],
       search: '',
       form: {},
@@ -96,9 +112,31 @@ export default {
       const url = '/apis/apps/' + this.editRow.id;
       $http.get(url).then(res => {
         if (res.data) {
-          this.editRow.rrids = res.data.rrids;
+          // this.editRow.rrids = res.data.rrids;
+          this.getRRData(res.data.rrids);
         }
       });
+    },
+    getRRData(rrids) {
+      if (!rrids || !rrids.length) {
+        return;
+      }
+      let promiseList = [];
+      rrids.forEach(rrid => {
+        let url = '/apis/rrs/' + rrid;
+        promiseList.push($http.get(url));
+      });
+
+      Promise.all(promiseList).then(resList => {
+        this.selectRRList = resList.filter(res => {
+          return res.status === 200;
+        }).map(res => {
+          return res.data;
+        });
+      });
+    },
+    handleDel(row) {
+      this.selectRRList = this.selectRRList.filter(item => item.id !== row.id);
     },
     getCenterList() {
       const url = '/apis/datacenter/datas';
@@ -151,8 +189,17 @@ export default {
     handleSelectionChange(val) {
       this.multipleSelection = val;
     },
+    handleAdd() {
+      if (this.multipleSelection.length) {
+        this.multipleSelection.forEach(item => {
+          if (!this.selectRRList.some(rr => rr.id === item.id)) {
+            this.selectRRList.push(item);
+          }
+        });
+      } 
+    },
     handlerSave() {
-      const ids = this.multipleSelection.map(row => row.id);
+      const ids = this.selectRRList.map(row => row.id);
       this.editRow.rrids = ids;
       this.$refs.form.validate(valid => {
           if (valid) {
