@@ -7,19 +7,19 @@
         </el-breadcrumb>
       </div>
       <el-form class="mt-xs" size="small" label-width="120px" label-position="right">
-      <el-row>
-        <el-col :span="6" class="page-title">
-          <el-form-item label="文本框" label-width="70px">
-            <el-input v-model="params.search" placeholder="文本框"></el-input>
-          </el-form-item>
-        </el-col>
-        <el-col :span="18" align="right">
-          <el-button size="small" type="primary" @click="handlerSearch">查询</el-button>
-          <el-button v-if="isAdmin" @click="handlerAdd" type="primary" size="small">
-            创建
-          </el-button>
-        </el-col>
-      </el-row>
+        <el-row>
+          <el-col :span="6">
+            <el-form-item label="文本框" label-width="70px">
+              <el-input @keyup.enter.native="handlerSearch" v-model="params.search" placeholder="文本框"></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col  :offset="1" :span="6" align="left">
+            <el-button size="small" type="primary" @click="handlerSearch">查询</el-button>
+            <el-button v-if="isAdmin" @click="handlerAdd" type="primary" size="small">
+              创建
+            </el-button>
+          </el-col>
+        </el-row>
       </el-form>
      <el-table
       class="mt-xs"

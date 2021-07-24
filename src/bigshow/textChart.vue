@@ -25,12 +25,13 @@ export default {
       $http.get(url).then(res => {
         if (res.data.qpsTotal) {
           let num = res.data.qpsTotal + '';
-          this.$emit('total', num);
+          this.$emit('total', res.data);
           if (num.length < 11) {
             num = '0'.repeat(11 - num.length) + num;
           }
           this.total = num;
         } else {
+          this.$emit('total', res.data);
           this.total = '00000000000';
         }
       });
@@ -41,7 +42,6 @@ export default {
 <style scoped>
 .textChart {
   height: 100%;
-  margin: auto;
   text-align: center;
   justify-content: center;
 }

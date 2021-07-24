@@ -8,13 +8,13 @@
       </div>
       <el-form class="mt-xs" size="small" label-width="120px" label-position="right">
       <el-row>
-        <el-col :span="6" class="page-title">
+        <el-col :span="6">
           <!-- 广域网 -->
           <el-form-item label="文本框" label-width="70px">
-            <el-input v-model="params.search" placeholder="文本框"></el-input>
+            <el-input @keyup.enter.native="handlerSearch" v-model="params.search" placeholder="文本框"></el-input>
           </el-form-item>
         </el-col>
-        <el-col :span="18" align="right">
+        <el-col :span="6" align="left" :offset="1">
           <el-button size="small" type="primary" @click="handlerSearch">查询</el-button>
           <el-button v-if="isAdmin" @click="handlerAdd" type="primary" size="small">
             创建
@@ -113,7 +113,7 @@ export default {
   mounted() {
     this.getList();
     let user = getUser();
-    this.isAdmin = user.role === 'admin';
+    this.isAdmin = user.admin === 'admin';
   },
   methods: {
     handlerSearch() {

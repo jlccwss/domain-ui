@@ -28,8 +28,8 @@
         <div class="flex-col flex-auto mr-20">
           <div class="chart cur-day flex-col mb-20">
             <chart-boder></chart-boder>
-            <div class="thrid-title">当日解析量({{totalStr}})<span class="des">{{time}}</span></div>
-            <text-chart @total="changeTotal" class="flex-auto"></text-chart>
+            <div class="sub-title">当日解析量({{totalStr}})<span class="ml-sm">当日活跃IP量({{ipTotalStr}})</span><span class="des">{{time}}</span></div>
+            <text-chart @total="changeTotal" class="flex-auto mt-xs"></text-chart>
           </div>
           <div class="chart flex-col flex-auto">
             <chart-boder></chart-boder>
@@ -69,7 +69,8 @@ export default {
   data() {
     return {
       time: '',
-      totalStr: ''
+      totalStr: '',
+      ipTotalStr: ''
     };
   },
   components: {
@@ -84,13 +85,17 @@ export default {
     this.calTime();
   },
   methods: {
-    changeTotal(v) {
+    changeTotal(data) {
+      this.totalStr = this.getTotalStr(data.qpsTotal);
+      this.ipTotalStr = this.getTotalStr(data.ipTotal);
+    },
+    getTotalStr(v) {
       if (v < 10000) {
-        this.totalStr = v;
+        return v;
       }  else if (v < 10000 * 10000) {
-        this.totalStr =  (v/10000).toFixed(2) + '万';
+        return  (v/10000).toFixed(2) + '万';
       } else {
-        this.totalStr = (v/(10000*10000)).toFixed(2) + '亿';
+        return (v/(10000*10000)).toFixed(2) + '亿';
       }
     },
     calTime() {
@@ -186,7 +191,7 @@ export default {
 }
 .cur-day {
   height: 125px;
-  padding: 20px;
+  // padding: 20px;
 }
 .thrid-title {
   color: #fff;

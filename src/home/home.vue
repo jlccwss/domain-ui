@@ -6,7 +6,7 @@
           <div class="logo-name">集团域名解析统一管理系统</div>
         </div>
         <div class="handler flex">
-          <!-- <i class="el-icon-bell mr-sm" v-if="user.role === 'admin'"></i>
+          <!-- <i class="el-icon-bell mr-sm" v-if="user.admin === 'admin'"></i>
           <i class="el-icon-question mr-sm"></i> -->
           <div class="user-logo mr-sm"></div>
           <el-dropdown class="mr-sm" @command="handleCommand">

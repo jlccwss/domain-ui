@@ -125,7 +125,7 @@ export default {
   },
   mounted() {
     let user = getUser();
-    this.isAdmin = user.role === 'admin';
+    this.isAdmin = user.admin === 'admin';
     this.getList();
   },
   methods: {

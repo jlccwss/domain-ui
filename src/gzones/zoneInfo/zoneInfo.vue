@@ -11,7 +11,7 @@
        <el-row>
          <el-col :span="6">
           <el-form-item label="记录名称" label-width="70px">
-            <el-input v-model="params.search" placeholder="记录名称"></el-input>
+            <el-input @keyup.enter.native="handlerSearch" v-model="params.search" placeholder="记录名称"></el-input>
           </el-form-item>
          </el-col>
          <el-col :span="6" :offset="1" align="left">
@@ -136,7 +136,7 @@ export default {
   mounted() {
     this.zoneId = this.$route.params.zoneId;
     let user = getUser();
-    this.isAdmin = user.role === 'admin';
+    this.isAdmin = user.admin === 'admin';
     this.getList();
     this.getDetail();
   },

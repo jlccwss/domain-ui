@@ -14,6 +14,8 @@
 <script>
 import $http from '@/http';
 import '@/lib/china';
+// const colorMap = ['rgba(54, 207, 201, 0.33)', 'rgba(247, 181, 0, 0.33)', 'rgba(250, 100, 0, 0.33)',
+//  'rgba(50, 197, 255, 0.33)', 'rgba(255, 133, 192, 0.33)', 'rgba(128, 93, 255, 0.33)'];
 const colorMap = ['rgba(54, 207, 201, 0.33)', 'rgba(247, 181, 0, 0.33)', 'rgba(250, 100, 0, 0.33)',
  'rgba(50, 197, 255, 0.33)', 'rgba(255, 133, 192, 0.33)', 'rgba(128, 93, 255, 0.33)'];
 export default {
