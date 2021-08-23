@@ -43,7 +43,7 @@ export default {
               } 
 
               if (v < 10000 * 10000) {
-                return v/10000 + '万';
+                return (v/10000).toFixed(2) + '万';
               }
 
               return (v/(10000*10000)).toFixed(2) + '亿';
@@ -133,7 +133,7 @@ export default {
                   return v;
                 } 
                 if (v < 10000 * 10000) {
-                  return v/10000 + '万';
+                  return (v/10000).toFixed(2) + '万';
                 }
 
                 return (v/(10000*10000)).toFixed(2) + '亿';

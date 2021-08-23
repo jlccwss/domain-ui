@@ -14,6 +14,12 @@ Vue.config.productionTip = false;
 Vue.use(ElementUI);
 Vue.use(VueRouter)
 
+document.onkeydown = function(e) {
+  if (e.keyCode == 13) {
+      return false;
+  }
+}
+
 new Vue({
   router,
   render: h => h(App),

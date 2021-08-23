@@ -142,7 +142,8 @@ export default {
   width: 469px;
 }
 .title-img {
-  background: url('./../assets/title-img.png');
+  background: url('./../assets/favicon.png');
+  // background: url('./../assets/title-img.png');
   width: 34px;
   height: 26px;
   background-repeat: no-repeat;

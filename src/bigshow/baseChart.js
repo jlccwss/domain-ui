@@ -10,7 +10,7 @@ const baseChart = {
   methods: {
     refresh() {
       this.fetchData();
-      setTimeout(() => this.refresh(), 5000)
+      setTimeout(() => this.refresh(), 20000)
     }
   }
 };

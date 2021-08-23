@@ -122,6 +122,7 @@ export default {
   },
   methods: {
     handlerSearch() {
+      console.log(1)
       this.pagination.currpage = 1;
       this.getList();
     },

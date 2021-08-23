@@ -2,12 +2,15 @@
   <div>
     <div class="mapChart" ref="chart"></div>
     <div class="lenged">
-      <div class="item flex"><div class="rect" style="background: rgba(128, 93, 255, 0.66)"></div>&gt;=15000</div>
+      <div class="item flex"><div class="rect" style="background: #8543E0"></div>&gt;=10000</div>
+      <div class="item flex"><div class="rect" style="background: #FACC14"></div>&lt;10000</div>
+      <div class="item flex"><div class="rect" style="background: #2FC25B"></div>&lt;5000</div>
+      <!-- <div class="item flex"><div class="rect" style="background: rgba(128, 93, 255, 0.66)"></div>&gt;=15000</div>
       <div class="item flex"><div class="rect" style="background: rgba(255, 133, 192, 0.66)"></div>&lt;15000</div>
       <div class="item flex"><div class="rect" style="background: rgba(50, 197, 255, 0.66)"></div>&lt;12000</div>
       <div class="item flex"><div class="rect" style="background: rgba(250, 100, 0, 0.66)"></div>&lt;9000</div>
       <div class="item flex"><div class="rect" style="background: rgba(247, 181, 0, 0.66)"></div>&lt;6000</div>
-      <div class="item flex"><div class="rect" style="background: rgba(54, 207, 201, 0.66)"></div>&lt;3000</div>
+      <div class="item flex"><div class="rect" style="background: rgba(54, 207, 201, 0.66)"></div>&lt;3000</div> -->
     </div>
   </div>
 </template>
@@ -16,8 +19,7 @@ import $http from '@/http';
 import '@/lib/china';
 // const colorMap = ['rgba(54, 207, 201, 0.33)', 'rgba(247, 181, 0, 0.33)', 'rgba(250, 100, 0, 0.33)',
 //  'rgba(50, 197, 255, 0.33)', 'rgba(255, 133, 192, 0.33)', 'rgba(128, 93, 255, 0.33)'];
-const colorMap = ['rgba(54, 207, 201, 0.33)', 'rgba(247, 181, 0, 0.33)', 'rgba(250, 100, 0, 0.33)',
- 'rgba(50, 197, 255, 0.33)', 'rgba(255, 133, 192, 0.33)', 'rgba(128, 93, 255, 0.33)'];
+const colorMap = ['#2FC25B', '#FACC14', '#8543E0'];
 export default {
   props: ['type'],
   data() {
@@ -130,21 +132,21 @@ export default {
         itemStyle: {
             normal: {
               color: function(item) {
-                if (item.value[2] < 3000) {
+                if (item.value[2] < 5000) {
                   return colorMap[0];
                 }
-                if (item.value[2] < 6000) {
+                if (item.value[2] < 10000) {
                   return colorMap[1];
                 }
-                if (item.value[2] < 9000) {
-                  return colorMap[1];
-                }
-                if (item.value[2] < 12000) {
-                  return colorMap[1];
-                }
-                if (item.value[2] < 15000) {
-                  return colorMap[1];
-                }
+                // if (item.value[2] < 9000) {
+                //   return colorMap[1];
+                // }
+                // if (item.value[2] < 12000) {
+                //   return colorMap[1];
+                // }
+                // if (item.value[2] < 15000) {
+                //   return colorMap[1];
+                // }
                 return colorMap[2];
               },
               borderColor: 'rgba(255, 255, 255, 0.3)',
@@ -168,10 +170,10 @@ export default {
                 return 0;
             }
             
-            if (val[2] < 3000) {
+            if (val[2] < 5000) {
               return 10;
             }
-            if (val[2] > 6000) {
+            if (val[2] < 10000) {
               return 15;
             }
             return 20;
@@ -185,7 +187,7 @@ export default {
   mounted() {
     this.myChart = window.echarts.init(this.$refs.chart);
     this.calMap();
-    this.fetchData();
+    this.refresh();
     var mapFeatures = window.echarts.getMap('china').geoJson.features;
     mapFeatures.forEach(v => {
         // 地区名称
@@ -195,6 +197,10 @@ export default {
     });
   },
   methods: {
+    refresh() {
+      this.fetchData();
+      setTimeout(() => this.refresh(), 20000)
+    },
     calMap() {
       const h = this.$refs.chart.clientHeight;
       const w = this.$refs.chart.clientWidth;

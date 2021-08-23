@@ -68,7 +68,7 @@
       <el-table-column
         label="员工姓名">
         <template slot-scope="{ row }">
-          {{row.employeeFirstName}}{{row.employeeLastName}}
+          {{row.employeeLastName}}{{row.employeeFirstName}}
         </template>
       </el-table-column>
       <!-- <el-table-column

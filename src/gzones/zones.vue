@@ -104,10 +104,16 @@ export default {
       addAndEdit: false,
       changeDialog: false,
       isAdmin: false,
+      enableMap: {1: '启用', 0: '未启用'},
       pagination: {
         currpage: 1,
         pagesize: 10
       },
+      approveStatus: {
+        0: '未审核',
+        1: '已通过',
+        2: '已拒绝',
+      }
     };
   },
   mounted() {

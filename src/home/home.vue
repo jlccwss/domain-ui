@@ -9,15 +9,15 @@
           <!-- <i class="el-icon-bell mr-sm" v-if="user.admin === 'admin'"></i>
           <i class="el-icon-question mr-sm"></i> -->
           <div class="user-logo mr-sm"></div>
-          <el-dropdown class="mr-sm" @command="handleCommand">
-            <span class="el-dropdown-link">
+          <!-- <el-dropdown class="mr-sm"> -->
+            <span class="el-dropdown-link mr-sm">
             {{user.userName}}<!--<i class="el-icon-arrow-down el-icon--right"></i> -->
             </span>
             <!-- <el-dropdown-menu slot="dropdown">
               <el-dropdown-item command="changePwd">修改密码</el-dropdown-item>
               <el-dropdown-item command="logout">登出</el-dropdown-item>
             </el-dropdown-menu> -->
-          </el-dropdown>
+          <!-- </el-dropdown> -->
         </div>
       </div>
       <div class="content">
