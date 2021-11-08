@@ -8,7 +8,7 @@
         <div class="handler flex">
           <!-- <i class="el-icon-bell mr-sm" v-if="user.admin === 'admin'"></i>
           <i class="el-icon-question mr-sm"></i> -->
-          <span class="mr-sm user-name">你好，{{user.uid}}</span>
+          <span class="mr-sm user-name">你好，{{user.username}}</span>
           <div class="user-logo mr-sm"></div>
           <!-- <el-dropdown class="mr-sm"> -->
             <span class="el-dropdown-link mr-sm">
