@@ -109,6 +109,13 @@ export default {
     this.getCurRole();
     this.currentNav = this.$route.path;
     this.initWss();
+    if (this.currentNav.includes('/home/zones/')) {
+      this.currentNav = '/home/zones'
+    }
+
+    if (this.currentNav.includes('/home/gzones/')) {
+      this.currentNav = '/home/gzones'
+    }
     this.$router.afterEach((to) => {
       if (this.currentNav !== to.path) {
         this.currentNav = to.path;
