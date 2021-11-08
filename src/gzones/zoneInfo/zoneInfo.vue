@@ -26,7 +26,7 @@
           </el-button>
          </el-col>
          <el-col :offset="1" :span="6">
-          <el-form-item label="排序" label-width="40px">
+          <el-form-item label="排序属性" label-width="70px">
             <el-radio-group v-model="sortType">
               <el-radio :label="1">创建时间</el-radio>
               <el-radio :label="2">数据中心</el-radio>
