@@ -28,10 +28,10 @@
             </el-table-column>
            </el-table>
            <el-input placeholder="请输入内容" v-model="search" class="input-with-select mt-xs">
-            <el-select v-model="type" slot="prepend" placeholder="请选择">
+            <!-- <el-select v-model="type" slot="prepend" placeholder="请选择">
               <el-option label="互联网" value="1"></el-option>
               <el-option label="广域网" value="2"></el-option>
-            </el-select>
+            </el-select> -->
             <el-button slot="append" @click="handlerSearch" icon="el-icon-search"></el-button>
           </el-input>
         </el-form-item>
@@ -88,7 +88,7 @@ export default {
       pagination: { currpage: 1, pagesize: 10 },
       appList: [],
       rrlist: [],
-      type: '1',
+      type: '2',
       rules: {
         name: [
            { required: true, message: '请输入应用名称', trigger: 'blur' },

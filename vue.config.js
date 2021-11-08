@@ -30,7 +30,7 @@ module.exports = {
   //     ])
   // },
   devServer: {
-    proxy: 'http://jlccwss.vicp.cc:18888'
+    proxy: 'https://jlccwss.vicp.cc:18888'
   }
 }
 

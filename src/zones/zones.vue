@@ -13,7 +13,7 @@
               <el-input @keyup.enter.native="handlerSearch" v-model="params.search" placeholder="文本框"></el-input>
             </el-form-item>
           </el-col>
-          <el-col  :offset="1" :span="6" align="left">
+          <el-col  :offset="1" :span="4" align="left">
             <el-button size="small" type="primary" @click="handlerSearch">查询</el-button>
             <el-button v-if="isAdmin" @click="handlerAdd" type="primary" size="small">
               创建
@@ -122,7 +122,6 @@ export default {
   },
   methods: {
     handlerSearch() {
-      console.log(1)
       this.pagination.currpage = 1;
       this.getList();
     },
@@ -218,7 +217,7 @@ export default {
         this.loading = false;
       }, () => {
         this.loading = false;
-      })
+      });
     },
     close(refresh) {
       if (refresh) {

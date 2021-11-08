@@ -8,10 +8,11 @@
         <div class="handler flex">
           <!-- <i class="el-icon-bell mr-sm" v-if="user.admin === 'admin'"></i>
           <i class="el-icon-question mr-sm"></i> -->
+          <span class="mr-sm user-name">你好，{{user.uid}}</span>
           <div class="user-logo mr-sm"></div>
           <!-- <el-dropdown class="mr-sm"> -->
             <span class="el-dropdown-link mr-sm">
-            {{user.userName}}<!--<i class="el-icon-arrow-down el-icon--right"></i> -->
+            <!--<i class="el-icon-arrow-down el-icon--right"></i> -->
             </span>
             <!-- <el-dropdown-menu slot="dropdown">
               <el-dropdown-item command="changePwd">修改密码</el-dropdown-item>
@@ -116,10 +117,10 @@ export default {
   },
   methods: {
     navToAddress() {
-      var ww = window.open('/apis/ipamurl');
-      $http.get('/apis/current_role').then(() => {
-        // ww.close()
-      }, () => ww.close());
+      // var ww = window.open('/apis/ipamurl');
+      // $http.get('/apis/current_role').then(() => {
+      //   // ww.close()
+      // }, () => ww.close());
       // var ww = window.open('/apis/ipamurl');
       // ww.onload = function() {
       //   ww.close();
@@ -344,6 +345,10 @@ export default {
       overflow-y: hidden;
       padding: 12px 16px;
     }
+  }
+
+  .user-name {
+    color: #fff;
   }
 }
 </style>

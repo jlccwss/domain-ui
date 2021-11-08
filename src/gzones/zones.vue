@@ -14,7 +14,7 @@
             <el-input @keyup.enter.native="handlerSearch" v-model="params.search" placeholder="文本框"></el-input>
           </el-form-item>
         </el-col>
-        <el-col :span="6" align="left" :offset="1">
+        <el-col :span="4" align="left" :offset="1">
           <el-button size="small" type="primary" @click="handlerSearch">查询</el-button>
           <el-button v-if="isAdmin" @click="handlerAdd" type="primary" size="small">
             创建

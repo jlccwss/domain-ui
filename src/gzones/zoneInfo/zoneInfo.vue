@@ -14,12 +14,25 @@
             <el-input @keyup.enter.native="handlerSearch" v-model="params.search" placeholder="记录名称"></el-input>
           </el-form-item>
          </el-col>
-         <el-col :span="6" :offset="1" align="left">
+         <el-col :span="6">
+          <el-form-item label="记录值" label-width="70px">
+            <el-input @keyup.enter.native="handlerSearch" v-model="params.search" placeholder="记录名称"></el-input>
+          </el-form-item>
+         </el-col>
+         <el-col :span="4" :offset="1" align="left">
           <el-button size="small" type="primary" @click="handlerSearch">查询</el-button>
           <el-button @click="handlerAdd" type="primary" size="small">
             创建
           </el-button>
          </el-col>
+         <el-col :offset="1" :span="6">
+          <el-form-item label="排序" label-width="40px">
+            <el-radio-group v-model="sortType">
+              <el-radio :label="1">创建时间</el-radio>
+              <el-radio :label="2">数据中心</el-radio>
+            </el-radio-group>
+          </el-form-item>
+        </el-col>
        </el-row>
     </el-form>
      <el-table
@@ -130,6 +143,7 @@ export default {
         currpage: 1,
         pagesize: 10
       },
+      sortType: 1,
       changeDialog: false
     };
   },
@@ -195,14 +209,34 @@ export default {
     getList() {
       this.loading = true;
       const { currpage, pagesize } = this.pagination;
-      const { search } = this.params;
+      const { search, searchValue } = this.params;
       let url = `/apis/zones/${this.zoneId}/rrs?pageNum=${currpage}&pageSize=${pagesize}`;
       if (search) {
         url += `&searchName=${search}`;
       }
+
+      if (searchValue) {
+        url += `&searchValue=${searchValue}`;
+      }
+      if (this.sortType) {
+        if (this.sortType === 1) {
+          url += '&createTime=true';
+        }
+
+        if (this.sortType === 2) {
+          url += '&centerName=true';
+        }
+      }
       $http.get(url).then(res => {
         if (res.data.status === 0) {
-          this.list = res.data.data;
+          let list = res.data.data;
+          let subfix = `.${this.detail.zoneName}.`;
+          list.forEach(element => {
+            if (element.rrName && element.rrName.includes(subfix)) {
+              element.rrName = element.rrName.replace(subfix, '');
+            }
+          });
+          this.list = list;
           this.pagination.total = res.data.total;
         }
         this.loading = false;

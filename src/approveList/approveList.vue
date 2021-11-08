@@ -25,14 +25,30 @@
       </el-table-column>
       <el-table-column
         prop="flowName"
-        width="500"
+        width="550"
         label="审批流">
         <template slot-scope="{ row }">
           <el-steps class="steps" :active="row.step">
-            <el-step :status="finishStep[row.flowPath1Status]" :title="row.flowPath1"></el-step>
-            <el-step :status="finishStep[row.flowPath2Status]" :title="row.flowPath2"></el-step>
-            <el-step :status="finishStep[row.flowPath3Status]" :title="row.flowPath3"></el-step>
-            <el-step :status="finishStep[row.flowPath4Status]" :title="row.flowPath4"></el-step>
+            <el-step :status="finishStep[row.flowPath1Status]">
+              <template slot="title">
+                <div :class="{approve: row.flowPath1Status[index] === 1, reject: row.flowPath1Status[index] === 2}" :key="name + index + 'flowPath1'" v-for="(name, index) in row.flowPath1">{{name}}{{row.flowPath1Name[index]}}</div>
+              </template>
+            </el-step>
+            <el-step :status="finishStep[row.flowPath2Status]">
+              <template slot="title">
+                <div :class="{approve: row.flowPath2Status[index] === 1, reject: row.flowPath2Status[index] === 2}" :key="name + index + 'flowPath2'" v-for="(name, index) in row.flowPath2">{{name}}{{row.flowPath2Name[index]}}</div>
+              </template>
+            </el-step>
+            <el-step :status="finishStep[row.flowPath3Status]">
+              <template slot="title">
+                <div :class="{approve: row.flowPath3Status[index] === 1, reject: row.flowPath3Status[index] === 2}" :key="name + index + 'flowPath3'" v-for="(name, index) in row.flowPath3">{{name}}{{row.flowPath3Name[index]}}</div>
+              </template>
+            </el-step>
+            <el-step :status="finishStep[row.flowPath4Status]">
+              <template slot="title">
+                <div :class="{approve: row.flowPath4Status[index] === 1, reject: row.flowPath4Status[index] === 2}" :key="name + index + 'flowPath4'" v-for="(name, index) in row.flowPath4">{{name}}{{row.flowPath4Name[index]}}</div>
+              </template>
+            </el-step>
           </el-steps>
           <el-row :style="{paddingLeft: row.step * 110 + 'px'}" v-if="![1, 2].includes(row.finishStatus)">
             <el-button :disabled="row.disabled" type="primary" size="mini" @click="handlerApprove(row.id)">通过</el-button>
@@ -122,24 +138,26 @@ export default {
       const { currpage, pagesize } = this.pagination;
       const url = `/apis/approveList?pageNum=${currpage}&pageSize=${pagesize}`;
       const list = ['flowPath1', 'flowPath2', 'flowPath3', 'flowPath4'];
-      const userName = getUser().userName;
+      const userName = getUser().uid;
       $http.get(url).then(res => {
         if (res.data.status === 0) {
           let data = res.data.data.map(record => {
             const activeStep = list.findIndex((l) => {
-                if (record[`${l}Status`] === 0 || record[`${l}Status`] === 2) {
-                    return true;
-                }
-                return false;
+              let status = Math.max(...record[`${l}Status`]);
+              if (status === 0 || status === 2) {
+                  return true;
+              }
+              return false;
             });
             const errorStep = list.findIndex((l) => {
-                if (record[`${l}Status`] === 2) {
-                    return true;
-                }
-                return false;
+              let status = Math.max(...record[`${l}Status`]);
+              if (status === 2) {
+                  return true;
+              }
+              return false;
             });
             record.step = activeStep;
-            record.disabled = userName !== record[`${list[activeStep]}`] || errorStep !== -1;
+            record.disabled = !record[`${list[activeStep]}`].includes(userName) || errorStep !== -1;
             return record;
           });
           this.list = data;
@@ -178,7 +196,15 @@ export default {
 </script>
 <style scoped lang="scss">
 .steps {
-  width: 400px;
+  width: 500px;
   margin: auto;
+}
+
+.approve {
+  color: green;
+}
+
+.reject {
+  color: red;
 }
 </style>

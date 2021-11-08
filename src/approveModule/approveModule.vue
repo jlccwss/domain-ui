@@ -131,7 +131,11 @@ export default {
       this.addAndEdit = true;
       this.editRow = {
         flowType: 1,
-        status: 1
+        status: 1,
+        flowPath1: [],
+        flowPath2: [],
+        flowPath3: [],
+        flowPath4: []
       };
     },
     handlerDel(rowId) {

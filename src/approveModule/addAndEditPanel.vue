@@ -13,22 +13,22 @@
             </el-radio-group>
         </el-form-item>
         <el-form-item label="第一审批人">
-            <el-select v-model="editRow.flowPath1" style="width:100%">
+            <el-select filterable multiple @change="changeFlow1" :value="editRow.flowPath1" style="width:100%">
               <el-option :key="user.id" :label="user.userName + '('+user.employeeFirstName+user.employeeLastName+')'" :value="user.userName" v-for="user in userList"></el-option>
             </el-select>
         </el-form-item>
         <el-form-item label="第二审批人">
-            <el-select v-model="editRow.flowPath2" style="width:100%">
+            <el-select filterable multiple @change="changeFlow2" :value="editRow.flowPath2" style="width:100%">
               <el-option :key="user.id" :label="user.userName + '('+user.employeeFirstName+user.employeeLastName+')'" :value="user.userName" v-for="user in userList"></el-option>
             </el-select>
         </el-form-item>
         <el-form-item label="第三审批人">
-            <el-select v-model="editRow.flowPath3" style="width:100%">
+            <el-select filterable multiple @change="changeFlow3" :value="editRow.flowPath3" style="width:100%">
               <el-option :key="user.id" :label="user.userName + '('+user.employeeFirstName+user.employeeLastName+')'" :value="user.userName" v-for="user in userList"></el-option>
             </el-select>
         </el-form-item>
         <el-form-item label="第四审批人">
-            <el-select v-model="editRow.flowPath4" style="width:100%">
+            <el-select filterable multiple @change="changeFlow4" :value="editRow.flowPath4" style="width:100%">
               <el-option :key="user.id" :label="user.userName + '('+user.employeeFirstName+user.employeeLastName+')'" :value="user.userName" v-for="user in userList"></el-option>
             </el-select>
         </el-form-item>
@@ -78,7 +78,27 @@ export default {
       });
     },
     handlerCancel() {
-      this.$emit('close')
+      this.$emit('close');
+    },
+    changeFlow1(vals) {
+      if (vals.length <= 3) {
+        this.editRow.flowPath1 = vals;
+      }
+    },
+    changeFlow2(vals) {
+      if (vals.length <= 3) {
+        this.editRow.flowPath2 = vals;
+      }
+    },
+    changeFlow3(vals) {
+      if (vals.length <= 3) {
+        this.editRow.flowPath3 = vals;
+      }
+    },
+    changeFlow4(vals) {
+      if (vals.length <= 3) {
+        this.editRow.flowPath4 = vals;
+      }
     },
     handlerSave() {
       let url = '/apis/approveModule';
