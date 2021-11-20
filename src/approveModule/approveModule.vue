@@ -132,10 +132,10 @@ export default {
       this.editRow = {
         flowType: 1,
         status: 1,
-        flowPath1: [],
-        flowPath2: [],
-        flowPath3: [],
-        flowPath4: []
+        // flowPath1: [],
+        // flowPath2: [],
+        // flowPath3: [],
+        // flowPath4: []
       };
     },
     handlerDel(rowId) {
