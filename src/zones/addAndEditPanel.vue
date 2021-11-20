@@ -17,6 +17,9 @@
               <el-option :key="view.id" :label="view.viewName" :value="view.viewName" v-for="view in viewList"></el-option>
             </el-select>
         </el-form-item>
+        <el-form-item prop="sort" label="序号">
+            <el-input-number class="w-full" :controls="false" v-model="editRow.sort"></el-input-number>
+        </el-form-item>
         <el-form-item prop="des" label="备注">
             <el-input
               v-model="editRow.des"

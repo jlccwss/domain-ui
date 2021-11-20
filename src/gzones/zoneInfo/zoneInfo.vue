@@ -16,7 +16,7 @@
          </el-col>
          <el-col :span="6">
           <el-form-item label="记录值" label-width="70px">
-            <el-input @keyup.enter.native="handlerSearch" v-model="params.search" placeholder="记录名称"></el-input>
+            <el-input @keyup.enter.native="handlerSearch" v-model="params.searchValue" placeholder="记录值"></el-input>
           </el-form-item>
          </el-col>
          <el-col :span="4" :offset="1" align="left">

@@ -108,17 +108,25 @@ export default {
   mounted() {
     this.getCurRole();
     this.currentNav = this.$route.path;
-    this.initWss();
+    // this.initWss();
     if (this.currentNav.includes('/home/zones/')) {
-      this.currentNav = '/home/zones'
+      this.currentNav = '/home/zones';
     }
 
     if (this.currentNav.includes('/home/gzones/')) {
       this.currentNav = '/home/gzones'
     }
     this.$router.afterEach((to) => {
+      console.log(to.path)
       if (this.currentNav !== to.path) {
         this.currentNav = to.path;
+        if (this.currentNav.includes('/home/zones/')) {
+          this.currentNav = '/home/zones';
+        }
+
+        if (this.currentNav.includes('/home/gzones/')) {
+          this.currentNav = '/home/gzones'
+        }
       }
     });
   },

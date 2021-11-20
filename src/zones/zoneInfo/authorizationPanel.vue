@@ -103,13 +103,10 @@ export default {
         return;
       }
       const zoneId = this.$route.params.zoneId;
-      let url = '/apis/zones/' + zoneId + '/rrs/' + this.editRow.id;
-      let user = this.allUserList.find(user => user.id === this.selectUsers[0]);
-      if (user) {
-        this.editRow.createBy = user.userName;
-      }
+      let userId = this.selectUsers[0];
+      let url = '/apis/zones/' + zoneId + '/rrs/' + this.editRow.id+'/'+userId;
       
-      $http.put(url, this.editRow).then(res => {
+      $http.post(url).then(res => {
         if (res.data.status) {
           this.$notify.error({
             message: res.data.msg

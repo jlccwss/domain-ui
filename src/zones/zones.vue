@@ -9,8 +9,8 @@
       <el-form class="mt-xs" size="small" label-width="120px" label-position="right">
         <el-row>
           <el-col :span="6">
-            <el-form-item label="文本框" label-width="70px">
-              <el-input @keyup.enter.native="handlerSearch" v-model="params.search" placeholder="文本框"></el-input>
+            <el-form-item label="区名称" label-width="70px">
+              <el-input @keyup.enter.native="handlerSearch" v-model="params.search" placeholder="区名称"></el-input>
             </el-form-item>
           </el-col>
           <el-col  :offset="1" :span="4" align="left">
@@ -50,6 +50,10 @@
       <el-table-column
         prop="des"
         label="备注">
+      </el-table-column>
+      <el-table-column
+        prop="sort"
+        label="序号">
       </el-table-column>
       <el-table-column
         label="创建时间">

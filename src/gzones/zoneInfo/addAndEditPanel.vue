@@ -6,7 +6,7 @@
          <el-form-item prop="rrName" label="记录名称">
            <el-row class="form-row">
              <el-col :span="14">
-               <el-input v-model="editRow.rrName"></el-input>
+               <el-input :disabled="!!editRow.id" v-model="editRow.rrName"></el-input>
              </el-col>
              <el-col :span="10">.{{zoneName}}</el-col>
            </el-row>
@@ -18,7 +18,7 @@
           </el-row>
         </el-form-item>
         <el-form-item prop="rrType" label="记录类型">
-            <el-select style="width:100%" v-model="editRow.rrType">
+            <el-select :disabled="!!editRow.id" style="width:100%" v-model="editRow.rrType">
               <el-option :key="type.id" :label="type.typeName" :value="type.typeName" v-for="type in typeList"></el-option>
             </el-select>
         </el-form-item>
