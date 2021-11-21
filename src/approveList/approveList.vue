@@ -122,7 +122,7 @@ export default {
       const { currpage, pagesize } = this.pagination;
       const url = `/apis/approveList?pageNum=${currpage}&pageSize=${pagesize}`;
       const list = ['flowPath1', 'flowPath2', 'flowPath3', 'flowPath4'];
-      const userName = getUser().uid;
+      const userName = getUser().username;
       $http.get(url).then(res => {
         if (res.data.status === 0) {
           let dataList = res.data.data || [];

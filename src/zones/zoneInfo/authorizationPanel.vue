@@ -83,8 +83,8 @@ export default {
       $http.get(url).then(res => {
         if (res.data.status === 0) {
           this.allUserList =  this.userList = res.data.data;
-          if (this.editRow.createBy) {
-            let user = this.allUserList.find(user => user.userName === this.editRow.createBy);
+          if (this.editRow.owner) {
+            let user = this.allUserList.find(user => user.id === this.editRow.owner);
             if (user) {
               this.selectUsers = [user.id];
             }

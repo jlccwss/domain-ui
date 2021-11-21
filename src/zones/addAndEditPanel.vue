@@ -9,7 +9,7 @@
         <el-form-item prop="defaultTtl" label="默认TTL">
           <el-row class="form-row">
             <el-col :span="20"><el-input-number :min="1" style="width: 100%" size="small" v-model="editRow.defaultTtl"></el-input-number></el-col>
-            <el-col :span="4" class="pl-sm">分钟</el-col>
+            <el-col :span="4" class="pl-sm">秒</el-col>
           </el-row>
         </el-form-item>
         <el-form-item prop="viewName" label="视图名称">

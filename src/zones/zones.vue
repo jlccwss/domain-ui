@@ -182,7 +182,7 @@ export default {
                 dateFormat(item.createTime)
               ];
             });
-            data.unshift(['记录名称', '视图名称', 'TTL（分钟）', '备注', '是否启用', '数据中心', '审批状态', '创建时间']);
+            data.unshift(['记录名称', '视图名称', 'TTL（秒）', '备注', '是否启用', '数据中心', '审批状态', '创建时间']);
             exportCsv(row.zoneName, data);
           } else {
             this.$notify.warning({

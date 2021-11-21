@@ -60,7 +60,7 @@
       </el-table-column>
       <el-table-column
         prop="rrTtl"
-        label="TTL（分钟）">
+        label="TTL（秒）">
       </el-table-column>
       <el-table-column
         prop="des"
