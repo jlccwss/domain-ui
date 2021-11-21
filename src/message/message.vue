@@ -122,6 +122,7 @@ export default {
                 this.$notify.success({
                   message: '删除成功'
                 });
+                this.getList();
               }
             }, () => {
               this.$notify.error({
