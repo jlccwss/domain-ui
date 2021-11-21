@@ -149,11 +149,16 @@ export default {
       this.$confirm('删除后不可恢复', '确认要删除这条信息吗？')
           .then(() => {
             const url = `/apis/groups/${rowId}`;
-            $http.delete(url).then(() => {
-              this.$notify.success({
-                message: '删除成功'
-              });
-              this.getList();
+            $http.delete(url).then(res => {
+              if (res.data.status) {
+                this.$notify.error({
+                  message: res.data.msg
+                });
+              } else {
+                this.$notify.success({
+                  message: '删除成功'
+                });
+              }
             }, () => {
               this.$notify.error({
                 message: '删除失败'
