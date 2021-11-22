@@ -132,10 +132,10 @@ export default {
   },
   methods: {
     navToAddress() {
-      // var ww = window.open('/apis/ipamurl');
-      // $http.get('/apis/current_role').then(() => {
-      //   // ww.close()
-      // }, () => ww.close());
+      var ww = window.open('/apis/ipamurl');
+      $http.get('/apis/current_role').then(() => {
+        // ww.close()
+      }, () => ww.close());
       // var ww = window.open('/apis/ipamurl');
       // ww.onload = function() {
       //   ww.close();
